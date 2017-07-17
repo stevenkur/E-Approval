@@ -8,20 +8,24 @@
         }
     </style>
 
-    <!-- <script type="text/javascript">
-    function addCommas(nStr)
-    {
-        nStr += '';
-        var x = nStr.split('.');
-        var x1 = x[0];
-        var x2 = x.length > 1 ? '.' + x[1] : '';
-        var rgx = /(\d+)(\d{3})/;
-        while (rgx.test(x1)) {
-            x1 = x1.replace(rgx, '$1' + '.' + '$2');
-        }
-        return x1 + x2;
-    }
-    </script> -->
+    <script type="text/javascript">
+    // function addCommas(nStr)
+    // {
+    //     nStr += '';
+    //     var x = nStr.split('.');
+    //     var x1 = x[0];
+    //     var x2 = x.length > 1 ? '.' + x[1] : '';
+    //     var rgx = /(\d+)(\d{3})/;
+    //     while (rgx.test(x1)) {
+    //         x1 = x1.replace(rgx, '$1' + '.' + '$2');
+    //     }
+    //     return x1 + x2;
+    // }
+    // $(document).on("click", '.addrow', function (){
+    //         newrow = '<label class="custom-file">Another Document<input type="file" id="file" name="file" class="custom-file-input"><span class="custom-file-control"></span></label>';                    
+    //         $(this).parent().parent().before(newrow);
+    //     });
+    </script>
   
     <!-- Main content -->
     <section class="content">
@@ -94,17 +98,20 @@
                     <label class="col-md-3 control-label">Attachment</label>
                     <div class="col-md-9">
                         <label class="custom-file">Payment Requisition Form
-                            <input type="file" id="file1" class="custom-file-input">
+                            <input type="file" id="file1" name="file1" class="custom-file-input">
                             <span class="custom-file-control"></span>
                         </label>
                         <label class="custom-file">Original Tax & Supplier Invoices
-                            <input type="file" id="file1" class="custom-file-input">
+                            <input type="file" id="file2" name="file2" class="custom-file-input">
                             <span class="custom-file-control"></span>
                         </label>
                         <label class="custom-file">AirwayBill Number
-                            <input type="file" id="file1" class="custom-file-input">
+                            <input type="file" id="file3" name="file3" class="custom-file-input">
                             <span class="custom-file-control"></span>
                         </label>
+                        <!-- <div class="col-md-2">
+                            <button class="btn btn-primary addrow">Add</button>
+                        </div> -->
                     </div>
                 </div>
 
