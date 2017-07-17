@@ -19,6 +19,10 @@ Route::get('/query', function () {
     return view('admin/query');
 });
 
+Route::get('/masteraccount', function () {
+    return view('admin/masteraccount');
+});
+
 Route::get('/index', function () {
     return view('user/index');
 });
