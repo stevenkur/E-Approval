@@ -47,29 +47,25 @@
         <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
           <ul class="nav navbar-nav">
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Claim <span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Master <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="#">New Claim</a></li>
-                <li><a href="#">List Claim</a></li>
+                <li><a href="#">Master Account</a></li>
+                <li><a href="#">Master Role</a></li>
+                <li><a href="#">Master Category</a></li>
+                <li><a href="#">Master Activity</a></li>
+                <li><a href="#">Master Flow</a></li>
+                <li><a href="#">Master Holiday</a></li>
               </ul>
             </li>
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Report <span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">List <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="#">Monitoring Report</a></li>
-                <li><a href="#">Resolution Report</a></li>
-                <li><a href="#">LSF Budget Report</a></li>
+                <li><a href="#">List Ticket</a></li>
+                <li><a href="#">List Attachment</a></li>
+                <li><a href="#">List Period</a></li>
               </ul>
             </li>
-            <li><a href="#">Form</a></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Change Area (Marcom) <span class="caret"></span></a>
-              <ul class="dropdown-menu" role="menu">
-                <li><a href="#">Marcom</a></li>
-                <li><a href="#">RDP</a></li>
-                <li><a href="#">BDF</a></li>
-              </ul>
-            </li>
+            <li><a href="#">Query</a></li>
             <!-- <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
@@ -88,12 +84,12 @@
         <!-- Navbar Right Menu -->
         <div class="navbar-custom-menu">
           <ul class="nav navbar-nav">
-            <li class="dropdown">
+            <!-- <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Profile <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
                 <li><a href="#">Change Password</a></li>
               </ul>
-            </li>
+            </li> -->
             <li><a href="#">Logout</a></li>
           </ul>
         </div>
@@ -109,7 +105,7 @@
       <section class="content-header">
         <h1>
           Hello,
-          <small><b>User Name (Role)</b></small>
+          <small><b>Admin User Name</b></small>
         </h1>
         <!-- <h4 align="right">{{ date('l, d M Y') }}</h4> -->
         <!-- <ol class="breadcrumb">
@@ -131,7 +127,6 @@
       <div class="pull-right hidden-xs">
         <b>Version</b> 1.0.0
       </div>
-
       <strong>Copyright &copy; 2017 <a href="#">Developer Team</a>.</strong> All rights reserved.
     </div>
     <!-- /.container -->

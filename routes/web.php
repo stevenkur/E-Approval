@@ -12,8 +12,29 @@
 */
 
 Route::get('/', function () {
-    return view('index');
+    return view('auth/login');
 });
+
+Route::get('/query', function () {
+    return view('admin/query');
+});
+
+Route::get('/index', function () {
+    return view('user/index');
+});
+
+Route::get('/profile', function () {
+    return view('user/profile');
+});
+
+Route::get('/newclaim', function () {
+    return view('user/newclaim');
+});
+
+Route::get('/listclaim', function () {
+    return view('user/listclaim');
+});
+
 
 Auth::routes();
 
