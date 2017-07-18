@@ -23,6 +23,50 @@ Route::get('/masteraccount', function () {
     return view('admin/masteraccount');
 });
 
+Route::get('/masterrole', function () {
+    return view('admin/masterrole');
+});
+
+Route::get('/mastercategory', function () {
+    return view('admin/mastercategory');
+});
+
+Route::get('/mastercategoryaccess', function () {
+    return view('admin/mastercategoryaccess');
+});
+
+Route::get('/mastercategorydetail', function () {
+    return view('admin/mastercategorydetail');
+});
+
+Route::get('/masteractivity', function () {
+    return view('admin/masteractivity');
+});
+
+Route::get('/masterflow', function () {
+    return view('admin/masterflow');
+});
+
+Route::get('/masterholiday', function () {
+    return view('admin/masterholiday');
+});
+
+Route::get('/masteruserdistributor', function () {
+    return view('admin/masteruserdistributor');
+});
+
+Route::get('/masterdistributor', function () {
+    return view('admin/masterdistributor');
+});
+
+Route::get('/mastermarketing', function () {
+    return view('admin/mastermarketing');
+});
+
+Route::get('/masterprogram', function () {
+    return view('admin/masterprogram');
+});
+
 Route::get('/index', function () {
     return view('user/index');
 });

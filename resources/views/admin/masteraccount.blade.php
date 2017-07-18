@@ -10,7 +10,6 @@
         });
     </script>
 
-
     <!-- Main content -->
     <section class="content">
         <div class="box box-primary">
@@ -48,7 +47,7 @@
                             <input type="text" class="form-control" id="secondemail" name="secondemail" placeholder="" required="required" style="text-align: right;" />
                         </div>
                     </div> -->
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label class="col-md-4 control-label">Distributor ID</label>
                         <div class="col-md-8">
                             <select class="form-control" name="distributorid" id="distributorid">
@@ -57,20 +56,20 @@
                                 <option value="3">3</option>
                             </select>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label class="col-md-4 control-label">Category</label>
                         <div class="col-md-8">
                         <div class="checkbox">
-                            <label><input type="checkbox" value="1">Marcom</label>
-                        </div>
-                        <div class="checkbox">
-                            <label><input type="checkbox" value="2">RDP</label>
-                        </div>
-                        <div class="checkbox">
-                            <label><input type="checkbox" value="3">BDF</label>
+                            <label><input type="checkbox" id="checkboxx" value="1">Marcom
+                                <div id="autoapprove" style="display:none;">Auto Approved Day</div>
+                            </label><br>
+                            <label><input type="checkbox" id="checkboxx" value="2">RDP
+                            </label><br>
+                            <label><input type="checkbox" id="checkboxx" value="3">BDF
+                            </label><br>
                         </div>
                         </div>
                     </div>
@@ -173,4 +172,5 @@ $(function() {
       'autoWidth'   : true
     })
   });
+$("#checkboxx").is(':checked') ? $("#autoapprove").show() : $("#autoapprove").hide();
 </script>

@@ -54,9 +54,15 @@
                 <li><a href="#">Master Account</a></li>
                 <li><a href="#">Master Role</a></li>
                 <li><a href="#">Master Category</a></li>
+                <li><a href="#">Master Category Access</a></li>
+                <li><a href="#">Master Category Detail</a></li>
                 <li><a href="#">Master Activity</a></li>
                 <li><a href="#">Master Flow</a></li>
                 <li><a href="#">Master Holiday</a></li>
+                <li><a href="#">Master User Distributor</a></li>
+                <li><a href="#">Master Distributor</a></li>
+                <li><a href="#">Master Marketing</a></li>
+                <li><a href="#">Master Program</a></li>
               </ul>
             </li>
             <li class="dropdown">
