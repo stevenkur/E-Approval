@@ -14,8 +14,13 @@ class CreateLogClaimsTable extends Migration
     public function up()
     {
         Schema::create('log_claims', function (Blueprint $table) {
-            $table->increments('id');
-            $table->timestamps();
+            $table->increments('id_log')->unique();
+            $table->integer('id_user');
+            $table->string('id_claim', 10);
+            $table->integer('id_activity');
+            $table->timestamps('date_log');
+            
+           
         });
     }
 

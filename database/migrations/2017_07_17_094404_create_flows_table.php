@@ -14,7 +14,12 @@ class CreateFlowsTable extends Migration
     public function up()
     {
         Schema::create('flows', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id_flow')->unique();
+            $table->string('kode_flow', 30);
+            $table->string('nama_flow', 50);
+            $table->integer('id_role');
+            $table->integer('level_flow');
+            
             $table->timestamps();
         });
     }

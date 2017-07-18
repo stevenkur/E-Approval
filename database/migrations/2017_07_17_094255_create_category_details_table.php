@@ -14,7 +14,11 @@ class CreateCategoryDetailsTable extends Migration
     public function up()
     {
         Schema::create('category_details', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id_categorydetail')->unique();
+            $table->string('nama_category', 30);
+            $table->string('category_type', 30);
+            
+           
             $table->timestamps();
         });
     }

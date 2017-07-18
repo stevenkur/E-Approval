@@ -14,7 +14,11 @@ class CreateDistributorsTable extends Migration
     public function up()
     {
         Schema::create('distributors', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id_dist')->unique();
+            $table->string('distributor_id', 20);
+            $table->string('nama_distributor', 100);
+            $table->string('country', 50);
+            
             $table->timestamps();
         });
     }

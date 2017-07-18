@@ -14,7 +14,12 @@ class CreateCategoryAccessesTable extends Migration
     public function up()
     {
         Schema::create('category_accesses', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id_access')->unique();
+            $table->integer('id_user');
+            $table->integer('id_category');
+            $table->integer('id_role');
+            $table->integer('auto_approved');
+            
             $table->timestamps();
         });
     }

@@ -14,7 +14,12 @@ class CreateClaimAttachmentsTable extends Migration
     public function up()
     {
         Schema::create('claim_attachments', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id_attachment')->unique();
+            $table->string('id_claim', 10);
+            $table->string('path_attachment', 50);
+            $table->string('nama_attachment', 25);
+            
+           
             $table->timestamps();
         });
     }

@@ -14,8 +14,25 @@ class CreateClaimsTable extends Migration
     public function up()
     {
         Schema::create('claims', function (Blueprint $table) {
-            $table->increments('id');
-            $table->timestamps();
+            $table->string('id_claim',10)->unique;
+            $table->string('nama_category', 30);
+            $table->string('category_type', 30);
+            $table->string('nama_program', 75);
+            $table->integer('value');
+            $table->integer('entitlement');
+            $table->integer('programforyear');
+            $table->string('pr_number', 30);
+            $table->string('invoice_number', 30);
+            $table->string('airwaybill', 50);
+            $table->string('payment_form', 50);
+            $table->string('original_tax', 50);
+            $table->string('nama_distributor', 100);
+            $table->string('kode_flow', 30);
+            $table->integer('level_flow');
+            $table->string('status', 50);
+            $table->timestamps('tanggal_claim');
+            
+            
         });
     }
 

@@ -14,7 +14,11 @@ class CreateProgramsTable extends Migration
     public function up()
     {
         Schema::create('programs', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id_program')->unique();
+            $table->string('nama_program', 75);
+            $table->integer('tahun');
+            
+           
             $table->timestamps();
         });
     }

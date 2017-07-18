@@ -14,7 +14,11 @@ class CreateUserDistributorsTable extends Migration
     public function up()
     {
         Schema::create('user_distributors', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id_user_distributor')->unique();
+            $table->integer('id_user');
+            $table->string('distributor_id', 20);
+            
+           
             $table->timestamps();
         });
     }
