@@ -15,7 +15,7 @@ class CreateMarketingsTable extends Migration
     {
         Schema::create('marketings', function (Blueprint $table) {
             $table->increments('id_marketing')->unique();
-            $table->string('distributor_id', 20);
+            $table->integer('id_dist');
             $table->integer('id_program');
             $table->integer('entitlement');
             $table->date('maxclaim_date');

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 19, 2017 at 04:29 AM
+-- Generation Time: Jul 19, 2017 at 05:48 AM
 -- Server version: 10.1.8-MariaDB
 -- PHP Version: 5.6.14
 
@@ -113,7 +113,10 @@ INSERT INTO `category_details` (`id_categorydetail`, `nama_category`, `category_
 (1, 'Marcom', 'HM1 - Build the Base ', NULL, NULL),
 (2, 'Marcom', 'HM2 - LED Lamps Leadership', NULL, NULL),
 (3, 'Marcom', 'HM3 - ProShop', NULL, NULL),
-(4, 'BDF', 'HM4 - MR Growth', NULL, NULL);
+(4, 'BDF', 'HM4 - MR Growth', NULL, NULL),
+(5, 'BDF', 'HM5 - Branded Retail (excl BDF)', NULL, NULL),
+(6, 'RDP', 'HM8 - Cross Cons Campaign', NULL, NULL),
+(7, 'RDP', 'HM9 - Local Cons Campaign', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -186,6 +189,16 @@ CREATE TABLE `distributors` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `distributors`
+--
+
+INSERT INTO `distributors` (`id_dist`, `distributor_id`, `nama_distributor`, `country`, `created_at`, `updated_at`) VALUES
+(1, 'IDTRJKT1', 'PT. Sahabat Abadi Sejahtera 31', 'Indonesia', NULL, NULL),
+(2, 'IDTRJKT2', 'PT. Sahabat Abadi Sejahtera 32', 'Indonesia', NULL, NULL),
+(3, 'IDTRJKT4', 'PT. Sahabat Abadi Sejahtera 34', 'Indonesia', NULL, NULL),
+(4, 'IDTRJKT5', 'PT. Telesindo Citra Sejahtera', 'Indonesia', NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -247,7 +260,7 @@ CREATE TABLE `log_claims` (
 
 CREATE TABLE `marketings` (
   `id_marketing` int(10) UNSIGNED NOT NULL,
-  `distributor_id` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_dist` int(20) NOT NULL,
   `id_program` int(11) NOT NULL,
   `entitlement` int(11) NOT NULL,
   `maxclaim_date` date NOT NULL,
@@ -316,6 +329,14 @@ CREATE TABLE `programs` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `programs`
+--
+
+INSERT INTO `programs` (`id_program`, `nama_program`, `tahun`, `created_at`, `updated_at`) VALUES
+(1, 'program a', 2017, NULL, NULL),
+(2, 'program b', 2017, NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -378,6 +399,31 @@ CREATE TABLE `users` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id_user`, `nama_user`, `email`, `password`, `email1`, `email2`, `email3`, `email4`, `email5`, `email6`, `email7`, `email8`, `email9`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'Distributor A', 'distributor@philips.com', 'distributor@philips.com', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
+(2, 'mariootto poluan', 'mariootto.poluan@philips.com', 'mariootto.poluan@philips.com', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
+(3, 'Heri Dono', 'heri.dono1@philips.com', 'heri.dono1@philips.com', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
+(4, 'Admin Marketing', 'admin.marketing@philips.com', 'admin.marketing@philips.com', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
+(5, 'Ahmad Saiful', 'ahmad.saiful@philips.com', 'ahmad.saiful@philips.com', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
+(6, 'Dedy B.Pramono', 'dedy.b.pramono@philips.com', 'dedy.b.pramono@philips.com', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
+(7, 'Setia Adi Nugraha', 'setia.adi.nugraha@philips.com', 'setia.adi.nugraha@philips.com', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
+(8, 'Puja Kusuma', 'Puja.Kusuma@philips.com', 'Puja.Kusuma@philips.com', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
+(9, 'Alberta Pietutami', 'alberta.pietutami@philips.com', 'alberta.pietutami@philips.com', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
+(10, 'Astrid Ramli', 'Astrid.Ramli@philips.com', 'Astrid.Ramli@philips.com', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
+(11, 'Herumono Saputro', 'Herumono.Saputro@philips.com', 'Herumono.Saputro@philips.com', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
+(12, 'Edi Marsongko', 'edi.marsongko1@philips.com', 'edi.marsongko1@philips.com', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
+(13, 'Sauhong Lim', 'sauhong.lim@philips.com', 'sauhong.lim@philips.com', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
+(14, 'Annisa Arrofah', 'annisa.arrofah@philips.com', 'annisa.arrofah@philips.com', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
+(15, 'Oktavia richa', 'oktavia.richa@philips.com', 'oktavia.richa@philips.com', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
+(16, 'Luella Luhukay', 'luella.luhukay@philips.com', 'luella.luhukay@philips.com', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
+(17, 'Riste Milev', 'riste.milev@philips.com', 'riste.milev@philips.com', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
+(18, 'Rami Hajjar', 'rami.hajjar@philips.com', 'rami.hajjar@philips.com', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
+(19, 'Administrator', 'Administrator', 'Administrator', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -391,6 +437,77 @@ CREATE TABLE `user_distributors` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `user_distributors`
+--
+
+INSERT INTO `user_distributors` (`id_user_distributor`, `id_user`, `distributor_id`, `created_at`, `updated_at`) VALUES
+(1, 1, 'IDTRJKT1', NULL, NULL),
+(2, 2, 'IDTRJKT1', NULL, NULL),
+(3, 3, 'IDTRJKT1', NULL, NULL),
+(4, 4, 'IDTRJKT1', NULL, NULL),
+(5, 5, 'IDTRJKT1', NULL, NULL),
+(6, 6, 'IDTRJKT1', NULL, NULL),
+(7, 7, 'IDTRJKT1', NULL, NULL),
+(8, 8, 'IDTRJKT1', NULL, NULL),
+(9, 9, 'IDTRJKT1', NULL, NULL),
+(10, 10, 'IDTRJKT1', NULL, NULL),
+(11, 11, 'IDTRJKT1', NULL, NULL),
+(12, 12, 'IDTRJKT1', NULL, NULL),
+(13, 13, 'IDTRJKT1', NULL, NULL),
+(14, 14, 'IDTRJKT1', NULL, NULL),
+(15, 15, 'IDTRJKT1', NULL, NULL),
+(16, 16, 'IDTRJKT1', NULL, NULL),
+(17, 17, 'IDTRJKT1', NULL, NULL),
+(18, 18, 'IDTRJKT1', NULL, NULL),
+(19, 3, 'IDTRJKT2', NULL, NULL),
+(20, 4, 'IDTRJKT2', NULL, NULL),
+(21, 5, 'IDTRJKT2', NULL, NULL),
+(22, 6, 'IDTRJKT2', NULL, NULL),
+(23, 7, 'IDTRJKT2', NULL, NULL),
+(24, 8, 'IDTRJKT2', NULL, NULL),
+(25, 9, 'IDTRJKT2', NULL, NULL),
+(26, 10, 'IDTRJKT2', NULL, NULL),
+(27, 11, 'IDTRJKT2', NULL, NULL),
+(28, 12, 'IDTRJKT2', NULL, NULL),
+(29, 13, 'IDTRJKT2', NULL, NULL),
+(30, 14, 'IDTRJKT2', NULL, NULL),
+(31, 15, 'IDTRJKT2', NULL, NULL),
+(32, 16, 'IDTRJKT2', NULL, NULL),
+(33, 17, 'IDTRJKT2', NULL, NULL),
+(34, 18, 'IDTRJKT2', NULL, NULL),
+(35, 3, 'IDTRJKT4', NULL, NULL),
+(36, 4, 'IDTRJKT4', NULL, NULL),
+(37, 5, 'IDTRJKT4', NULL, NULL),
+(38, 6, 'IDTRJKT4', NULL, NULL),
+(39, 7, 'IDTRJKT4', NULL, NULL),
+(40, 8, 'IDTRJKT4', NULL, NULL),
+(41, 9, 'IDTRJKT4', NULL, NULL),
+(42, 10, 'IDTRJKT4', NULL, NULL),
+(43, 11, 'IDTRJKT4', NULL, NULL),
+(44, 12, 'IDTRJKT4', NULL, NULL),
+(45, 13, 'IDTRJKT4', NULL, NULL),
+(46, 14, 'IDTRJKT4', NULL, NULL),
+(47, 15, 'IDTRJKT4', NULL, NULL),
+(48, 16, 'IDTRJKT4', NULL, NULL),
+(49, 17, 'IDTRJKT4', NULL, NULL),
+(50, 18, 'IDTRJKT4', NULL, NULL),
+(51, 4, 'IDTRJKT5', NULL, NULL),
+(52, 5, 'IDTRJKT5', NULL, NULL),
+(53, 6, 'IDTRJKT5', NULL, NULL),
+(54, 7, 'IDTRJKT5', NULL, NULL),
+(55, 8, 'IDTRJKT5', NULL, NULL),
+(56, 9, 'IDTRJKT5', NULL, NULL),
+(57, 10, 'IDTRJKT5', NULL, NULL),
+(58, 11, 'IDTRJKT5', NULL, NULL),
+(59, 12, 'IDTRJKT5', NULL, NULL),
+(60, 13, 'IDTRJKT5', NULL, NULL),
+(61, 14, 'IDTRJKT5', NULL, NULL),
+(62, 15, 'IDTRJKT5', NULL, NULL),
+(63, 16, 'IDTRJKT5', NULL, NULL),
+(64, 17, 'IDTRJKT5', NULL, NULL),
+(65, 18, 'IDTRJKT5', NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -551,7 +668,7 @@ ALTER TABLE `comments`
 -- AUTO_INCREMENT for table `distributors`
 --
 ALTER TABLE `distributors`
-  MODIFY `id_dist` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id_dist` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `flows`
 --
@@ -581,7 +698,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `programs`
 --
 ALTER TABLE `programs`
-  MODIFY `id_program` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id_program` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `roles`
 --
@@ -591,12 +708,12 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_user` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id_user` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT for table `user_distributors`
 --
 ALTER TABLE `user_distributors`
-  MODIFY `id_user_distributor` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id_user_distributor` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
