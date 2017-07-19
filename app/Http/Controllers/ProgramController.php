@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
+use App\Program;
+use DB;
 
 class ProgramController extends Controller
 {
@@ -13,7 +15,9 @@ class ProgramController extends Controller
      */
     public function index()
     {
-        //
+
+        $program=Program::all();
+        return view('admin/masterprogram')->with('program', $program);
     }
 
     /**
@@ -35,6 +39,12 @@ class ProgramController extends Controller
     public function store(Request $request)
     {
         //
+        $program = new Program();        
+        $program->nama_program = $request->program;        
+        $program->tahun = $request->year;
+        $program->save();        
+        return redirect()->route('masterprogram.index')
+            ->with('alert-success', 'Data Berhasil Disimpan.');
     }
 
     /**
@@ -69,6 +79,14 @@ class ProgramController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $program = Program::where('id_program',$id); 
+        $program->update([
+            'nama_program' => $request->program,
+            'tahun' => $request->year
+        ]);
+        
+        return redirect()->route('masterprogram.index')
+            ->with('alert-success', 'Data Berhasil Diupdate.');
     }
 
     /**
@@ -80,5 +98,8 @@ class ProgramController extends Controller
     public function destroy($id)
     {
         //
+        $program = Program::where('id_program',$id)->delete(); 
+        
+        return redirect()->route('masterprogram.index')->with('alert-success', 'Data Berhasil Dihapus.');
     }
 }

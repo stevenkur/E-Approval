@@ -1,34 +1,63 @@
 @extends('layouts.backend-admin')
 
 @section('content')
+    
+    <?php 
+        if(isset($_GET['idprogram'])){
+            foreach($program as $programs){
+                if($programs['id_program']==$_GET['idprogram']){
+                    $idprogram = $programs['id_program'];
+                    $namaprogram = $programs['nama_program'];
+                    $tahun = $programs['tahun'];
+                }
+            }
+            $flag=true;
+        }
+        else 
+            $flag=false;
+    ?>
 
     <!-- Main content -->
     <section class="content">
     <div class="row">
     <div class="col-md-4">
         <div class="box box-primary">
-            <form action="#" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewprogram">
+            @if($flag)
+            <form action="{{ route('masterprogram.update', $idprogram) }}" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewprogram">
+            <input name="_method" type="hidden" value="PATCH">
+            @else 
+            <form action="{{ route('masterprogram.store') }}" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewprogram">
+            <input name="_method" type="hidden" value="POST">
+            @endif
             {{csrf_field()}}
             <div class="box-header with-border">
+                @if($flag)
+                <h3 class="box-title">Update Program</h3>
+                @else
                 <h3 class="box-title">Add Program</h3>
+                @endif
             </div>
             <div class="box-body">
                 <div class="form-group">
                     <label class="col-md-4 control-label">Program</label>
                     <div class="col-md-8">
-                        <input type="text" class="form-control" id="program" name="program" placeholder="" required="required" style="text-align: right;" />
+                        <input type="text" class="form-control" id="program" name="program" placeholder="" required="required" <?php if($flag) echo 'value='."'$namaprogram'"; ?>/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-4 control-label">Year</label>
                     <div class="col-md-8">
-                        <input type="text" class="form-control" id="year" name="year" placeholder="" required="required" style="text-align: right;" />
+                        <input type="text" class="form-control" id="year" name="year" placeholder="" required="required" <?php if($flag) echo 'value='."'$tahun'"; ?>/>
                     </div>
                 </div>
             </div>
             <div class="box-footer" align="right">
                 <button type="reset" class="btn btn-ok">Reset</button>
+                @if($flag)
+                <button type="submit" class="btn btn-primary">Update</button>
+                @else
                 <button type="submit" class="btn btn-primary">Submit</button>
+                @endif
             </div>
             </form>
         </div>
@@ -52,27 +81,20 @@
                     </tr>
                     </thead>
                     <tbody>
+                    @foreach($program as $programs)
                     <tr>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
+                        <td>{{ $programs->id_program }}</td>
+                        <td>{{ $programs->nama_program }}</td>
+                        <td>{{$programs->tahun }}</td>
+                        <td><a class="btn btn-primary" type ="submit" href="./masterprogram?idprogram={{$programs->id_program}}">Edit</a></td>
+                        <td>
+                            {{ Form::open(array('url' => 'masterprogram/' . $programs->id_program)) }}
+                            {{ Form::hidden('_method', 'DELETE') }}
+                            {{ Form::submit('Delete', array('onclick'=>"return confirm('Anda yakin akan menghapus data ?');", 'class' => 'btn btn-danger')) }}
+                            {{ Form::close() }}
+                        </td>
                     </tr>
-                    <tr>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                    </tr>
-                    <tr>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                    </tr>
+                    @endforeach
                     </tbody>
                 </table>
             </div>

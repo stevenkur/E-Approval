@@ -55,7 +55,11 @@
             </div>
             <div class="box-footer" align="right">
                 <button type="reset" class="btn btn-ok">Reset</button>
+                @if($flag)
+                <button type="submit" class="btn btn-primary">Update</button>
+                @else
                 <button type="submit" class="btn btn-primary">Submit</button>
+                @endif
             </div>
             </form>
         </div>

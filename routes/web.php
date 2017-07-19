@@ -82,3 +82,5 @@ Route::get('/newclaim', function () {
 Route::get('/listclaim', function () {
     return view('user/listclaim');
 });
+
+Route::resource('masterprogram', 'ProgramController');

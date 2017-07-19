@@ -62,7 +62,7 @@
                 <li><a href="#">Master User Distributor</a></li>
                 <li><a href="#">Master Distributor</a></li>
                 <li><a href="#">Master Marketing</a></li>
-                <li><a href="#">Master Program</a></li>
+                <li><a href="{{ route('masterprogram.index') }}">Master Program</a></li>
               </ul>
             </li>
             <li class="dropdown">
