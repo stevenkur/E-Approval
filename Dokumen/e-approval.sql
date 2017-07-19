@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 19, 2017 at 05:48 AM
+-- Generation Time: Jul 19, 2017 at 06:52 AM
 -- Server version: 10.1.8-MariaDB
 -- PHP Version: 5.6.14
 
@@ -90,6 +90,73 @@ CREATE TABLE `category_accesses` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `category_accesses`
+--
+
+INSERT INTO `category_accesses` (`id_access`, `id_user`, `id_category`, `id_role`, `auto_approved`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 2, 5, NULL, NULL),
+(2, 1, 2, 2, 5, NULL, NULL),
+(3, 1, 3, 2, 5, NULL, NULL),
+(4, 1, 4, 2, 5, NULL, NULL),
+(5, 2, 1, 3, 5, NULL, NULL),
+(6, 2, 2, 3, 5, NULL, NULL),
+(7, 2, 3, 3, 5, NULL, NULL),
+(8, 2, 4, 3, 5, NULL, NULL),
+(9, 3, 1, 4, 5, NULL, NULL),
+(10, 3, 2, 4, 5, NULL, NULL),
+(11, 3, 3, 4, 5, NULL, NULL),
+(12, 3, 4, 4, 5, NULL, NULL),
+(13, 3, 5, 4, 5, NULL, NULL),
+(14, 3, 6, 4, 5, NULL, NULL),
+(15, 4, 1, 5, 5, NULL, NULL),
+(16, 4, 2, 5, 5, NULL, NULL),
+(17, 4, 3, 5, 5, NULL, NULL),
+(18, 4, 5, 5, 5, NULL, NULL),
+(19, 4, 6, 5, 5, NULL, NULL),
+(20, 5, 3, 6, 5, NULL, NULL),
+(21, 6, 3, 7, 5, NULL, NULL),
+(22, 7, 1, 8, 5, NULL, NULL),
+(23, 7, 6, 8, 5, NULL, NULL),
+(24, 8, 4, 9, 5, NULL, NULL),
+(25, 9, 1, 10, 5, NULL, NULL),
+(26, 9, 6, 10, 5, NULL, NULL),
+(27, 9, 1, 11, 5, NULL, NULL),
+(28, 9, 6, 11, 5, NULL, NULL),
+(29, 10, 1, 10, 5, NULL, NULL),
+(30, 10, 6, 10, 5, NULL, NULL),
+(31, 11, 2, 12, 5, NULL, NULL),
+(32, 11, 5, 12, 5, NULL, NULL),
+(33, 11, 2, 11, 5, NULL, NULL),
+(34, 11, 5, 11, 5, NULL, NULL),
+(35, 12, 2, 12, 5, NULL, NULL),
+(36, 12, 5, 12, 5, NULL, NULL),
+(37, 13, 1, 13, 5, NULL, NULL),
+(38, 13, 2, 13, 5, NULL, NULL),
+(39, 13, 5, 13, 5, NULL, NULL),
+(40, 13, 6, 13, 5, NULL, NULL),
+(41, 14, 4, 14, 5, NULL, NULL),
+(42, 15, 1, 15, 5, NULL, NULL),
+(43, 15, 2, 15, 5, NULL, NULL),
+(44, 15, 3, 15, 5, NULL, NULL),
+(45, 15, 5, 15, 5, NULL, NULL),
+(46, 15, 6, 15, 5, NULL, NULL),
+(47, 16, 1, 16, 5, NULL, NULL),
+(48, 16, 2, 16, 5, NULL, NULL),
+(49, 16, 3, 16, 5, NULL, NULL),
+(50, 16, 5, 16, 5, NULL, NULL),
+(51, 16, 6, 16, 5, NULL, NULL),
+(52, 17, 1, 17, 5, NULL, NULL),
+(53, 17, 2, 17, 5, NULL, NULL),
+(54, 17, 3, 17, 5, NULL, NULL),
+(55, 17, 5, 17, 5, NULL, NULL),
+(56, 17, 6, 17, 5, NULL, NULL),
+(57, 18, 1, 18, 5, NULL, NULL),
+(58, 18, 2, 18, 5, NULL, NULL),
+(59, 18, 3, 18, 5, NULL, NULL),
+(60, 18, 5, 18, 5, NULL, NULL),
+(61, 18, 6, 18, 5, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -267,6 +334,14 @@ CREATE TABLE `marketings` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `marketings`
+--
+
+INSERT INTO `marketings` (`id_marketing`, `id_dist`, `id_program`, `entitlement`, `maxclaim_date`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 1000000, '2017-08-11', NULL, NULL),
+(2, 1, 2, 500000, '2017-08-25', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -648,7 +723,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `category_accesses`
 --
 ALTER TABLE `category_accesses`
-  MODIFY `id_access` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id_access` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 --
 -- AUTO_INCREMENT for table `category_details`
 --
@@ -688,7 +763,7 @@ ALTER TABLE `log_claims`
 -- AUTO_INCREMENT for table `marketings`
 --
 ALTER TABLE `marketings`
-  MODIFY `id_marketing` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id_marketing` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `migrations`
 --
