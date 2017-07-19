@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 18, 2017 at 12:31 PM
+-- Generation Time: Jul 19, 2017 at 04:29 AM
 -- Server version: 10.1.8-MariaDB
 -- PHP Version: 5.6.14
 
@@ -100,10 +100,20 @@ CREATE TABLE `category_accesses` (
 CREATE TABLE `category_details` (
   `id_categorydetail` int(10) UNSIGNED NOT NULL,
   `nama_category` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `category_type` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `category_type` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `category_details`
+--
+
+INSERT INTO `category_details` (`id_categorydetail`, `nama_category`, `category_type`, `created_at`, `updated_at`) VALUES
+(1, 'Marcom', 'HM1 - Build the Base ', NULL, NULL),
+(2, 'Marcom', 'HM2 - LED Lamps Leadership', NULL, NULL),
+(3, 'Marcom', 'HM3 - ProShop', NULL, NULL),
+(4, 'BDF', 'HM4 - MR Growth', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -526,7 +536,7 @@ ALTER TABLE `category_accesses`
 -- AUTO_INCREMENT for table `category_details`
 --
 ALTER TABLE `category_details`
-  MODIFY `id_categorydetail` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id_categorydetail` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `claim_attachments`
 --
@@ -551,7 +561,7 @@ ALTER TABLE `flows`
 -- AUTO_INCREMENT for table `holidays`
 --
 ALTER TABLE `holidays`
-  MODIFY `id_holiday` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_holiday` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `log_claims`
 --

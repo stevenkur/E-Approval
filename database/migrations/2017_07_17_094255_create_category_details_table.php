@@ -16,7 +16,7 @@ class CreateCategoryDetailsTable extends Migration
         Schema::create('category_details', function (Blueprint $table) {
             $table->increments('id_categorydetail')->unique();
             $table->string('nama_category', 30);
-            $table->string('category_type', 30);
+            $table->string('category_type', 50);
             
            
             $table->timestamps();
