@@ -7,20 +7,20 @@
     <div class="row">
     <div class="col-md-4">
         <div class="box box-primary">
-            <form action="#" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewclaim">
+            <form action="#" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewrole">
             {{csrf_field()}}
             <div class="box-header with-border">
-                <h3 class="box-title">Add Role</h3>
+                <h3 class="box-title">Create Role</h3>
             </div>
             <div class="box-body">
                 <div class="form-group">
                     <label class="col-md-3 control-label">Role</label>
                     <div class="col-md-9">
-                        <input type="text" class="form-control" id="email" name="email" placeholder="" required="required" style="text-align: right;" />
+                        <input type="text" class="form-control" id="role" name="role" placeholder="" required="required" style="text-align: right;" />
                     </div>
                 </div>
             </div>
-            <div class="box-footer" align="left">
+            <div class="box-footer" align="right">
                 <button type="reset" class="btn btn-ok">Reset</button>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
@@ -30,12 +30,12 @@
 
     <div class="col-md-8">
         <div class="box box-primary">
-            <div class="box-header">
+            <div class="box-header with-border">
                 <h3 class="box-title">List Role</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                <table id="holiday" class="table table-bordered table-striped">
+                <table id="table" class="table table-bordered table-striped">
                     <thead>
                     <tr>
                         <th>ID</th>
@@ -93,7 +93,7 @@
 <!-- page script -->
 <script>
 $(function() {
-    $('#holiday').DataTable({
+    $('#table').DataTable({
       'paging'      : true,
       'lengthChange': true,
       'searching'   : true,

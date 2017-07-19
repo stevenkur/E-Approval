@@ -5,7 +5,7 @@
     <!-- Main content -->
     <section class="content">
         <div class="box box-primary">
-            <div class="box-header">
+            <div class="box-header with-border">
                 <h3 class="box-title">List Claim</h3>
             </div>
             <!-- /.box-header -->

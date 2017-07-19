@@ -1,11 +1,19 @@
 @extends('layouts.backend-admin')
 
 @section('content')
+    <?php $i=1; ?>
+    <script type="text/javascript">
+        $(document).on("click", '.addrow', function (){            
+            newrow = '<div class="form-group"><label class="col-md-2 control-label">Flow Level <?php echo $i; ?></label><div class="col-md-4"><select class="form-control" id="role" name="role"><option value="#">-- Please Choose Role --</option><option value="1">Role A</option><option value="2">Role B</option><option value="3">Role C</option></select></div></div><?php $i++; ?>';  
+
+            $(this).parent().before(newrow);
+        });
+    </script>
 
     <!-- Main content -->
     <section class="content">
     <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-12">
         <div class="box box-primary">
             <form action="#" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewclaim">
             {{csrf_field()}}
@@ -14,31 +22,33 @@
             </div>
             <div class="box-body">
                 <div class="form-group">
-                    <label class="col-md-3 control-label">Flow Code</label>
-                    <div class="col-md-9">
+                    <label class="col-md-2 control-label">Flow Code</label>
+                    <div class="col-md-4">
                         <input type="text" class="form-control" id="email" name="email" placeholder="" required="required" style="text-align: right;" />
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-md-3 control-label">Flow Name</label>
-                    <div class="col-md-9">
+                    <label class="col-md-2 control-label">Flow Name</label>
+                    <div class="col-md-4">
                         <input type="text" class="form-control" id="email" name="email" placeholder="" required="required" style="text-align: right;" />
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-md-3 control-label">Role</label>
-                    <div class="col-md-9">
-                        <input type="text" class="form-control" id="email" name="email" placeholder="" required="required" style="text-align: right;" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-3 control-label">Flow Level</label>
-                    <div class="col-md-9">
-                        <input type="text" class="form-control" id="email" name="email" placeholder="" required="required" style="text-align: right;" />
-                    </div>
-                </div>
+                    <label class="col-md-2 control-label">Flow Level <?php echo $i; ?></label>                    
+                    <div class="col-md-4">
+                        <select class="form-control" id="role" name="role">
+                            <option value="#">-- Please Choose Role --</option>
+                            <option value="1">Role A</option>
+                            <option value="2">Role B</option>
+                            <option value="3">Role C</option>
+                        </select>
+                    </div>          
+                </div>         
+                <div class="col-md-12" align="center">
+                    <button class="btn btn-primary addrow">Add Level</button>
+                </div> 
             </div>
-            <div class="box-footer" align="left">
+            <div class="box-footer" align="right">
                 <button type="reset" class="btn btn-ok">Reset</button>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
@@ -46,27 +56,30 @@
         </div>
     </div>
 
-    <div class="col-md-8">
+    <div class="col-md-12">
         <div class="box box-primary">
-            <div class="box-header">
+            <div class="box-header with-border">
                 <h3 class="box-title">List Flow</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                <table id="holiday" class="table table-bordered table-striped">
+                <table id="table" class="table table-bordered table-striped">
                     <thead>
                     <tr>
                         <th>ID</th>
                         <th>Flow Code</th>
                         <th>Flow Name</th>
-                        <th>Role</th>
                         <th>Flow Level</th>
+                        <th>Role</th>
                         <th>Edit</th>
                         <th>Delete</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
+                        <td>tes</td>
+                        <td>tes</td>
+                        <td>tes</td>
                         <td>tes</td>
                         <td>tes</td>
                         <td>tes</td>
@@ -120,7 +133,7 @@
 <!-- page script -->
 <script>
 $(function() {
-    $('#holiday').DataTable({
+    $('#table').DataTable({
       'paging'      : true,
       'lengthChange': true,
       'searching'   : true,

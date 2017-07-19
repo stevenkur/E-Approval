@@ -5,40 +5,50 @@
     <!-- Main content -->
     <section class="content">
     <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
         <div class="box box-primary">
-            <form action="#" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formaddprogram">
+            <form action="#" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewmarketing">
             {{csrf_field()}}
             <div class="box-header with-border">
                 <h3 class="box-title">Add Marketing</h3>
             </div>
             <div class="box-body">
                 <div class="form-group">
-                    <label class="col-md-3 control-label">Distributor ID</label>
-                    <div class="col-md-9">
-                        <input type="text" class="form-control" id="program" name="program" placeholder="" required="required" style="text-align: right;" />
+                    <label class="col-md-4 control-label">Distributor</label>
+                    <div class="col-md-8">
+                        <select class="form-control" id="distributor" name="distributor">
+                            <option value="#">-- Please Choose One --</option>
+                            <option value="1">Distributor A</option>
+                            <option value="2">Distributor B</option>
+                            <option value="3">Distributor C</option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-md-3 control-label">Program Name</label>
-                    <div class="col-md-9">
-                        <input type="text" class="form-control" id="program" name="program" placeholder="" required="required" style="text-align: right;" />
+                    <label class="col-md-4 control-label">Program Name</label>
+                    <div class="col-md-8">
+                        <select class="form-control" id="program" name="program">
+                            <option value="#">-- Please Choose One --</option>
+                            <option value="1">Program A</option>
+                            <option value="2">Program B</option>
+                            <option value="3">Program C</option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-md-3 control-label">Entitlement</label>
-                    <div class="col-md-9">
-                        <input type="text" class="form-control" id="program" name="program" placeholder="" required="required" style="text-align: right;" />
+                    <label class="col-md-4 control-label">Entitlement</label>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" id="entitlement" name="entitlement" placeholder="" required="required" style="text-align: right;" />
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-md-3 control-label">Max Claim Date</label>
-                    <div class="col-md-9">
-                        <input type="text" class="form-control" id="program" name="program" placeholder="" required="required" style="text-align: right;" />
+                    <label class="col-md-4 control-label">Max Claim Date</label>
+                    <div class="col-md-8">
+                        <input type="date" class="form-control" id="maxclaim" name="maxclaim" placeholder="" required="required" style="text-align: right;" />
                     </div>
                 </div>
             </div>
-            <div class="box-footer" align="left">
+            <div class="box-footer" align="right">
                 <button type="reset" class="btn btn-ok">Reset</button>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
@@ -46,14 +56,14 @@
         </div>
     </div>
 
-    <div class="col-md-8">
+    <div class="col-md-12">
         <div class="box box-primary">
-            <div class="box-header">
+            <div class="box-header with-border">
                 <h3 class="box-title">List Marketing</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                <table id="holiday" class="table table-bordered table-striped">
+                <table id="table" class="table table-bordered table-striped">
                     <thead>
                     <tr>
                         <th>ID</th>
@@ -123,7 +133,7 @@
 <!-- page script -->
 <script>
 $(function() {
-    $('#holiday').DataTable({
+    $('#table').DataTable({
       'paging'      : true,
       'lengthChange': true,
       'searching'   : true,

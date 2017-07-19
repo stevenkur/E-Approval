@@ -5,28 +5,33 @@
     <!-- Main content -->
     <section class="content">
     <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-5">
         <div class="box box-primary">
-            <form action="#" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewclaim">
+            <form action="#" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewcategorydetail">
             {{csrf_field()}}
             <div class="box-header with-border">
                 <h3 class="box-title">Add Category</h3>
             </div>
             <div class="box-body">
                 <div class="form-group">
-                    <label class="col-md-3 control-label">Category Name</label>
-                    <div class="col-md-9">
-                        <input type="text" class="form-control" id="email" name="email" placeholder="" required="required" style="text-align: right;" />
+                    <label class="col-md-4 control-label">Category Name</label>
+                    <div class="col-md-8">
+                        <select class="form-control" id="category" name="category">
+                            <option value="#">-- Please Choose One --</option>
+                            <option value="1">Category A</option>
+                            <option value="2">Category B</option>
+                            <option value="3">Category C</option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-md-3 control-label">Category Type</label>
-                    <div class="col-md-9">
-                        <input type="text" class="form-control" id="email" name="email" placeholder="" required="required" style="text-align: right;" />
+                    <label class="col-md-4 control-label">Category Type</label>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" id="categorytype" name="categorytype" placeholder="" required="required" style="text-align: right;" />
                     </div>
                 </div>
             </div>
-            <div class="box-footer" align="left">
+            <div class="box-footer" align="right">
                 <button type="reset" class="btn btn-ok">Reset</button>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
@@ -34,14 +39,14 @@
         </div>
     </div>
 
-    <div class="col-md-8">
+    <div class="col-md-7">
         <div class="box box-primary">
-            <div class="box-header">
+            <div class="box-header with-border">
                 <h3 class="box-title">List Category Detail</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                <table id="holiday" class="table table-bordered table-striped">
+                <table id="table" class="table table-bordered table-striped">
                     <thead>
                     <tr>
                         <th>ID</th>
@@ -57,14 +62,17 @@
                         <td>tes</td>
                         <td>tes</td>
                         <td>tes</td>
-                    </tr>
-                    <tr>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
                         <td>tes</td>
                     </tr>
                     <tr>
+                        <td>tes</td>
+                        <td>tes</td>
+                        <td>tes</td>
+                        <td>tes</td>
+                        <td>tes</td>
+                    </tr>
+                    <tr>
+                        <td>tes</td>
                         <td>tes</td>
                         <td>tes</td>
                         <td>tes</td>
@@ -100,7 +108,7 @@
 <!-- page script -->
 <script>
 $(function() {
-    $('#holiday').DataTable({
+    $('#table').DataTable({
       'paging'      : true,
       'lengthChange': true,
       'searching'   : true,

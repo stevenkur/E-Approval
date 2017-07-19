@@ -4,102 +4,62 @@
     <script type="text/javascript">
         var i=2;
         $(document).on("click", '.addrow', function (){            
-            newrow = '<div class="form-group"><label class="col-md-4 control-label">Email </label><div class="col-md-8"><input type="text" class="form-control" id="secondemail" name="secondemail" placeholder="" required="required" style="text-align: right;" /></div></div>';                    
-            $(this).parent().parent().after(newrow);
+            newrow = '<div class="form-group"><label class="col-md-4 control-label">Email *</label><div class="col-md-8"><input type="text" class="form-control" id="email" name="email" placeholder="" required="required" style="text-align: right;" /></div>   </div>';                    
+            $(this).parent().before(newrow);
             i++;      
         });
     </script>
 
     <!-- Main content -->
     <section class="content">
+    <div class="row">
+    <div class="col-md-6">
         <div class="box box-primary">
-            <form action="#" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewclaim">
+            <form action="#" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewaccount">
             {{csrf_field()}}
             <div class="box-header with-border">
                 <h3 class="box-title">Create Account</h3>
             </div>
             <div class="box-body">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="col-md-4 control-label">Email</label>
-                        <div class="col-md-6">
-                            <input type="text" class="form-control" id="email" name="email" placeholder="" required="required" style="text-align: right;" />
-                        </div>
-                        <div class="col-md-2">
-                            <button class="btn btn-primary addrow">Add</button>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-4 control-label">Name</label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control" id="name" name="name" placeholder="" required="required" style="text-align: right;" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-4 control-label">Password</label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control" id="password" name="password" placeholder="" required="required" style="text-align: right;" />
-                        </div>
-                    </div>
-                    <!-- <div class="form-group">
-                        <label class="col-md-4 control-label">2nd Email</label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control" id="secondemail" name="secondemail" placeholder="" required="required" style="text-align: right;" />
-                        </div>
-                    </div> -->
-                    <!-- <div class="form-group">
-                        <label class="col-md-4 control-label">Distributor ID</label>
-                        <div class="col-md-8">
-                            <select class="form-control" name="distributorid" id="distributorid">
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                            </select>
-                        </div>
-                    </div> -->
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="col-md-4 control-label">Category</label>
-                        <div class="col-md-8">
-                        <div class="checkbox">
-                            <label><input type="checkbox" id="checkboxx" value="1">Marcom
-                                <div id="autoapprove" style="display:none;">Auto Approved Day</div>
-                            </label><br>
-                            <label><input type="checkbox" id="checkboxx" value="2">RDP
-                            </label><br>
-                            <label><input type="checkbox" id="checkboxx" value="3">BDF
-                            </label><br>
-                        </div>
-                        </div>
-                    </div>
-                    <div class="form-group required">
-                        <label class="col-md-4 control-label">Role</label>
-                        <div class="col-md-8">
-                            <select class="form-control" name="role" id="role">
-                                <option value="1">Best Partner</option>
-                                <option value="2">DM</option>
-                                <option value="3">blabla</option>
-                            </select>
-                        </div>
+                <div class="form-group">
+                    <label class="col-md-4 control-label">Primary Email</label>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" id="email" name="email" placeholder="" required="required" style="text-align: right;" />
                     </div>
                 </div>
-
+                <div class="form-group">
+                    <label class="col-md-4 control-label">Name</label>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" id="name" name="name" placeholder="" required="required" style="text-align: right;" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-4 control-label">Password</label>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" id="password" name="password" placeholder="" required="required" style="text-align: right;" />
+                    </div>
+                </div>
+                <div class="col-md-12" align="center">
+                    <button class="btn btn-primary addrow">Add Email CC</button>
+                </div> 
             </div>
+
             <div class="box-footer" align="right">
                 <button type="reset" class="btn btn-ok">Reset</button>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
             </form>
         </div>
+    </div>
 
+    <div class="col-md-12">
         <div class="box box-primary">
-            <div class="box-header">
+            <div class="box-header with-border">
                 <h3 class="box-title">List Account</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                <table id="account" class="table table-bordered table-striped">
+                <table id="table" class="table table-bordered table-striped">
                     <thead>
                     <tr>
                         <th>Email</th>
@@ -107,7 +67,8 @@
                         <th>Password</th>
                         <th>Role</th>
                         <th>Distributor ID</th>
-                        <th>Detail</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -118,16 +79,19 @@
                         <td>tes</td>
                         <td>tes</td>
                         <td>tes</td>
-                    </tr>
-                    <tr>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
                         <td>tes</td>
                     </tr>
                     <tr>
+                        <td>tes</td>
+                        <td>tes</td>
+                        <td>tes</td>
+                        <td>tes</td>
+                        <td>tes</td>
+                        <td>tes</td>
+                        <td>tes</td>
+                    </tr>
+                    <tr>
+                        <td>tes</td>
                         <td>tes</td>
                         <td>tes</td>
                         <td>tes</td>
@@ -140,6 +104,8 @@
             </div>
             <!-- /.box-body -->
         </div>
+    </div>
+    </div>
     </section>
     <!-- /.content -->
 
@@ -163,7 +129,7 @@
 <!-- page script -->
 <script>
 $(function() {
-    $('#account').DataTable({
+    $('#table').DataTable({
       'paging'      : true,
       'lengthChange': true,
       'searching'   : true,
@@ -172,5 +138,4 @@ $(function() {
       'autoWidth'   : true
     })
   });
-$("#checkboxx").is(':checked') ? $("#autoapprove").show() : $("#autoapprove").hide();
 </script>

@@ -49,7 +49,7 @@
                     <div class="form-group required">
                         <label class="col-md-4 control-label">Program Name</label>
                         <div class="col-md-8">
-                            <select class="form-control" name="programname" id="programname">
+                            <select class="form-control" id="programname" name="programname">
                                 <option value="#">-- Please Choose One --</option>
                                 <option value="1">Program A</option>
                                 <option value="2">Program B</option>
@@ -60,7 +60,7 @@
                     <div class="form-group required">
                         <label class="col-md-4 control-label">Program for Year</label>
                         <div class="col-md-8">
-                            <select class="form-control" name="programyear" id="programyear">
+                            <select class="form-control" id="programyear" name="programyear">
                                 <option value="#">-- Please Choose One --</option>
                                 <option value="2016">2016</option>
                                 <option value="2017">2017</option>
@@ -72,7 +72,7 @@
                     <div class="form-group required">
                         <label class="col-md-4 control-label">Claim Type</label>
                         <div class="col-md-8">
-                            <select class="form-control" name="claimtype" id="claimtype" disabled>
+                            <select class="form-control" id="claimtype" name="claimtype" disabled>
                                 <option value="Marcom">Marcom</option>
                                 <option value="RDP">RDP</option>
                                 <option value="BDF">BDF</option>

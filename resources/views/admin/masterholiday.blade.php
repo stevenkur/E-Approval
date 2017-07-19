@@ -16,11 +16,11 @@
                 <div class="form-group">
                     <label class="col-md-3 control-label">Date</label>
                     <div class="col-md-9">
-                        <input type="date" class="form-control" id="email" name="email" placeholder="" required="required" style="text-align: right;" />
+                        <input type="date" class="form-control" id="date" name="date" placeholder="" required="required" style="text-align: right;" />
                     </div>
                 </div>
             </div>
-            <div class="box-footer" align="left">
+            <div class="box-footer" align="right">
                 <button type="reset" class="btn btn-ok">Reset</button>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
@@ -30,12 +30,12 @@
 
     <div class="col-md-8">
         <div class="box box-primary">
-            <div class="box-header">
+            <div class="box-header with-border">
                 <h3 class="box-title">List Holiday</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                <table id="holiday" class="table table-bordered table-striped">
+                <table id="table" class="table table-bordered table-striped">
                     <thead>
                     <tr>
                         <th>Day</th>
@@ -89,7 +89,7 @@
 <!-- page script -->
 <script>
 $(function() {
-    $('#holiday').DataTable({
+    $('#table').DataTable({
       'paging'      : true,
       'lengthChange': true,
       'searching'   : true,
