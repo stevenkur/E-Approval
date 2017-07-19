@@ -18,15 +18,15 @@ class CreateUsersTable extends Migration
             $table->string('nama_user', 50);
             $table->string('email', 100);
             $table->string('password', 255);
-            $table->string('email1', 50);
-            $table->string('email2', 50);
-            $table->string('email3', 50);
-            $table->string('email4', 50);
-            $table->string('email5', 50);
-            $table->string('email6', 50);
-            $table->string('email7', 50);
-            $table->string('email8', 50);
-            $table->string('email9', 50);
+            $table->string('email1', 50)->nullable();
+            $table->string('email2', 50)->nullable();
+            $table->string('email3', 50)->nullable();
+            $table->string('email4', 50)->nullable();
+            $table->string('email5', 50)->nullable();
+            $table->string('email6', 50)->nullable();
+            $table->string('email7', 50)->nullable();
+            $table->string('email8', 50)->nullable();
+            $table->string('email9', 50)->nullable();
             
             $table->rememberToken();
             $table->timestamps();

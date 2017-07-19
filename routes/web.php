@@ -11,6 +11,8 @@
 |
 */
 
+Auth::routes();
+
 Route::get('/', function () {
     return view('auth/login');
 });
@@ -67,9 +69,7 @@ Route::get('/masterprogram', function () {
     return view('admin/masterprogram');
 });
 
-Route::get('/index', function () {
-    return view('user/index');
-});
+Route::get('index', 'IndexController@index');
 
 Route::get('/profile', function () {
     return view('user/profile');
@@ -82,8 +82,3 @@ Route::get('/newclaim', function () {
 Route::get('/listclaim', function () {
     return view('user/listclaim');
 });
-
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
