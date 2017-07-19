@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 19, 2017 at 06:52 AM
+-- Generation Time: Jul 19, 2017 at 09:49 AM
 -- Server version: 10.1.8-MariaDB
 -- PHP Version: 5.6.14
 
@@ -122,14 +122,10 @@ INSERT INTO `category_accesses` (`id_access`, `id_user`, `id_category`, `id_role
 (24, 8, 4, 9, 5, NULL, NULL),
 (25, 9, 1, 10, 5, NULL, NULL),
 (26, 9, 6, 10, 5, NULL, NULL),
-(27, 9, 1, 11, 5, NULL, NULL),
-(28, 9, 6, 11, 5, NULL, NULL),
-(29, 10, 1, 10, 5, NULL, NULL),
-(30, 10, 6, 10, 5, NULL, NULL),
-(31, 11, 2, 12, 5, NULL, NULL),
-(32, 11, 5, 12, 5, NULL, NULL),
-(33, 11, 2, 11, 5, NULL, NULL),
-(34, 11, 5, 11, 5, NULL, NULL),
+(29, 10, 1, 11, 5, NULL, NULL),
+(30, 10, 6, 11, 5, NULL, NULL),
+(33, 11, 2, 20, 5, NULL, NULL),
+(34, 11, 5, 20, 5, NULL, NULL),
 (35, 12, 2, 12, 5, NULL, NULL),
 (36, 12, 5, 12, 5, NULL, NULL),
 (37, 13, 1, 13, 5, NULL, NULL),
@@ -281,6 +277,26 @@ CREATE TABLE `flows` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `flows`
+--
+
+INSERT INTO `flows` (`id_flow`, `kode_flow`, `nama_flow`, `id_role`, `level_flow`, `created_at`, `updated_at`) VALUES
+(1, 'MARCOM-U5M', 'Marcom di bawah 5 juta', 2, 1, NULL, NULL),
+(2, 'MARCOM-U5M', 'Marcom di bawah 5 juta', 3, 2, NULL, NULL),
+(3, 'MARCOM-U5M', 'Marcom di bawah 5 juta', 5, 3, NULL, NULL),
+(4, 'MARCOM-U5M', 'Marcom di bawah 5 juta', 8, 4, NULL, NULL),
+(5, 'MARCOM-U5M', 'Marcom di bawah 5 juta', 10, 5, NULL, NULL),
+(6, 'MARCOM-U5M', 'Marcom di bawah 5 juta', 9, 6, NULL, NULL),
+(7, 'MARCOM-U5M', 'Marcom di bawah 5 juta', 13, 7, NULL, NULL),
+(8, 'MARCOM-U5M', 'Marcom di bawah 5 juta', 15, 8, NULL, NULL),
+(9, 'MARCOM-U5M', 'Marcom di bawah 5 juta', 16, 9, NULL, NULL),
+(10, 'Natura-1', 'Natura Flow 1', 2, 1, NULL, NULL),
+(11, 'Natura-1', 'Natura Flow 1', 3, 2, NULL, NULL),
+(12, 'Natura-1', 'Natura Flow 1', 4, 3, NULL, NULL),
+(13, 'Natura-1', 'Natura Flow 1', 9, 4, NULL, NULL),
+(14, 'Natura-1', 'Natura Flow 1', 14, 5, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -440,14 +456,15 @@ INSERT INTO `roles` (`id_role`, `nama_role`, `created_at`, `updated_at`) VALUES
 (8, 'Admin Marcom', NULL, NULL),
 (9, 'Admin Natura', NULL, NULL),
 (10, 'Marcom Manager', NULL, NULL),
-(11, 'B2C', NULL, NULL),
+(11, 'Marcom Manager, B2C', NULL, NULL),
 (12, 'Trade Consumer Manager', NULL, NULL),
 (13, 'Marketing Manager', NULL, NULL),
 (14, 'Admin SCM', NULL, NULL),
 (15, 'Admin Finance', NULL, NULL),
 (16, 'Controller', NULL, NULL),
 (17, 'CFO', NULL, NULL),
-(18, 'CEO', NULL, NULL);
+(18, 'CEO', NULL, NULL),
+(20, 'Trade Consumer, B2C', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -479,25 +496,25 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id_user`, `nama_user`, `email`, `password`, `email1`, `email2`, `email3`, `email4`, `email5`, `email6`, `email7`, `email8`, `email9`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Distributor A', 'distributor@philips.com', 'distributor@philips.com', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
-(2, 'mariootto poluan', 'mariootto.poluan@philips.com', 'mariootto.poluan@philips.com', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
-(3, 'Heri Dono', 'heri.dono1@philips.com', 'heri.dono1@philips.com', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
-(4, 'Admin Marketing', 'admin.marketing@philips.com', 'admin.marketing@philips.com', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
-(5, 'Ahmad Saiful', 'ahmad.saiful@philips.com', 'ahmad.saiful@philips.com', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
-(6, 'Dedy B.Pramono', 'dedy.b.pramono@philips.com', 'dedy.b.pramono@philips.com', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
-(7, 'Setia Adi Nugraha', 'setia.adi.nugraha@philips.com', 'setia.adi.nugraha@philips.com', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
-(8, 'Puja Kusuma', 'Puja.Kusuma@philips.com', 'Puja.Kusuma@philips.com', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
-(9, 'Alberta Pietutami', 'alberta.pietutami@philips.com', 'alberta.pietutami@philips.com', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
-(10, 'Astrid Ramli', 'Astrid.Ramli@philips.com', 'Astrid.Ramli@philips.com', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
-(11, 'Herumono Saputro', 'Herumono.Saputro@philips.com', 'Herumono.Saputro@philips.com', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
-(12, 'Edi Marsongko', 'edi.marsongko1@philips.com', 'edi.marsongko1@philips.com', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
-(13, 'Sauhong Lim', 'sauhong.lim@philips.com', 'sauhong.lim@philips.com', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
-(14, 'Annisa Arrofah', 'annisa.arrofah@philips.com', 'annisa.arrofah@philips.com', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
-(15, 'Oktavia richa', 'oktavia.richa@philips.com', 'oktavia.richa@philips.com', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
-(16, 'Luella Luhukay', 'luella.luhukay@philips.com', 'luella.luhukay@philips.com', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
-(17, 'Riste Milev', 'riste.milev@philips.com', 'riste.milev@philips.com', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
-(18, 'Rami Hajjar', 'rami.hajjar@philips.com', 'rami.hajjar@philips.com', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
-(19, 'Administrator', 'Administrator', 'Administrator', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL);
+(1, 'Distributor A', 'distributor@philips.com', '62959c7041947dbb114dba4e12d74669', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
+(2, 'mariootto poluan', 'mariootto.poluan@philips.com', 'ea6974be86d52240e12db44819b5344c', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
+(3, 'Heri Dono', 'heri.dono1@philips.com', 'c8184539461c19f227b099dcfa0e3145', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
+(4, 'Admin Marketing', 'admin.marketing@philips.com', '6c8f14f76cb7777b1f171a9139fb8d92', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
+(5, 'Ahmad Saiful', 'ahmad.saiful@philips.com', '24fed7d4d6684307a98ff9dcdfb877b9', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
+(6, 'Dedy B.Pramono', 'dedy.b.pramono@philips.com', 'c08c0d79f45aac6e85e7b6f843dd2090', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
+(7, 'Setia Adi Nugraha', 'setia.adi.nugraha@philips.com', 'dc3f0b9aea6354d9cbbcba41328e90dc', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
+(8, 'Puja Kusuma', 'Puja.Kusuma@philips.com', '8fe2ce657ccde28e1c1a989bc4861cb7', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
+(9, 'Alberta Pietutami', 'alberta.pietutami@philips.com', '73e0cd17c69eebea257940dccc29b328', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
+(10, 'Astrid Ramli', 'Astrid.Ramli@philips.com', '4c567062e7800944f8ddcb1ab8c49517', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
+(11, 'Herumono Saputro', 'Herumono.Saputro@philips.com', 'b72a2973bd0c90f021359a69e3bddadd', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
+(12, 'Edi Marsongko', 'edi.marsongko1@philips.com', '8f84267981e3a673067fa6e69d6403a8', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
+(13, 'Sauhong Lim', 'sauhong.lim@philips.com', '1c1a90f4aa722a2706f4ee9fcf7a199d', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
+(14, 'Annisa Arrofah', 'annisa.arrofah@philips.com', '4bfe532174f5a6892a44d226b1b9a265', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
+(15, 'Oktavia richa', 'oktavia.richa@philips.com', '8e30a6dc9aedf766176e3ee81c4614bf', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
+(16, 'Luella Luhukay', 'luella.luhukay@philips.com', 'c6d3a24f43029753e6a4282f47396124', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
+(17, 'Riste Milev', 'riste.milev@philips.com', 'b9323347bbfb06fc8a93a6e5fad345a4', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
+(18, 'Rami Hajjar', 'rami.hajjar@philips.com', '7190450dd391c8d4f3d568a9601eb8bd', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
+(19, 'Administrator', 'Administrator', '7b7bc2512ee1fedcd76bdc68926d4f7b', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -748,7 +765,7 @@ ALTER TABLE `distributors`
 -- AUTO_INCREMENT for table `flows`
 --
 ALTER TABLE `flows`
-  MODIFY `id_flow` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id_flow` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `holidays`
 --
@@ -778,7 +795,7 @@ ALTER TABLE `programs`
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id_role` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id_role` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT for table `users`
 --
