@@ -34,10 +34,9 @@
                     <label class="col-md-4 control-label">User</label>
                     <div class="col-md-8">
                         <select class="form-control" id="user" name="user">
-                            <option value="#">-- Please Choose One --</option>
-                            <option value="1">User A</option>
-                            <option value="2">User B</option>
-                            <option value="3">User C</option>
+                            @foreach($user as $users)
+                            <option value="{{ $users->id_user }}" <?php if($flag&&$iduser==$users->id_user) echo 'selected'; ?> >{{ $users->nama_user }}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
@@ -45,10 +44,9 @@
                     <label class="col-md-4 control-label">Category</label>
                     <div class="col-md-8">
                         <select class="form-control" id="category" name="category">
-                            <option value="#">-- Please Choose One --</option>
-                            <option value="1">Category A</option>
-                            <option value="2">Category B</option>
-                            <option value="3">Category C</option>
+                            @foreach($category as $categories)
+                            <option value="{{ $categories->id_category }}" <?php if($flag&&$idcategory==$categories->id_category) echo 'selected'; ?> >{{ $categories->nama_category }}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
@@ -93,9 +91,9 @@
                     <thead>
                     <tr>
                         <th>ID Access</th>
-                        <th>ID User</th>
-                        <th>ID Category</th>
-                        <th>ID Role</th>
+                        <th>Nama User</th>
+                        <th>Nama Category</th>
+                        <th>Nama Role</th>
                         <th>Auto Approve Day</th>
                         <th>Edit</th>
                         <th>Delete</th>
@@ -105,9 +103,9 @@
                     @foreach($categoryaccess as $category_accesses)
                     <tr>
                         <td>{{ $category_accesses->id_access }}</td>
-                        <td>{{ $category_accesses->id_user }}</td>
-                        <td>{{ $category_accesses->id_role }}</td>
-                        <td>{{ $category_accesses->id_category }}</td>
+                        <td>{{ $category_accesses->nama_user }}</td>
+                        <td>{{ $category_accesses->nama_role }}</td>
+                        <td>{{ $category_accesses->nama_category }}</td>
                         <td>{{ $category_accesses->auto_approved }}</td>
                         
                         <td><a class="btn btn-primary" type ="submit" href="./mastercategoryaccess?idaccess={{$category_accesses->id_access}}">Edit</a></td>

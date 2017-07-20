@@ -20,7 +20,7 @@ class CategoryAccessController extends Controller
     public function index()
     {
         //
-        $categoryaccess=Category_access::all();
+        $categoryaccess=DB::select(DB::raw("SELECT A.id_access, A.id_user, B.nama_user, A.id_role, C.nama_role, A.id_category, D.nama_category, A.auto_approved FROM category_accesses A, users B, roles C, categories D WHERE A.id_user=B.id_user and A.id_role=C.id_role and A.id_category=D.id_category"));
         $category=Category::all();
         $role=Role::all();
         $user=User::all();

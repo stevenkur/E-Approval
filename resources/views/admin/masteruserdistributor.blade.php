@@ -82,8 +82,8 @@
                     <thead>
                     <tr>
                         <th>ID</th>
-                        <th>User ID</th>
-                        <th>Distributor ID</th>
+                        <th>Nama User</th>
+                        <th>Nama Distributor</th>
                         <th>Edit</th>
                         <th>Delete</th>
                     </tr>
