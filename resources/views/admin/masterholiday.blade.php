@@ -2,13 +2,33 @@
 
 @section('content')
 
+    <?php 
+        if(isset($_GET['idholiday'])){
+            foreach($holiday as $holidays){
+                if($holidays['id_holiday']==$_GET['idholiday']){
+                    $idholiday = $holidays['id_holiday'];
+                    $datename = $holidays['date_name'];
+                    $tanggallibur = $holidays['tanggal_libur'];
+                 
+                }
+            }
+            $flag=true;
+        }
+        else 
+            $flag=false;
+    ?>
     <!-- Main content -->
     <section class="content">
     <div class="row">
     <div class="col-md-4">
         <div class="box box-primary">
-            <form action="#" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewclaim">
-            {{csrf_field()}}
+            @if($flag)
+            <form action="{{ route('masterholiday.update', $idholiday) }}" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewholiday">
+            <input name="_method" type="hidden" value="PATCH">
+            @else 
+            <form action="{{ route('masterholiday.store') }}" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewholiday">
+            <input name="_method" type="hidden" value="POST"> 
+            @endif{{csrf_field()}}
             <div class="box-header with-border">
                 <h3 class="box-title">Add Holiday</h3>
             </div>
@@ -16,7 +36,7 @@
                 <div class="form-group">
                     <label class="col-md-3 control-label">Date</label>
                     <div class="col-md-9">
-                        <input type="date" class="form-control" id="date" name="date" placeholder="" required="required" style="text-align: right;" />
+                        <input type="date" class="form-control" id="date" name="date" placeholder="" required="required" />
                     </div>
                 </div>
             </div>
@@ -42,27 +62,29 @@
                 <table id="table" class="table table-bordered table-striped">
                     <thead>
                     <tr>
+                        <th>Id</th>
                         <th>Day</th>
                         <th>Date</th>
+                        <th>Delete</th>
                         <th>Delete</th>
                     </tr>
                     </thead>
                     <tbody>
+                    @foreach($holiday as $holidays)
                     <tr>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
+                        <td>{{ $holidays->id_holiday }}</td>
+                        <td>{{ $holidays->date_name }}</td>
+                        <td>{{ $holidays->tanggal_libur }}</td>
+                        
+                        <td><a class="btn btn-primary" type ="submit" href="./masterholiday?idholiday={{$holidays->id_holiday}}">Edit</a></td>
+                        <td>
+                            {{ Form::open(array('url' => 'masterholiday/' . $holidays->id_holiday)) }}
+                            {{ Form::hidden('_method', 'DELETE') }}
+                            {{ Form::submit('Delete', array('onclick'=>"return confirm('Anda yakin akan menghapus data ?');", 'class' => 'btn btn-danger')) }}
+                            {{ Form::close() }}
+                        </td>
                     </tr>
-                    <tr>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                    </tr>
-                    <tr>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                    </tr>
+                    @endforeach
                     </tbody>
                 </table>
             </div>

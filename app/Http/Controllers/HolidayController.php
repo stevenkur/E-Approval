@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
+use App\Holiday;
+use DB;
 
 class HolidayController extends Controller
 {
@@ -14,6 +16,9 @@ class HolidayController extends Controller
     public function index()
     {
         //
+        $holiday=Holiday::all();
+        return view('admin/masterholiday')->with('holiday',$holiday);
+
     }
 
     /**
@@ -35,6 +40,14 @@ class HolidayController extends Controller
     public function store(Request $request)
     {
         //
+        $holiday = new Holiday();     
+        $string = $request->date;
+        $date = DateTime::createFromFormat("Y-m-d", $string);            
+        $holiday->date_name = $date->format("d");        
+        $holiday->tanggal_libur = $request->date; 
+        $holiday->save();        
+        return redirect()->route('masterholiday.index')
+            ->with('alert-success', 'Data Berhasil Disimpan.');
     }
 
     /**

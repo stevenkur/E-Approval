@@ -2,6 +2,23 @@
 
 @section('content')
 
+    <?php 
+        
+        if(isset($_GET['idaccess'])){
+            foreach($categoryaccess as $category_accesses){
+                if($category_accesses['id_categorydetail']==$_GET['idaccess']){
+                    $idaccess = $category_accesses['id_access'];
+                    $idrole = $category_accesses['id_role'];
+                    $idcategory = $category_accesses['id_category'];
+                    $iduser = $category_accesses['id_user'];
+                 
+                }
+            }
+            $flag=true;
+        }
+        else 
+            $flag=false;
+    ?>
     <!-- Main content -->
     <section class="content">
     <div class="row">
@@ -85,33 +102,23 @@
                     </tr>
                     </thead>
                     <tbody>
+                    @foreach($categoryaccess as $category_accesses)
                     <tr>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
+                        <td>{{ $category_accesses->id_access }}</td>
+                        <td>{{ $category_accesses->id_user }}</td>
+                        <td>{{ $category_accesses->id_role }}</td>
+                        <td>{{ $category_accesses->id_category }}</td>
+                        <td>{{ $category_accesses->auto_approved }}</td>
+                        
+                        <td><a class="btn btn-primary" type ="submit" href="./mastercategoryaccess?idaccess={{$category_accesses->id_access}}">Edit</a></td>
+                        <td>
+                            {{ Form::open(array('url' => 'mastercategoryaccess/' . $category_accesses->id_access)) }}
+                            {{ Form::hidden('_method', 'DELETE') }}
+                            {{ Form::submit('Delete', array('onclick'=>"return confirm('Anda yakin akan menghapus data ?');", 'class' => 'btn btn-danger')) }}
+                            {{ Form::close() }}
+                        </td>
                     </tr>
-                    <tr>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                    </tr>
-                    <tr>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                    </tr>
+                    @endforeach
                     </tbody>
                 </table>
             </div>

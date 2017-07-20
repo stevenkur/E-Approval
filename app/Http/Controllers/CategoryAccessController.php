@@ -2,7 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
+use App\Category_access;
+use App\Role;
+use App\Category;
+use App\User;
+use DB;
 
 class CategoryAccessController extends Controller
 {
@@ -14,6 +20,12 @@ class CategoryAccessController extends Controller
     public function index()
     {
         //
+        $categoryaccess=Category_access::all();
+        $category=Category::all();
+        $role=Role::all();
+        $user=User::all();
+        return view('admin/mastercategoryaccess')->with('user', $user)->with('role', $role)->with('categoryaccess', $categoryaccess)->with('category',$category);
+
     }
 
     /**
@@ -35,6 +47,14 @@ class CategoryAccessController extends Controller
     public function store(Request $request)
     {
         //
+        $categoryaccess = new Category_access();        
+        $categoryaccess->id_user = $request->user;        
+        $categoryaccess->id_category = $request->category; 
+        $categoryaccess->id_role = $request->role;        
+        $categoryaccess->auto_approved = $request->approveday; 
+        $categoryaccess->save();        
+        return redirect()->route('mastercategoryaccess.index')
+            ->with('alert-success', 'Data Berhasil Disimpan.');
     }
 
     /**
@@ -69,6 +89,17 @@ class CategoryAccessController extends Controller
     public function update(Request $request, $id)
     {
         //
+         $categoryaccess = Category_access::where('id_access',$id); 
+         $categoryaccess->update([
+            'id_user' => $request->user,       
+            'id_category' => $request->category,
+            'id_role' => $request->role,        
+            'auto_approved' => $request->approveday 
+            
+         ]);
+        
+        return redirect()->route('mastercategoryaccess.index')
+            ->with('alert-success', 'Data Berhasil Diupdate.');
     }
 
     /**
@@ -80,5 +111,9 @@ class CategoryAccessController extends Controller
     public function destroy($id)
     {
         //
+         $categoryaccess = Category_access::where('id_access',$id)->delete(); 
+        
+        return redirect()->route('mastercategoryaccess.index')->with('alert-success', 'Data Berhasil Dihapus.');
+   
     }
 }
