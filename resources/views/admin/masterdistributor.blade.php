@@ -2,27 +2,53 @@
 
 @section('content')
 
+    <?php 
+        if(isset($_GET['id_dist'])){
+            foreach($distributor as $distributors){
+                if($distributors['id_dist']==$_GET['id_dist']){
+                    $id_dist = $distributors['id_dist'];
+                    $distributorid = $distributors['distributor_id'];
+                    $namadistributor = $distributors['nama_distributor'];
+                    $country = $distributors['country'];
+                }
+            }
+            $flag=true;
+        }
+        else 
+            $flag=false;
+    ?>
+
     <!-- Main content -->
     <section class="content">
     <div class="row">
     <div class="col-md-6">
         <div class="box box-primary">
-            <form action="#" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewdistributor">
+            @if($flag)
+            <form action="{{ route('masterdistributor.update', $id_dist) }}" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewdistributor">
+            <input name="_method" type="hidden" value="PATCH">
+            @else 
+            <form action="{{ route('masterdistributor.store') }}" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewdistributor">
+            <input name="_method" type="hidden" value="POST">
+            @endif
             {{csrf_field()}}
             <div class="box-header with-border">
+                @if($flag)
+                <h3 class="box-title">Update Distributor</h3>
+                @else
                 <h3 class="box-title">Add Distributor</h3>
+                @endif
             </div>
             <div class="box-body">
                 <div class="form-group">
                     <label class="col-md-4 control-label">Distributor ID</label>
                     <div class="col-md-8">
-                        <input type="text" class="form-control" id="distributorid" name="distributorid" placeholder="" required="required" style="text-align: right;" />
+                        <input type="text" class="form-control" id="distributorid" name="distributorid" placeholder="" required="required" <?php if($flag) echo 'value='."'$distributorid'"; ?>/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-4 control-label">Distributor Name</label>
                     <div class="col-md-8">
-                        <input type="text" class="form-control" id="distributorname" name="distributorname" placeholder="" required="required" style="text-align: right;" />
+                        <input type="text" class="form-control" id="distributorname" name="distributorname" placeholder="" required="required" <?php if($flag) echo 'value='."'$namadistributor'"; ?>/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -30,9 +56,11 @@
                     <div class="col-md-8">
                         <select class="form-control" id="country" name="country">
                             <option value="#">-- Please Choose One --</option>
-                            <option value="1">Indonesia</option>
-                            <option value="2">Singapura</option>
-                            <option value="3">Malaysia</option>
+                            <option value="Indonesia" <?php if($flag&& $country=='Indonesia') echo 'selected'; ?> >Indonesia</option>
+                            <option value="Singapore" <?php if($flag&& $country=='Singapore') echo 'selected'; ?> >Singapore</option>
+                            <option value="Malaysia" <?php if($flag&& $country=='Malaysia') echo 'selected'; ?> >Malaysia</option>
+                            <option value="Phillipines" <?php if($flag&& $country=='Philippines') echo 'selected'; ?> >Philippines</option>
+                            <option value="Thailand" <?php if($flag&& $country=='Thailand') echo 'selected'; ?> >Thailand</option>
                         </select>
                     </div>
                 </div>
@@ -68,30 +96,21 @@
                     </tr>
                     </thead>
                     <tbody>
+                    @foreach($distributor as $distributors)
                     <tr>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
+                        <td>{{ $distributors->id_dist }}</td>
+                        <td>{{ $distributors->distributor_id }}</td>
+                        <td>{{ $distributors->nama_distributor }}</td>
+                        <td>{{ $distributors->country }}</td>
+                        <td><a class="btn btn-primary" type ="submit" href="./masterdistributor?id_dist={{$distributors->id_dist}}">Edit</a></td>
+                        <td>
+                            {{ Form::open(array('url' => 'masterdistributor/' . $distributors->id_dist)) }}
+                            {{ Form::hidden('_method', 'DELETE') }}
+                            {{ Form::submit('Delete', array('onclick'=>"return confirm('Anda yakin akan menghapus data ?');", 'class' => 'btn btn-danger')) }}
+                            {{ Form::close() }}
+                        </td>
                     </tr>
-                    <tr>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                    </tr>
-                    <tr>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                    </tr>
+                    @endforeach
                     </tbody>
                 </table>
             </div>

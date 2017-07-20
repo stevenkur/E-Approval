@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User_distributor;
+use App\User;
+use App\Distributor;
 
 class UserDistributorController extends Controller
 {
@@ -14,6 +17,10 @@ class UserDistributorController extends Controller
     public function index()
     {
         //
+        $userdistributor=User_distributor::all();
+        $user=User::all();
+        $distributor=Distributor::all();
+        return view('admin/masteruserdistributor')->with('userdistributor', $userdistributor)->with('user', $user)->with('distributor', $distributor);
     }
 
     /**
@@ -35,6 +42,12 @@ class UserDistributorController extends Controller
     public function store(Request $request)
     {
         //
+        $distributor = new Distributor();
+        $distributor->id_user = $request->user;
+        $distributor->distributor_id = $request->distributor;
+        $distributor->save();        
+        return redirect()->route('masteruserdistributor.index')
+            ->with('alert-success', 'Data Berhasil Disimpan.');
     }
 
     /**

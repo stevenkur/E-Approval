@@ -2,6 +2,22 @@
 
 @section('content')
 
+    <?php 
+        if(isset($_GET['id_dist'])){
+            foreach($distributor as $distributors){
+                if($distributors['id_dist']==$_GET['id_dist']){
+                    $id_dist = $distributors['id_dist'];
+                    $distributorid = $distributors['distributor_id'];
+                    $namadistributor = $distributors['nama_distributor'];
+                    $country = $distributors['country'];
+                }
+            }
+            $flag=true;
+        }
+        else 
+            $flag=false;
+    ?>
+
     <!-- Main content -->
     <section class="content">
     <div class="row">
@@ -10,17 +26,20 @@
             <form action="#" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewuserdistributor">
             {{csrf_field()}}
             <div class="box-header with-border">
+                @if($flag)
+                <h3 class="box-title">Update User Distributor</h3>
+                @else
                 <h3 class="box-title">Add User Distributor</h3>
+                @endif
             </div>
             <div class="box-body">
                 <div class="form-group">
                     <label class="col-md-4 control-label">User</label>
                     <div class="col-md-8">
                         <select class="form-control" id="user" name="user">
-                            <option value="#">-- Please Choose One --</option>
-                            <option value="1">User A</option>
-                            <option value="2">User B</option>
-                            <option value="3">User C</option>
+                            @foreach($user as $users)
+                            <option value="{{ $users->id_user }}">{{ $users->nama_user }}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
@@ -28,10 +47,9 @@
                     <label class="col-md-4 control-label">Distributor</label>
                     <div class="col-md-8">
                         <select class="form-control" id="distributor" name="distributor">
-                            <option value="#">-- Please Choose One --</option>
-                            <option value="1">Distributor A</option>
-                            <option value="2">Distributor B</option>
-                            <option value="3">Distributor C</option>
+                            @foreach($distributor as $distributors)
+                            <option value="{{ $distributors->id_user }}">{{ $distributors->nama_user }}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
@@ -66,27 +84,15 @@
                     </tr>
                     </thead>
                     <tbody>
+                    @foreach($userdistributor as $userdistributors)
                     <tr>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
+                        <td>{{ $userdistributors->id_user_distributor }}</td>
+                        <td>{{ $userdistributors->id_user }}</td>
+                        <td>{{ $userdistributors->distributor_id }}</td>
+                        <td>Edit</td>
+                        <td>Delett</td>
                     </tr>
-                    <tr>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                    </tr>
-                    <tr>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                    </tr>
+                    @endforeach
                     </tbody>
                 </table>
             </div>

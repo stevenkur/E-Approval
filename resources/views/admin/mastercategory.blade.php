@@ -23,13 +23,14 @@
     <div class="row">
     <div class="col-md-4">
         <div class="box box-primary">
-           @if($flag)
+            @if($flag)
             <form action="{{ route('mastercategory.update', $idcategory) }}" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewcategory">
             <input name="_method" type="hidden" value="PATCH">
             @else 
             <form action="{{ route('mastercategory.store') }}" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewcategory">
             <input name="_method" type="hidden" value="POST"> 
-            @endif{{csrf_field()}}
+            @endif
+            {{csrf_field()}}
             <div class="box-header with-border">
                 <h3 class="box-title">Create Category</h3>
             </div>

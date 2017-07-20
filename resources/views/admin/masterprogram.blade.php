@@ -85,7 +85,7 @@
                     <tr>
                         <td>{{ $programs->id_program }}</td>
                         <td>{{ $programs->nama_program }}</td>
-                        <td>{{$programs->tahun }}</td>
+                        <td>{{ $programs->tahun }}</td>
                         <td><a class="btn btn-primary" type ="submit" href="./masterprogram?idprogram={{$programs->id_program}}">Edit</a></td>
                         <td>
                             {{ Form::open(array('url' => 'masterprogram/' . $programs->id_program)) }}

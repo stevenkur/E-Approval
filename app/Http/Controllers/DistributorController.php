@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Distributor;
 
 class DistributorController extends Controller
 {
@@ -14,6 +15,8 @@ class DistributorController extends Controller
     public function index()
     {
         //
+        $distributor=Distributor::all();
+        return view('admin/masterdistributor')->with('distributor', $distributor);
     }
 
     /**
@@ -35,6 +38,13 @@ class DistributorController extends Controller
     public function store(Request $request)
     {
         //
+        $distributor = new Distributor();
+        $distributor->distributor_id = $request->distributorid;
+        $distributor->nama_distributor = $request->distributorname;
+        $distributor->country = $request->country;
+        $distributor->save();        
+        return redirect()->route('masterdistributor.index')
+            ->with('alert-success', 'Data Berhasil Disimpan.');
     }
 
     /**
@@ -69,6 +79,15 @@ class DistributorController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $distributor = Distributor::where('id_dist',$id); 
+        $distributor->update([
+            'distributor_id' => $request->distributorid,
+            'nama_distributor' => $request->distributorname,
+            'country' => $request->country
+        ]);
+        
+        return redirect()->route('masterdistributor.index')
+            ->with('alert-success', 'Data Berhasil Diupdate.');
     }
 
     /**
@@ -80,5 +99,8 @@ class DistributorController extends Controller
     public function destroy($id)
     {
         //
+        $distributor = Distributor::where('id_dist',$id)->delete(); 
+        
+        return redirect()->route('masterdistributor.index')->with('alert-success', 'Data Berhasil Dihapus.');
     }
 }
