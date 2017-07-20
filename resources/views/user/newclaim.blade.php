@@ -9,18 +9,24 @@
     </style>
 
     <script type="text/javascript">
-    // function addCommas(nStr)
-    // {
-    //     nStr += '';
-    //     var x = nStr.split('.');
-    //     var x1 = x[0];
-    //     var x2 = x.length > 1 ? '.' + x[1] : '';
-    //     var rgx = /(\d+)(\d{3})/;
-    //     while (rgx.test(x1)) {
-    //         x1 = x1.replace(rgx, '$1' + '.' + '$2');
-    //     }
-    //     return x1 + x2;
-    // }
+        function convertToRupiah(objek) {
+            separator = ".";
+            a = objek.value;
+            b = a.replace(/[^\d]/g,"");
+            c = "";
+            d = "Rp ";
+            panjang = b.length;
+            j = 0;
+            for (i = panjang; i > 0; i--) {
+                j = j + 1;
+                if (((j % 3) == 1) && (j != 1)) {
+                    c = b.substr(i-1,1) + separator + c;
+                } else {
+                    c = b.substr(i-1,1) + c;
+                }
+            }
+            objek.value = d + c;
+        }
     // $(document).on("click", '.addrow', function (){
     //         newrow = '<label class="custom-file">Another Document<input type="file" id="file" name="file" class="custom-file-input"><span class="custom-file-control"></span></label>';                    
     //         $(this).parent().parent().before(newrow);
@@ -43,7 +49,7 @@
                     <div class="form-group required">
                         <label class="col-md-4 control-label">Reg. No</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="regno" name="regno" placeholder="" required="required" style="text-align: right;" />
+                            <input type="text" class="form-control" id="regno" name="regno" placeholder="" required="required"/>
                         </div>
                     </div>
                     <div class="form-group required">
@@ -69,27 +75,26 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="form-group required">
+                    <div class="form-group">
                         <label class="col-md-4 control-label">Claim Type</label>
                         <div class="col-md-8">
-                            <select class="form-control" id="claimtype" name="claimtype" disabled>
+                            <select class="form-control" id="claimtype" name="claimtype" style="text-align: right;" disabled>
                                 <option value="Marcom">Marcom</option>
                                 <option value="RDP">RDP</option>
                                 <option value="BDF">BDF</option>
                             </select>
                         </div>
                     </div>
-                    <div class="form-group required">
-                        <label class="col-md-4 control-label">Value</label>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Entitlement</label>
                         <div class="col-md-8">
-                            <!-- <input type="text" class="form-control" id="value" name="value" onkeyup="this.value=addCommas(this.value);" required="required" style="text-align: right;" /> -->
-                            <input type="text" class="form-control" id="value" name="value" required="required" style="text-align: right;" />
+                            <input type="text" class="form-control" id="entitlement" name="entitlement" value="Rp 1.000.000" required="required" style="text-align: right;" disabled />
                         </div>
                     </div>
                     <div class="form-group required">
-                        <label class="col-md-4 control-label">Entitlement</label>
+                        <label class="col-md-4 control-label">Value</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="entitlement" name="entitlement" placeholder="" required="required" style="text-align: right;" />
+                            <input type="text" class="form-control" id="value" name="value" onkeyup="convertToRupiah(this);" style="text-align: right;"/>
                         </div>
                     </div>
                 </div>
