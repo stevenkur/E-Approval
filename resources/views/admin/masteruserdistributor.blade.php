@@ -2,14 +2,13 @@
 
 @section('content')
 
-    <?php 
-        if(isset($_GET['id_dist'])){
-            foreach($distributor as $distributors){
-                if($distributors['id_dist']==$_GET['id_dist']){
-                    $id_dist = $distributors['id_dist'];
-                    $distributorid = $distributors['distributor_id'];
-                    $namadistributor = $distributors['nama_distributor'];
-                    $country = $distributors['country'];
+    <?php
+        if(isset($_GET['id_user_distributor'])){
+            foreach($userdistributor as $userdistributors){
+                if($userdistributors['id_user_distributor']==$_GET['id_user_distributor']){
+                    $iduserdistributor = $userdistributors['id_user_distributor'];
+                    $iduser = $userdistributors['id_user'];
+                    $iddist = $userdistributors['id_dist'];
                 }
             }
             $flag=true;
@@ -23,7 +22,13 @@
     <div class="row">
     <div class="col-md-6">
         <div class="box box-primary">
-            <form action="#" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewuserdistributor">
+            @if($flag)
+            <form action="{{ route('masteruserdistributor.update', $iduserdistributor) }}" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewuserdistributor">
+            <input name="_method" type="hidden" value="PATCH">
+            @else 
+            <form action="{{ route('masteruserdistributor.store') }}" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewuserdistributor">
+            <input name="_method" type="hidden" value="POST">
+            @endif
             {{csrf_field()}}
             <div class="box-header with-border">
                 @if($flag)
@@ -38,7 +43,7 @@
                     <div class="col-md-8">
                         <select class="form-control" id="user" name="user">
                             @foreach($user as $users)
-                            <option value="{{ $users->id_user }}">{{ $users->nama_user }}</option>
+                            <option value="{{ $users->id_user }}" <?php if($flag&&$iduser==$users->id_user) echo 'selected'; ?> >{{ $users->nama_user }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -48,7 +53,7 @@
                     <div class="col-md-8">
                         <select class="form-control" id="distributor" name="distributor">
                             @foreach($distributor as $distributors)
-                            <option value="{{ $distributors->id_user }}">{{ $distributors->nama_user }}</option>
+                            <option value="{{ $distributors->id_dist }}" <?php if($flag&&$iddist==$distributors->id_dist) echo 'selected'; ?> >{{ $distributors->nama_distributor }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -87,10 +92,15 @@
                     @foreach($userdistributor as $userdistributors)
                     <tr>
                         <td>{{ $userdistributors->id_user_distributor }}</td>
-                        <td>{{ $userdistributors->id_user }}</td>
-                        <td>{{ $userdistributors->distributor_id }}</td>
-                        <td>Edit</td>
-                        <td>Delett</td>
+                        <td>{{ $userdistributors->nama_user }}</td>
+                        <td>{{ $userdistributors->nama_distributor }}</td>
+                        <td><a class="btn btn-primary" type ="submit" href="./masteruserdistributor?id_user_distributor={{$userdistributors->id_user_distributor}}">Edit</a></td>
+                        <td>
+                            {{ Form::open(array('url' => 'masteruserdistributor/' . $userdistributors->id_user_distributor)) }}
+                            {{ Form::hidden('_method', 'DELETE') }}
+                            {{ Form::submit('Delete', array('onclick'=>"return confirm('Anda yakin akan menghapus data ?');", 'class' => 'btn btn-danger')) }}
+                            {{ Form::close() }}
+                        </td>
                     </tr>
                     @endforeach
                     </tbody>
