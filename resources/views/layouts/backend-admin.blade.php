@@ -51,29 +51,29 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Master <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="#">Master Account</a></li>
-                <li><a href="#">Master Role</a></li>
-                <li><a href="#">Master Category</a></li>
-                <li><a href="#">Master Category Access</a></li>
-                <li><a href="#">Master Category Detail</a></li>
-                <li><a href="#">Master Activity</a></li>
-                <li><a href="#">Master Flow</a></li>
-                <li><a href="#">Master Holiday</a></li>
-                <li><a href="#">Master User Distributor</a></li>
-                <li><a href="#">Master Distributor</a></li>
-                <li><a href="#">Master Marketing</a></li>
+                <li><a href="{{ route('masteraccount.index') }}">Master Account</a></li>
+                <li><a href="{{ route('masterrole.index') }}">Master Role</a></li>
+                <li><a href="{{ route('mastercategory.index') }}">Master Category</a></li>
+                <li><a href="{{ route('mastercategoryaccess.index') }}">Master Category Access</a></li>
+                <li><a href="{{ route('mastercategorydetail.index') }}">Master Category Detail</a></li>
+                <li><a href="{{ route('masteractivity.index') }}">Master Activity</a></li>
+                <li><a href="{{ route('masterflow.index') }}">Master Flow</a></li>
+                <li><a href="{{ route('masterholiday.index') }}">Master Holiday</a></li>
+                <li><a href="{{ route('masteruserdistributor.index') }}">Master User Distributor</a></li>
+                <li><a href="{{ route('masterdistributor.index') }}">Master Distributor</a></li>
+                <li><a href="{{ route('mastermarketing.index') }}">Master Marketing</a></li>
                 <li><a href="{{ route('masterprogram.index') }}">Master Program</a></li>
               </ul>
             </li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">List <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="#">List Ticket</a></li>
-                <li><a href="#">List Attachment</a></li>
-                <li><a href="#">List Period</a></li>
+                <li><a href="{{ route('listticket') }}">List Ticket</a></li>
+                <li><a href="{{ route('listattachment') }}">List Attachment</a></li>
+                <li><a href="{{ route('listperiod') }}">List Period</a></li>
               </ul>
             </li>
-            <li><a href="#">Query</a></li>
+            <li><a href="{{ route('query') }}">Query</a></li>
             <!-- <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">

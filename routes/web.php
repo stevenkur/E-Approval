@@ -17,58 +17,6 @@ Route::get('/', function () {
     return view('auth/login');
 });
 
-Route::get('/query', function () {
-    return view('admin/query');
-});
-
-Route::get('/masteraccount', function () {
-    return view('admin/masteraccount');
-});
-
-Route::get('/masterrole', function () {
-    return view('admin/masterrole');
-});
-
-Route::get('/mastercategory', function () {
-    return view('admin/mastercategory');
-});
-
-Route::get('/mastercategoryaccess', function () {
-    return view('admin/mastercategoryaccess');
-});
-
-Route::get('/mastercategorydetail', function () {
-    return view('admin/mastercategorydetail');
-});
-
-Route::get('/masteractivity', function () {
-    return view('admin/masteractivity');
-});
-
-Route::get('/masterflow', function () {
-    return view('admin/masterflow');
-});
-
-Route::get('/masterholiday', function () {
-    return view('admin/masterholiday');
-});
-
-Route::get('/masteruserdistributor', function () {
-    return view('admin/masteruserdistributor');
-});
-
-Route::get('/masterdistributor', function () {
-    return view('admin/masterdistributor');
-});
-
-Route::get('/mastermarketing', function () {
-    return view('admin/mastermarketing');
-});
-
-Route::get('/masterprogram', function () {
-    return view('admin/masterprogram');
-});
-
 Route::get('index', 'IndexController@index');
 
 Route::get('/profile', function () {
@@ -83,4 +31,19 @@ Route::get('/listclaim', function () {
     return view('user/listclaim');
 });
 
+Route::resource('masteraccount', 'AccountController');
+Route::resource('masterrole', 'RoleController');
+Route::resource('mastercategory', 'CategoryController');
+Route::resource('mastercategoryaccess', 'CategoryAccessController');
+Route::resource('mastercategorydetail', 'CategoryDetailController');
+Route::resource('masteractivity', 'ActivityController');
+Route::resource('masterflow', 'FlowController');
+Route::resource('masterholiday', 'HolidayController');
+Route::resource('masteruserdistributor', 'UserDistributorController');
+Route::resource('masterdistributor', 'DistributorController');
+Route::resource('mastermarketing', 'MarketingController');
 Route::resource('masterprogram', 'ProgramController');
+Route::any('query', ['as'=>'query', 'uses'=>'AdminController@query']);
+Route::any('listticket', ['as'=>'listticket', 'uses'=>'AdminController@listticket']);
+Route::any('listattachment', ['as'=>'listattachment', 'uses'=>'AdminController@listattachment']);
+Route::any('listperiod', ['as'=>'listperiod', 'uses'=>'AdminController@listperiod']);
