@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
+use DateTime;
 use App\Holiday;
 use DB;
 
@@ -43,7 +44,7 @@ class HolidayController extends Controller
         $holiday = new Holiday();     
         $string = $request->date;
         $date = DateTime::createFromFormat("Y-m-d", $string);            
-        $holiday->date_name = $date->format("d");        
+        $holiday->date_name = $date->format("l");
         $holiday->tanggal_libur = $request->date; 
         $holiday->save();        
         return redirect()->route('masterholiday.index')
@@ -82,6 +83,16 @@ class HolidayController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $holiday = Holiday::where('id_holiday',$id); 
+        $string = $request->date;
+        $date = DateTime::createFromFormat("Y-m-d", $string);
+        $holiday->update([
+            'date_name' => $date->format("l"),
+            'tanggal_libur' => $request->date
+        ]);
+        
+        return redirect()->route('masterholiday.index')
+            ->with('alert-success', 'Data Berhasil Diupdate.');
     }
 
     /**
@@ -93,5 +104,8 @@ class HolidayController extends Controller
     public function destroy($id)
     {
         //
+        $holiday = Holiday::where('id_holiday',$id)->delete(); 
+        
+        return redirect()->route('masterholiday.index')->with('alert-success', 'Data Berhasil Dihapus.');
     }
 }

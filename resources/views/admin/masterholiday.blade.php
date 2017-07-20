@@ -8,8 +8,7 @@
                 if($holidays['id_holiday']==$_GET['idholiday']){
                     $idholiday = $holidays['id_holiday'];
                     $datename = $holidays['date_name'];
-                    $tanggallibur = $holidays['tanggal_libur'];
-                 
+                    $tanggallibur = $holidays['tanggal_libur'];                 
                 }
             }
             $flag=true;
@@ -28,15 +27,20 @@
             @else 
             <form action="{{ route('masterholiday.store') }}" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewholiday">
             <input name="_method" type="hidden" value="POST"> 
-            @endif{{csrf_field()}}
+            @endif
+            {{csrf_field()}}
             <div class="box-header with-border">
+                @if($flag)
+                <h3 class="box-title">Update Holiday</h3>
+                @else
                 <h3 class="box-title">Add Holiday</h3>
+                @endif
             </div>
             <div class="box-body">
                 <div class="form-group">
                     <label class="col-md-3 control-label">Date</label>
                     <div class="col-md-9">
-                        <input type="date" class="form-control" id="date" name="date" placeholder="" required="required" />
+                        <input type="date" class="form-control" id="date" name="date" placeholder="" required="required" <?php if($flag) echo 'value='."'$tanggallibur'"; ?>/>
                     </div>
                 </div>
             </div>
