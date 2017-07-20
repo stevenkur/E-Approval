@@ -2,13 +2,34 @@
 
 @section('content')
 
+
+    <?php 
+        if(isset($_GET['idcategory'])){
+            foreach($category as $categories){
+                if($categories['id_category']==$_GET['idcategory']){
+                    $idcategory = $categories['id_category'];
+                    $namacategory = $categories['nama_category'];
+                 
+                }
+            }
+            $flag=true;
+        }
+        else 
+            $flag=false;
+    ?>
+
     <!-- Main content -->
     <section class="content">
     <div class="row">
     <div class="col-md-4">
         <div class="box box-primary">
-            <form action="#" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewcategory">
-            {{csrf_field()}}
+           @if($flag)
+            <form action="{{ route('mastercategory.update', $idcategory) }}" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewcategory">
+            <input name="_method" type="hidden" value="PATCH">
+            @else 
+            <form action="{{ route('mastercategory.store') }}" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewcategory">
+            <input name="_method" type="hidden" value="POST"> 
+            @endif{{csrf_field()}}
             <div class="box-header with-border">
                 <h3 class="box-title">Create Category</h3>
             </div>
@@ -16,7 +37,7 @@
                 <div class="form-group">
                     <label class="col-md-3 control-label">Category</label>
                     <div class="col-md-9">
-                        <input type="text" class="form-control" id="category" name="category" placeholder="" required="required" style="text-align: right;" />
+                        <input type="text" class="form-control" id="category" name="category" placeholder="" required="required" <?php if($flag) echo 'value='."'$namacategory'"; ?> />
                     </div>
                 </div>
             </div>
@@ -49,24 +70,20 @@
                     </tr>
                     </thead>
                     <tbody>
+                    @foreach($category as $categories)
                     <tr>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
+                        <td>{{ $categories->id_category }}</td>
+                        <td>{{ $categories->nama_category }}</td>
+                        
+                        <td><a class="btn btn-primary" type ="submit" href="./mastercategory?idcategory={{$categories->id_category}}">Edit</a></td>
+                        <td>
+                            {{ Form::open(array('url' => 'mastercategory/' . $categories->id_category)) }}
+                            {{ Form::hidden('_method', 'DELETE') }}
+                            {{ Form::submit('Delete', array('onclick'=>"return confirm('Anda yakin akan menghapus data ?');", 'class' => 'btn btn-danger')) }}
+                            {{ Form::close() }}
+                        </td>
                     </tr>
-                    <tr>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                    </tr>
-                    <tr>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                    </tr>
+                    @endforeach
                     </tbody>
                 </table>
             </div>

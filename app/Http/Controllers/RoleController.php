@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
+use App\Role;
+use DB;
 
 class RoleController extends Controller
 {
@@ -14,6 +17,8 @@ class RoleController extends Controller
     public function index()
     {
         //
+        $role=Role::all();
+        return view('admin/masterrole')->with('role', $role);
     }
 
     /**
@@ -35,6 +40,12 @@ class RoleController extends Controller
     public function store(Request $request)
     {
         //
+        $role = new Role();        
+        $role->nama_role = $request->role;        
+        
+        $role->save();        
+        return redirect()->route('masterrole.index')
+            ->with('alert-success', 'Data Berhasil Disimpan.');
     }
 
     /**
@@ -57,6 +68,7 @@ class RoleController extends Controller
     public function edit($id)
     {
         //
+
     }
 
     /**
@@ -69,6 +81,13 @@ class RoleController extends Controller
     public function update(Request $request, $id)
     {
         //
+         $role = Role::where('id_role',$id); 
+         $role->update([
+            'nama_role' => $request->role
+         ]);
+        
+        return redirect()->route('masterrole.index')
+            ->with('alert-success', 'Data Berhasil Diupdate.');
     }
 
     /**
@@ -80,5 +99,9 @@ class RoleController extends Controller
     public function destroy($id)
     {
         //
+        $role = Role::where('id_role',$id)->delete(); 
+        
+        return redirect()->route('masterrole.index')->with('alert-success', 'Data Berhasil Dihapus.');
+   
     }
 }

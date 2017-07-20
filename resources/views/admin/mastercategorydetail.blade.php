@@ -2,13 +2,35 @@
 
 @section('content')
 
+
+    <?php 
+        $namacategory=0;
+        if(isset($_GET['idcategorydetail'])){
+            foreach($categorydetail as $categorydetails){
+                if($categorydetails['id_categorydetail']==$_GET['idcategorydetail']){
+                    $idcategorydetail = $categorydetails['id_categorydetail'];
+                    $namacategory = $categorydetails['nama_category'];
+                    $categorytype = $categorydetails['category_type'];
+                 
+                }
+            }
+            $flag=true;
+        }
+        else 
+            $flag=false;
+    ?>
     <!-- Main content -->
     <section class="content">
     <div class="row">
     <div class="col-md-5">
         <div class="box box-primary">
-            <form action="#" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewcategorydetail">
-            {{csrf_field()}}
+            @if($flag)
+            <form action="{{ route('mastercategorydetail.update', $idcategorydetail) }}" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewcategorydetail">
+            <input name="_method" type="hidden" value="PATCH">
+            @else 
+            <form action="{{ route('mastercategorydetail.store') }}" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewcategorydetail">
+            <input name="_method" type="hidden" value="POST"> 
+            @endif{{csrf_field()}}
             <div class="box-header with-border">
                 <h3 class="box-title">Add Category</h3>
             </div>
@@ -17,17 +39,16 @@
                     <label class="col-md-4 control-label">Category Name</label>
                     <div class="col-md-8">
                         <select class="form-control" id="category" name="category">
-                            <option value="#">-- Please Choose One --</option>
-                            <option value="1">Category A</option>
-                            <option value="2">Category B</option>
-                            <option value="3">Category C</option>
+                             @foreach($category as $categories)
+                             <option value="{{ $categories->nama_category }}" <?php if($flag&& $namacategory==$categories->nama_category) echo 'selected'; ?> >{{ $categories->nama_category}}</option>
+                             @endforeach
                         </select>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-4 control-label">Category Type</label>
                     <div class="col-md-8">
-                        <input type="text" class="form-control" id="categorytype" name="categorytype" placeholder="" required="required" style="text-align: right;" />
+                        <input type="text" class="form-control" id="categorytype" name="categorytype" placeholder="" required="required" <?php if($flag) echo 'value='."'$categorytype'"; ?> />
                     </div>
                 </div>
             </div>
@@ -61,27 +82,21 @@
                     </tr>
                     </thead>
                     <tbody>
+                    @foreach($categorydetail as $categorydetails)
                     <tr>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
+                        <td>{{ $categorydetails->id_categorydetail }}</td>
+                        <td>{{ $categorydetails->nama_category }}</td>
+                        <td>{{ $categorydetails->category_type }}</td>
+                        
+                        <td><a class="btn btn-primary" type ="submit" href="./mastercategorydetail?idcategorydetail={{$categorydetails->id_categorydetail}}">Edit</a></td>
+                        <td>
+                            {{ Form::open(array('url' => 'mastercategorydetail/' . $categorydetails->id_categorydetail)) }}
+                            {{ Form::hidden('_method', 'DELETE') }}
+                            {{ Form::submit('Delete', array('onclick'=>"return confirm('Anda yakin akan menghapus data ?');", 'class' => 'btn btn-danger')) }}
+                            {{ Form::close() }}
+                        </td>
                     </tr>
-                    <tr>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                    </tr>
-                    <tr>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                    </tr>
+                    @endforeach
                     </tbody>
                 </table>
             </div>

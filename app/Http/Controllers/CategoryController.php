@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
+use App\Category;
+use DB;
 
 class CategoryController extends Controller
 {
@@ -14,6 +17,8 @@ class CategoryController extends Controller
     public function index()
     {
         //
+        $category=Category::all();
+        return view('admin/mastercategory')->with('category', $category);
     }
 
     /**
@@ -35,6 +40,12 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         //
+        $category = new Category();        
+        $category->nama_category = $request->category;        
+        
+        $category->save();        
+        return redirect()->route('mastercategory.index')
+            ->with('alert-success', 'Data Berhasil Disimpan.');
     }
 
     /**
@@ -69,6 +80,13 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
         //
+         $category = Category::where('id_category',$id); 
+         $category->update([
+            'nama_category' => $request->category
+         ]);
+        
+        return redirect()->route('mastercategory.index')
+            ->with('alert-success', 'Data Berhasil Diupdate.');
     }
 
     /**
@@ -80,5 +98,9 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         //
+         $category = Category::where('id_category',$id)->delete(); 
+        
+        return redirect()->route('mastercategory.index')->with('alert-success', 'Data Berhasil Dihapus.');
+   
     }
 }

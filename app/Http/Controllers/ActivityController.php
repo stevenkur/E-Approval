@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
+use App\Activity;
+use DB;
+
 
 class ActivityController extends Controller
 {
@@ -14,6 +18,8 @@ class ActivityController extends Controller
     public function index()
     {
         //
+        $activity=Activity::all();
+        return view('admin/masteractivity')->with('activity', $activity);
     }
 
     /**
@@ -35,6 +41,12 @@ class ActivityController extends Controller
     public function store(Request $request)
     {
         //
+        $activity = new Activity();        
+        $activity->nama_activity = $request->activity;        
+        
+        $activity->save();        
+        return redirect()->route('masteractivity.index')
+            ->with('alert-success', 'Data Berhasil Disimpan.');
     }
 
     /**
@@ -69,6 +81,13 @@ class ActivityController extends Controller
     public function update(Request $request, $id)
     {
         //
+         $activity = Activity::where('id_activity',$id); 
+         $activity->update([
+            'nama_activity' => $request->activity
+         ]);
+        
+        return redirect()->route('masteractivity.index')
+            ->with('alert-success', 'Data Berhasil Diupdate.');
     }
 
     /**
@@ -80,5 +99,8 @@ class ActivityController extends Controller
     public function destroy($id)
     {
         //
+         $activity = Activity::where('id_activity',$id)->delete(); 
+        
+        return redirect()->route('masteractivity.index')->with('alert-success', 'Data Berhasil Dihapus.');
     }
 }

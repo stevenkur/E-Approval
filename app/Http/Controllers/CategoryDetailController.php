@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
+use App\CategoryDetail;
+use App\Category;
+use DB;
 
 class CategoryDetailController extends Controller
 {
@@ -14,6 +18,11 @@ class CategoryDetailController extends Controller
     public function index()
     {
         //
+        $categorydetail=CategoryDetail::all();
+        $category=Category::all();
+        return view('admin/mastercategorydetail')->with('categorydetail', $categorydetail)->with('category',$category);
+
+       
     }
 
     /**
@@ -35,6 +44,12 @@ class CategoryDetailController extends Controller
     public function store(Request $request)
     {
         //
+        $categorydetail = new CategoryDetail();        
+        $categorydetail->nama_category = $request->category;        
+        $categorydetail->category_type = $request->categorytype; 
+        $categorydetail->save();        
+        return redirect()->route('mastercategorydetail.index')
+            ->with('alert-success', 'Data Berhasil Disimpan.');
     }
 
     /**
@@ -69,6 +84,14 @@ class CategoryDetailController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $categorydetail = CategoryDetail::where('id_categorydetail',$id); 
+        $categorydetail->update([
+            'nama_category' => $request->category,
+            'category_type' => $request->categorytype
+         ]);
+        
+        return redirect()->route('mastercategorydetail.index')
+            ->with('alert-success', 'Data Berhasil Diupdate.');
     }
 
     /**
@@ -80,5 +103,9 @@ class CategoryDetailController extends Controller
     public function destroy($id)
     {
         //
+         $categorydetail = CategoryDetail::where('id_categorydetail',$id)->delete(); 
+        
+        return redirect()->route('mastercategorydetail.index')->with('alert-success', 'Data Berhasil Dihapus.');
+   
     }
 }

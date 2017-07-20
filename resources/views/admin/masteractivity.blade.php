@@ -2,13 +2,34 @@
 
 @section('content')
 
+ 
+    <?php 
+        if(isset($_GET['idactivity'])){
+            foreach($activity as $activities){
+                if($activities['id_activity']==$_GET['idactivity']){
+                    $idactivity = $activities['id_activity'];
+                    $namaactivity = $activities['nama_activity'];
+                 
+                }
+            }
+            $flag=true;
+        }
+        else 
+            $flag=false;
+    ?>
+
     <!-- Main content -->
     <section class="content">
     <div class="row">
     <div class="col-md-4">
         <div class="box box-primary">
-            <form action="#" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewactivity">
-            {{csrf_field()}}
+            @if($flag)
+            <form action="{{ route('masteractivity.update', $idactivity) }}" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewactivity">
+            <input name="_method" type="hidden" value="PATCH">
+            @else 
+            <form action="{{ route('masteractivity.store') }}" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewactivity">
+            <input name="_method" type="hidden" value="POST">
+            @endif{{csrf_field()}}
             <div class="box-header with-border">
                 <h3 class="box-title">Add Activity</h3>
             </div>
@@ -16,7 +37,7 @@
                 <div class="form-group">
                     <label class="col-md-3 control-label">Activity</label>
                     <div class="col-md-9">
-                        <input type="text" class="form-control" id="activity" name="activity" placeholder="" required="required" style="text-align: right;" />
+                        <input type="text" class="form-control" id="activity" name="activity" placeholder="" required="required" <?php if($flag) echo 'value='."'$namaactivity'"; ?>/>
                     </div>
                 </div>
             </div>
@@ -49,24 +70,20 @@
                     </tr>
                     </thead>
                     <tbody>
+                    @foreach($activity as $activities)
                     <tr>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
+                        <td>{{ $activities->id_activity }}</td>
+                        <td>{{ $activities->nama_activity }}</td>
+                        
+                        <td><a class="btn btn-primary" type ="submit" href="./masteractivity?idactivity={{$activities->id_activity}}">Edit</a></td>
+                        <td>
+                            {{ Form::open(array('url' => 'masteractivity/' . $activities->id_activity)) }}
+                            {{ Form::hidden('_method', 'DELETE') }}
+                            {{ Form::submit('Delete', array('onclick'=>"return confirm('Anda yakin akan menghapus data ?');", 'class' => 'btn btn-danger')) }}
+                            {{ Form::close() }}
+                        </td>
                     </tr>
-                    <tr>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                    </tr>
-                    <tr>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                    </tr>
+                    @endforeach
                     </tbody>
                 </table>
             </div>
