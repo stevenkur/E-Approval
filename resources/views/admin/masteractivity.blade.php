@@ -5,6 +5,7 @@
  
     <?php 
         if(isset($_GET['idactivity'])){
+            dd($activity);
             foreach($activity as $activities){
                 if($activities['id_activity']==$_GET['idactivity']){
                     $idactivity = $activities['id_activity'];

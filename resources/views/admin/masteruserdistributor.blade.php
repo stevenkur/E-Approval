@@ -4,11 +4,11 @@
 
     <?php
         if(isset($_GET['id_user_distributor'])){
-            foreach($userdistributor as $userdistributors){
-                if($userdistributors['id_user_distributor']==$_GET['id_user_distributor']){
-                    $iduserdistributor = $userdistributors['id_user_distributor'];
-                    $iduser = $userdistributors['id_user'];
-                    $iddist = $userdistributors['id_dist'];
+            for($i=0; $i<sizeof($userdistributor); $i++ ){
+                if($userdistributor[$i]->id_user_distributor==$_GET['id_user_distributor']){
+                    $iduserdistributor = $userdistributor[$i]->id_user_distributor;
+                    $iduser = $userdistributor[$i]->id_user;
+                    $iddist = $userdistributor[$i]->id_dist;
                 }
             }
             $flag=true;

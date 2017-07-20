@@ -5,13 +5,15 @@
     <?php 
         
         if(isset($_GET['idaccess'])){
-            foreach($categoryaccess as $category_accesses){
-                if($category_accesses['id_categorydetail']==$_GET['idaccess']){
-                    $idaccess = $category_accesses['id_access'];
-                    $idrole = $category_accesses['id_role'];
-                    $idcategory = $category_accesses['id_category'];
-                    $iduser = $category_accesses['id_user'];
-                 
+           
+            for($i=0;$i<sizeof($categoryaccess);$i++){
+                if( $categoryaccess[$i]->id_access==$_GET['idaccess']){
+                    $idaccess =  $categoryaccess[$i]->id_access;
+                    $idrole =  $categoryaccess[$i]->id_role;
+                    $idcategory =  $categoryaccess[$i]->id_category;
+                    $iduser =  $categoryaccess[$i]->id_user;
+                    $autoapproved =  $categoryaccess[$i]->auto_approved;
+                    break;
                 }
             }
             $flag=true;
@@ -24,7 +26,13 @@
     <div class="row">
     <div class="col-md-6">
         <div class="box box-primary">
-            <form action="#" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewcategoryaccess">
+            @if($flag)
+            <form action="{{ route('mastercategoryaccess.update', $idaccess) }}" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewcategoryaccess">
+            <input name="_method" type="hidden" value="PATCH">
+            @else 
+            <form action="{{ route('mastercategoryaccess.store') }}" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewcategoryaccess">
+            <input name="_method" type="hidden" value="POST">
+            @endif
             {{csrf_field()}}
             <div class="box-header with-border">
                 <h3 class="box-title">Add Category Access</h3>
@@ -54,17 +62,16 @@
                     <label class="col-md-4 control-label">Role</label>
                     <div class="col-md-8">
                         <select class="form-control" id="role" name="role">
-                            <option value="#">-- Please Choose One --</option>
-                            <option value="1">Role A</option>
-                            <option value="2">Role B</option>
-                            <option value="3">Role C</option>
+                           @foreach($role as $roles)
+                            <option value="{{ $roles->id_role }}" <?php if($flag&&$idrole==$roles->id_role) echo 'selected'; ?> >{{ $roles->nama_role }}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-4 control-label">Auto Approve Day</label>
                     <div class="col-md-8">
-                        <input type="text" class="form-control" id="approveday" name="approveday" placeholder="" required="required" style="text-align: right;" />
+                        <input type="text" class="form-control" id="approveday" name="approveday" placeholder="" required="required" <?php if($flag) echo 'value='."'$autoapproved'"; ?> />
                     </div>
                 </div>
             </div>
@@ -92,8 +99,8 @@
                     <tr>
                         <th>ID Access</th>
                         <th>Nama User</th>
-                        <th>Nama Category</th>
                         <th>Nama Role</th>
+                        <th>Nama Category</th>
                         <th>Auto Approve Day</th>
                         <th>Edit</th>
                         <th>Delete</th>
