@@ -32,9 +32,9 @@
             {{csrf_field()}}
             <div class="box-header with-border">
                 @if($flag)
-                <h3 class="box-title">Update User Distributor</h3>
+                <h3 class="box-title">Update User Role</h3>
                 @else
-                <h3 class="box-title">Add User Distributor</h3>
+                <h3 class="box-title">Add User Role</h3>
                 @endif
             </div>
             <div class="box-body">
@@ -52,8 +52,8 @@
                     <label class="col-md-4 control-label">Role</label>
                     <div class="col-md-8">
                         <select class="form-control" id="role" name="role">
-                            @foreach($distributor as $distributors)
-                            <option value="{{ $distributors->id_dist }}" <?php if($flag&&$iddist==$distributors->id_dist) echo 'selected'; ?> >{{ $distributors->nama_distributor }}</option>
+                            @foreach($role as $roles)
+                            <option value="{{ $roles->id_role }}" <?php if($flag&&$idrole==$roles->id_role) echo 'selected'; ?> >{{ $roles->nama_role }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -74,7 +74,7 @@
     <div class="col-md-12">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">List Distributor</h3>
+                <h3 class="box-title">List User and Role</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -89,14 +89,14 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($userdistributor as $userdistributors)
+                    @foreach($userrole as $userroles)
                     <tr>
-                        <td>{{ $userdistributors->id_user_distributor }}</td>
-                        <td>{{ $userdistributors->nama_user }}</td>
-                        <td>{{ $userdistributors->nama_distributor }}</td>
-                        <td><a class="btn btn-primary" type ="submit" href="./masteruserdistributor?id_user_distributor={{$userdistributors->id_user_distributor}}">Edit</a></td>
+                        <td>{{ $userroles->id_user_roles }}</td>
+                        <td>{{ $userroles->nama_user }}</td>
+                        <td>{{ $userroles->nama_role }}</td>
+                        <td><a class="btn btn-primary" type ="submit" href="./masteruserrole?id_user_distributor={{$userroles->id_user_roles}}">Edit</a></td>
                         <td>
-                            {{ Form::open(array('url' => 'masteruserdistributor/' . $userdistributors->id_user_distributor)) }}
+                            {{ Form::open(array('url' => 'masteruserrole/' . $userroles->id_user_roles)) }}
                             {{ Form::hidden('_method', 'DELETE') }}
                             {{ Form::submit('Delete', array('onclick'=>"return confirm('Anda yakin akan menghapus data ?');", 'class' => 'btn btn-danger')) }}
                             {{ Form::close() }}

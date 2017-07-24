@@ -8,7 +8,7 @@ use App\User;
 use App\Role;
 use DB;
 
-class UserRole extends Controller
+class UserRoleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,7 +22,7 @@ class UserRole extends Controller
         $user=User::all();        
         $role=Role::all();
 
-        return view('admin/masteruserrole')->with('useerrole', $userrole)->with('user', $user)->with('role', $role);
+        return view('admin/masteruserrole')->with('userrole', $userrole)->with('user', $user)->with('role', $role);
 
     }
 
