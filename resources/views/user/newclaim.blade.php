@@ -49,7 +49,7 @@
                     <div class="form-group required">
                         <label class="col-md-4 control-label">Reg. No</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="regno" name="regno" placeholder="" required="required"/>
+                            <input type="text" class="form-control" id="regno" name="regno" placeholder="" required="required" disabled/>
                         </div>
                     </div>
                     <div class="form-group required">

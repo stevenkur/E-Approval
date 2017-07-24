@@ -1,10 +1,72 @@
 @extends('layouts.backend')
 
 @section('content')
-  
+
     <!-- Main content -->
     <section class="content">
-        
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">List Claim</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <table id="claim" class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th>Reg. No</th>
+                        <th>Registered On</th>
+                        <th>BP Name</th>
+                        <th>Claim Type</th>
+                        <th>Program Name</th>
+                        <th>Value</th>
+                        <th>Status</th>
+                        <th>Comment</th>
+                        <th>PRNumber</th>
+                        <th>InvoiceNumber</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><a href="#">Reg. No</a></td>
+                        <td>Registered On</td>
+                        <td>BP Name</td>
+                        <td>Claim Type</td>
+                        <td>Program Name</td>
+                        <td>Value</td>
+                        <td>Status</td>
+                        <td>Comment</td>
+                        <td>PRNumber</td>
+                        <td>InvoiceNumber</td>
+                    </tr>
+                    <tr>
+                        <td><a href="#">Reg. No</a></td>
+                        <td>Registered On</td>
+                        <td>BP Name</td>
+                        <td>Claim Type</td>
+                        <td>Program Name</td>
+                        <td>Value</td>
+                        <td>Status</td>
+                        <td>Comment</td>
+                        <td>PRNumber</td>
+                        <td>InvoiceNumber</td>
+                    </tr>
+                    <tr>
+                        <td><a href="#">Reg. No</a></td>
+                        <td>Registered On</td>
+                        <td>BP Name</td>
+                        <td>Claim Type</td>
+                        <td>Program Name</td>
+                        <td>Value</td>
+                        <td>Status</td>
+                        <td>Comment</td>
+                        <td>PRNumber</td>
+                        <td>InvoiceNumber</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.box-body -->
+        </div>
     </section>
     <!-- /.content -->
 
@@ -25,3 +87,16 @@
 <script src="public/adminlte/dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="public/adminlte/dist/js/demo.js"></script>
+<!-- page script -->
+<script>
+$(function() {
+    $('#claim').DataTable({
+      'paging'      : true,
+      'lengthChange': true,
+      'searching'   : true,
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : true
+    })
+  });
+</script>

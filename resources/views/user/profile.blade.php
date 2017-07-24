@@ -20,7 +20,7 @@
 			    <div class="form-group">
 				    <label class="control-label col-sm-2">Name</label>
 				    <div class="col-sm-4">          
-						<input type="text" class="form-control" id="name" name="name" value="Full Name">
+						<input type="text" class="form-control" id="name" name="name" value="Full Name" disabled>
 				    </div>
 			    </div>
 			    <div class="form-group">

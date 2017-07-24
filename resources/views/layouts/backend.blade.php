@@ -60,10 +60,18 @@
               <ul class="dropdown-menu" role="menu">
                 <li><a href="#">Monitoring Report</a></li>
                 <li><a href="#">Resolution Report</a></li>
-                <li><a href="#">LSF Budget Report</a></li>
+                <!-- <li><a href="#">LSF Budget Report</a></li> -->
               </ul>
             </li>
-            <li><a href="public/form/FORM-KP-IF-ITS.doc" download>Form</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Form <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="public/form/FORM-KP-IF-ITS.doc" download>PR Form</a></li>
+                <li><a href="public/form/FORM-KP-IF-ITS.doc" download>Checklist Form</a></li>
+                <!-- <li><a href="#">LSF Budget Report</a></li> -->
+              </ul>
+            </li>
+            
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Change Area (Marcom) <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
@@ -94,9 +102,10 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Profile <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
                 <li><a href="#">Change Password</a></li>
+                <li><a href="#">Logout</a></li>
               </ul>
             </li>
-            <li><a href="#">Logout</a></li>
+            
           </ul>
         </div>
         <!-- /.navbar-custom-menu -->
