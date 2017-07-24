@@ -5,8 +5,8 @@
     <?php
         if(isset($_GET['id_user_role'])){
             for($i=0; $i<sizeof($userrole); $i++ ){
-                if($userrole[$i]->id_user_role==$_GET['id_user_role']){
-                    $iduserrole = $userrole[$i]->id_user_role;
+                if($userrole[$i]->id_user_roles==$_GET['id_user_role']){
+                    $iduserrole = $userrole[$i]->id_user_roles;
                     $iduser = $userrole[$i]->id_user;
                     $idrole = $userrole[$i]->id_role;
                 }
@@ -83,7 +83,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Nama User</th>
-                        <th>Nama Distributor</th>
+                        <th>Nama Role</th>
                         <th>Edit</th>
                         <th>Delete</th>
                     </tr>
@@ -94,7 +94,7 @@
                         <td>{{ $userroles->id_user_roles }}</td>
                         <td>{{ $userroles->nama_user }}</td>
                         <td>{{ $userroles->nama_role }}</td>
-                        <td><a class="btn btn-primary" type ="submit" href="./masteruserrole?id_user_distributor={{$userroles->id_user_roles}}">Edit</a></td>
+                        <td><a class="btn btn-primary" type ="submit" href="./masteruserrole?id_user_role={{$userroles->id_user_roles}}">Edit</a></td>
                         <td>
                             {{ Form::open(array('url' => 'masteruserrole/' . $userroles->id_user_roles)) }}
                             {{ Form::hidden('_method', 'DELETE') }}

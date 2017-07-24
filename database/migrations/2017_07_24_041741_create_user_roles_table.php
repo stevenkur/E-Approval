@@ -17,6 +17,8 @@ class CreateUserRolesTable extends Migration
             $table->increments('id_user_roles')->unique;
             $table->integer('id_user');
             $table->integer('id_role');
+
+            $table->timestamps();
         });
     }
 
