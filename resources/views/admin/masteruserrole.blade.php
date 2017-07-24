@@ -2,18 +2,13 @@
 
 @section('content')
 
-    <?php 
-        
-        if(isset($_GET['idmarketing'])){
-           
-            for($i=0;$i<sizeof($marketing);$i++){
-                if( $marketing[$i]->id_marketing==$_GET['idmarketing']){
-                    $idmarketing =  $marketing[$i]->id_marketing;
-                    $iddist =  $marketing[$i]->id_dist;
-                    $idprogram =  $marketing[$i]->id_program;
-                    $entitlement =  $marketing[$i]->entitlement;
-                    $maxclaimdate =  $marketing[$i]->maxclaim_date;
-                    break;
+    <?php
+        if(isset($_GET['id_user_role'])){
+            for($i=0; $i<sizeof($userrole); $i++ ){
+                if($userrole[$i]->id_user_role==$_GET['id_user_role']){
+                    $iduserrole = $userrole[$i]->id_user_role;
+                    $iduser = $userrole[$i]->id_user;
+                    $idrole = $userrole[$i]->id_role;
                 }
             }
             $flag=true;
@@ -21,53 +16,46 @@
         else 
             $flag=false;
     ?>
+
     <!-- Main content -->
     <section class="content">
     <div class="row">
     <div class="col-md-6">
         <div class="box box-primary">
             @if($flag)
-            <form action="{{ route('mastermarketing.update', $idmarketing) }}" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewmarketing">
+            <form action="{{ route('masteruserrole.update', $iduserrole) }}" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewuserrole">
             <input name="_method" type="hidden" value="PATCH">
             @else 
-            <form action="{{ route('mastermarketing.store') }}" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewmarketing">
+            <form action="{{ route('masteruserrole.store') }}" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewuserrole">
             <input name="_method" type="hidden" value="POST">
             @endif
             {{csrf_field()}}
             <div class="box-header with-border">
-                <h3 class="box-title">Add Marketing</h3>
+                @if($flag)
+                <h3 class="box-title">Update User Distributor</h3>
+                @else
+                <h3 class="box-title">Add User Distributor</h3>
+                @endif
             </div>
             <div class="box-body">
                 <div class="form-group">
-                    <label class="col-md-4 control-label">Distributor</label>
+                    <label class="col-md-4 control-label">User</label>
                     <div class="col-md-8">
-                        <select class="form-control" id="distributor" name="distributor">
+                        <select class="form-control" id="user" name="user">
+                            @foreach($user as $users)
+                            <option value="{{ $users->id_user }}" <?php if($flag&&$iduser==$users->id_user) echo 'selected'; ?> >{{ $users->nama_user }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-4 control-label">Role</label>
+                    <div class="col-md-8">
+                        <select class="form-control" id="role" name="role">
                             @foreach($distributor as $distributors)
-                            <option value="{{ $distributors->id_dist }}" <?php if($flag&&$iddist==$distributors->id_dist) echo 'selected'; ?> >{{ $distributors-> nama_distributor }}</option>
+                            <option value="{{ $distributors->id_dist }}" <?php if($flag&&$iddist==$distributors->id_dist) echo 'selected'; ?> >{{ $distributors->nama_distributor }}</option>
                             @endforeach
                         </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-4 control-label">Program Name</label>
-                    <div class="col-md-8">
-                        <select class="form-control" id="program" name="program">
-                            @foreach($program as $programs)
-                            <option value="{{ $programs->id_program }}" <?php if($flag&&$idprogram==$programs->id_program) echo 'selected'; ?> >{{ $programs-> nama_program }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-4 control-label">Entitlement</label>
-                    <div class="col-md-8">
-                        <input type="text" class="form-control" id="entitlement" name="entitlement" placeholder="" required="required" <?php if($flag) echo 'value='."'$entitlement'"; ?> />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-4 control-label">Max Claim Date</label>
-                    <div class="col-md-8">
-                        <input type="date" class="form-control" id="maxclaim" name="maxclaim" placeholder="" required="required" <?php if($flag) echo 'value='."'$maxclaimdate'"; ?> />
                     </div>
                 </div>
             </div>
@@ -86,34 +74,29 @@
     <div class="col-md-12">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">List Marketing</h3>
+                <h3 class="box-title">List Distributor</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
                 <table id="table" class="table table-bordered table-striped">
                     <thead>
                     <tr>
-                        <th>ID Marketing</th>
+                        <th>ID</th>
+                        <th>Nama User</th>
                         <th>Nama Distributor</th>
-                        <th>Program Name</th>
-                        <th>Entitlement</th>
-                        <th>Max Claim Date</th>
                         <th>Edit</th>
                         <th>Delete</th>
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($marketing as $marketings)
+                    @foreach($userdistributor as $userdistributors)
                     <tr>
-                        <td>{{ $marketings->id_marketing }}</td>
-                        <td>{{ $marketings->nama_distributor }}</td>
-                        <td>{{ $marketings->nama_program }}</td>
-                        <td>{{ $marketings->entitlement }}</td>
-                        <td>{{ $marketings->maxclaim_date }}</td>
-                        
-                        <td><a class="btn btn-primary" type ="submit" href="./mastermarketing?idmarketing={{$marketings->id_marketing}}">Edit</a></td>
+                        <td>{{ $userdistributors->id_user_distributor }}</td>
+                        <td>{{ $userdistributors->nama_user }}</td>
+                        <td>{{ $userdistributors->nama_distributor }}</td>
+                        <td><a class="btn btn-primary" type ="submit" href="./masteruserdistributor?id_user_distributor={{$userdistributors->id_user_distributor}}">Edit</a></td>
                         <td>
-                            {{ Form::open(array('url' => 'mastermarketing/' . $marketings->id_marketing)) }}
+                            {{ Form::open(array('url' => 'masteruserdistributor/' . $userdistributors->id_user_distributor)) }}
                             {{ Form::hidden('_method', 'DELETE') }}
                             {{ Form::submit('Delete', array('onclick'=>"return confirm('Anda yakin akan menghapus data ?');", 'class' => 'btn btn-danger')) }}
                             {{ Form::close() }}

@@ -43,6 +43,7 @@ Route::resource('masteruserdistributor', 'UserDistributorController');
 Route::resource('masterdistributor', 'DistributorController');
 Route::resource('mastermarketing', 'MarketingController');
 Route::resource('masterprogram', 'ProgramController');
+Route::resource('masteruserrole', 'UserRoleController');
 Route::any('query', ['as'=>'query', 'uses'=>'AdminController@query']);
 Route::any('listticket', ['as'=>'listticket', 'uses'=>'AdminController@listticket']);
 Route::any('listattachment', ['as'=>'listattachment', 'uses'=>'AdminController@listattachment']);

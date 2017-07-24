@@ -62,7 +62,7 @@
                     <label class="col-md-4 control-label">Role</label>
                     <div class="col-md-8">
                         <select class="form-control" id="role" name="role">
-                           @foreach($role as $roles)
+                            @foreach($role as $roles)
                             <option value="{{ $roles->id_role }}" <?php if($flag&&$idrole==$roles->id_role) echo 'selected'; ?> >{{ $roles->nama_role }}</option>
                             @endforeach
                         </select>

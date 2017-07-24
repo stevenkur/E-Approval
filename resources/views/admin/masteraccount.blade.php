@@ -39,6 +39,12 @@
                         <input type="text" class="form-control" id="password" name="password" placeholder="" required="required" style="text-align: right;" />
                     </div>
                 </div>
+                 <div class="form-group">
+                    <label class="col-md-4 control-label">Other Email</label>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" id="password" name="otheremail" placeholder="" required="required" style="text-align: right;" />
+                    </div>
+                </div>
                 <div class="col-md-12" align="center">
                     <button class="btn btn-primary addrow">Add Email CC</button>
                 </div> 

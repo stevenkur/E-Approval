@@ -63,6 +63,7 @@
                 <li><a href="{{ route('masterdistributor.index') }}">Master Distributor</a></li>
                 <li><a href="{{ route('mastermarketing.index') }}">Master Marketing</a></li>
                 <li><a href="{{ route('masterprogram.index') }}">Master Program</a></li>
+                <li><a href="{{ route('masterrole.index') }}">Master Role</a></li>
               </ul>
             </li>
             <li class="dropdown">

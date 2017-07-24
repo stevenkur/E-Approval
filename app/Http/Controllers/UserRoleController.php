@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
-use App\Marketing;
-use App\Program;
-use App\Distributor;
+use App\User_role;
+use App\User;
+use App\Role;
 use DB;
 
-
-class MarketingController extends Controller
+class UserRole extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,11 +18,11 @@ class MarketingController extends Controller
     public function index()
     {
         //
-        $marketing=DB::select(DB::raw("SELECT A.id_marketing, A.id_dist, B.nama_distributor, A.id_program, C.nama_program, A.entitlement,  A.maxclaim_date FROM marketings A, distributors B, programs C WHERE A.id_dist=B.id_dist and A.id_program=C.id_program "));
-        $program=Program::all();
-        $distributor=Distributor::all();
-      
-        return view('admin/mastermarketing')->with('program', $program)->with('distributor', $distributor)->with('marketing', $marketing);
+        $userrole=DB::select(DB::raw("SELECT A.id_user_roles, A.id_user, B.nama_user, A.id_role, C.nama_role FROM user_roles A, users B, roles C WHERE A.id_user=B.id_user and A.id_role=C.id_role"));
+        $user=User::all();        
+        $role=Role::all();
+
+        return view('admin/masteruserrole')->with('useerrole', $userrole)->with('user', $user)->with('role', $role);
 
     }
 
@@ -47,13 +45,11 @@ class MarketingController extends Controller
     public function store(Request $request)
     {
         //
-        $marketing = new Marketing();               
-        $marketing->id_dist = $request->distributor; 
-        $marketing->id_program = $request->program;        
-        $marketing->entitlement = $request->entitlement; 
-        $marketing->maxclaim_date = $request->maxclaim;
-        $marketing->save();        
-        return redirect()->route('mastermarketing.index')
+        $userrole = new User_role();
+        $userrole->id_user = $request->user;
+        $userrole->id_role = $request->role;
+        $userrole->save();        
+        return redirect()->route('masteruserrole.index')
             ->with('alert-success', 'Data Berhasil Disimpan.');
     }
 
@@ -89,16 +85,13 @@ class MarketingController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $marketing = Marketing::where('id_marketing',$id); 
-        $marketing->update([
-            'id_dist' => $request->distributor,       
-            'id_program' => $request->program,
-            'entitlement' => $request->entitlement,        
-            'maxclaim_date' => $request->maxclaim 
-            
-         ]);
+        $userrole = User_role::where('id_user_roles',$id); 
+        $userrole->update([
+            'id_user' => $request->user,
+            'id_role' => $request->role
+        ]);
         
-        return redirect()->route('mastermarketing.index')
+        return redirect()->route('masteruserrole.index')
             ->with('alert-success', 'Data Berhasil Diupdate.');
     }
 
@@ -111,9 +104,9 @@ class MarketingController extends Controller
     public function destroy($id)
     {
         //
-        $marketing = Marketing::where('id_marketing',$id)->delete(); 
+         $userrole = User_role::where('id_user_roles',$id)->delete(); 
         
-        return redirect()->route('mastermarketing.index')->with('alert-success', 'Data Berhasil Dihapus.');
-   
+        return redirect()->route('masteruserrole.index')->with('alert-success', 'Data Berhasil Dihapus.');
+  
     }
 }

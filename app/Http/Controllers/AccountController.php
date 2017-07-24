@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
+use App\User;
+use DB;
 
 class AccountController extends Controller
 {
@@ -14,6 +17,8 @@ class AccountController extends Controller
     public function index()
     {
         //
+        $user=User::all();
+        return view('admin/masteruser')->with('user', $user);
     }
 
     /**

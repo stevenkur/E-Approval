@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 19, 2017 at 09:49 AM
+-- Generation Time: Jul 24, 2017 at 06:29 AM
 -- Server version: 10.1.8-MariaDB
 -- PHP Version: 5.6.14
 
@@ -343,7 +343,7 @@ CREATE TABLE `log_claims` (
 
 CREATE TABLE `marketings` (
   `id_marketing` int(10) UNSIGNED NOT NULL,
-  `id_dist` int(20) NOT NULL,
+  `id_dist` int(11) NOT NULL,
   `id_program` int(11) NOT NULL,
   `entitlement` int(11) NOT NULL,
   `maxclaim_date` date NOT NULL,
@@ -376,23 +376,24 @@ CREATE TABLE `migrations` (
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-(55, '2014_10_12_000000_create_users_table', 1),
-(56, '2014_10_12_100000_create_password_resets_table', 1),
-(57, '2017_07_17_093811_create_roles_table', 1),
-(58, '2017_07_17_093852_create_categories_table', 1),
-(59, '2017_07_17_094001_create_distributors_table', 1),
-(60, '2017_07_17_094040_create_user_distributors_table', 1),
-(61, '2017_07_17_094155_create_marketings_table', 1),
-(62, '2017_07_17_094228_create_holidays_table', 1),
-(63, '2017_07_17_094255_create_category_details_table', 1),
-(64, '2017_07_17_094336_create_programs_table', 1),
-(65, '2017_07_17_094404_create_flows_table', 1),
-(66, '2017_07_17_094428_create_claims_table', 1),
-(67, '2017_07_17_094456_create_comments_table', 1),
-(68, '2017_07_17_094523_create_category_accesses_table', 1),
-(69, '2017_07_17_094601_create_claim_attachments_table', 1),
-(70, '2017_07_17_094636_create_activities_table', 1),
-(71, '2017_07_17_094707_create_log_claims_table', 1);
+(72, '2014_10_12_000000_create_users_table', 1),
+(73, '2014_10_12_100000_create_password_resets_table', 1),
+(74, '2017_07_17_093811_create_roles_table', 1),
+(75, '2017_07_17_093852_create_categories_table', 1),
+(76, '2017_07_17_094001_create_distributors_table', 1),
+(77, '2017_07_17_094040_create_user_distributors_table', 1),
+(78, '2017_07_17_094155_create_marketings_table', 1),
+(79, '2017_07_17_094228_create_holidays_table', 1),
+(80, '2017_07_17_094255_create_category_details_table', 1),
+(81, '2017_07_17_094336_create_programs_table', 1),
+(82, '2017_07_17_094404_create_flows_table', 1),
+(83, '2017_07_17_094428_create_claims_table', 1),
+(84, '2017_07_17_094456_create_comments_table', 1),
+(85, '2017_07_17_094523_create_category_accesses_table', 1),
+(86, '2017_07_17_094601_create_claim_attachments_table', 1),
+(87, '2017_07_17_094636_create_activities_table', 1),
+(88, '2017_07_17_094707_create_log_claims_table', 1),
+(89, '2017_07_24_041741_create_user_roles_table', 2);
 
 -- --------------------------------------------------------
 
@@ -426,7 +427,9 @@ CREATE TABLE `programs` (
 
 INSERT INTO `programs` (`id_program`, `nama_program`, `tahun`, `created_at`, `updated_at`) VALUES
 (1, 'program a', 2017, NULL, NULL),
-(2, 'program b', 2017, NULL, NULL);
+(2, 'program b', 2017, NULL, NULL),
+(3, 'program c', 2017, '2017-07-19 02:35:43', '2017-07-19 02:35:43'),
+(4, 'program d', 2017, '2017-07-19 02:35:43', '2017-07-19 03:17:26');
 
 -- --------------------------------------------------------
 
@@ -477,15 +480,15 @@ CREATE TABLE `users` (
   `nama_user` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email1` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email2` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email3` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email4` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email5` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email6` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email7` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email8` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email9` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email1` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email2` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email3` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email4` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email5` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email6` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email7` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email8` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email9` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -525,7 +528,7 @@ INSERT INTO `users` (`id_user`, `nama_user`, `email`, `password`, `email1`, `ema
 CREATE TABLE `user_distributors` (
   `id_user_distributor` int(10) UNSIGNED NOT NULL,
   `id_user` int(11) NOT NULL,
-  `distributor_id` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_dist` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -534,72 +537,53 @@ CREATE TABLE `user_distributors` (
 -- Dumping data for table `user_distributors`
 --
 
-INSERT INTO `user_distributors` (`id_user_distributor`, `id_user`, `distributor_id`, `created_at`, `updated_at`) VALUES
-(1, 1, 'IDTRJKT1', NULL, NULL),
-(2, 2, 'IDTRJKT1', NULL, NULL),
-(3, 3, 'IDTRJKT1', NULL, NULL),
-(4, 4, 'IDTRJKT1', NULL, NULL),
-(5, 5, 'IDTRJKT1', NULL, NULL),
-(6, 6, 'IDTRJKT1', NULL, NULL),
-(7, 7, 'IDTRJKT1', NULL, NULL),
-(8, 8, 'IDTRJKT1', NULL, NULL),
-(9, 9, 'IDTRJKT1', NULL, NULL),
-(10, 10, 'IDTRJKT1', NULL, NULL),
-(11, 11, 'IDTRJKT1', NULL, NULL),
-(12, 12, 'IDTRJKT1', NULL, NULL),
-(13, 13, 'IDTRJKT1', NULL, NULL),
-(14, 14, 'IDTRJKT1', NULL, NULL),
-(15, 15, 'IDTRJKT1', NULL, NULL),
-(16, 16, 'IDTRJKT1', NULL, NULL),
-(17, 17, 'IDTRJKT1', NULL, NULL),
-(18, 18, 'IDTRJKT1', NULL, NULL),
-(19, 3, 'IDTRJKT2', NULL, NULL),
-(20, 4, 'IDTRJKT2', NULL, NULL),
-(21, 5, 'IDTRJKT2', NULL, NULL),
-(22, 6, 'IDTRJKT2', NULL, NULL),
-(23, 7, 'IDTRJKT2', NULL, NULL),
-(24, 8, 'IDTRJKT2', NULL, NULL),
-(25, 9, 'IDTRJKT2', NULL, NULL),
-(26, 10, 'IDTRJKT2', NULL, NULL),
-(27, 11, 'IDTRJKT2', NULL, NULL),
-(28, 12, 'IDTRJKT2', NULL, NULL),
-(29, 13, 'IDTRJKT2', NULL, NULL),
-(30, 14, 'IDTRJKT2', NULL, NULL),
-(31, 15, 'IDTRJKT2', NULL, NULL),
-(32, 16, 'IDTRJKT2', NULL, NULL),
-(33, 17, 'IDTRJKT2', NULL, NULL),
-(34, 18, 'IDTRJKT2', NULL, NULL),
-(35, 3, 'IDTRJKT4', NULL, NULL),
-(36, 4, 'IDTRJKT4', NULL, NULL),
-(37, 5, 'IDTRJKT4', NULL, NULL),
-(38, 6, 'IDTRJKT4', NULL, NULL),
-(39, 7, 'IDTRJKT4', NULL, NULL),
-(40, 8, 'IDTRJKT4', NULL, NULL),
-(41, 9, 'IDTRJKT4', NULL, NULL),
-(42, 10, 'IDTRJKT4', NULL, NULL),
-(43, 11, 'IDTRJKT4', NULL, NULL),
-(44, 12, 'IDTRJKT4', NULL, NULL),
-(45, 13, 'IDTRJKT4', NULL, NULL),
-(46, 14, 'IDTRJKT4', NULL, NULL),
-(47, 15, 'IDTRJKT4', NULL, NULL),
-(48, 16, 'IDTRJKT4', NULL, NULL),
-(49, 17, 'IDTRJKT4', NULL, NULL),
-(50, 18, 'IDTRJKT4', NULL, NULL),
-(51, 4, 'IDTRJKT5', NULL, NULL),
-(52, 5, 'IDTRJKT5', NULL, NULL),
-(53, 6, 'IDTRJKT5', NULL, NULL),
-(54, 7, 'IDTRJKT5', NULL, NULL),
-(55, 8, 'IDTRJKT5', NULL, NULL),
-(56, 9, 'IDTRJKT5', NULL, NULL),
-(57, 10, 'IDTRJKT5', NULL, NULL),
-(58, 11, 'IDTRJKT5', NULL, NULL),
-(59, 12, 'IDTRJKT5', NULL, NULL),
-(60, 13, 'IDTRJKT5', NULL, NULL),
-(61, 14, 'IDTRJKT5', NULL, NULL),
-(62, 15, 'IDTRJKT5', NULL, NULL),
-(63, 16, 'IDTRJKT5', NULL, NULL),
-(64, 17, 'IDTRJKT5', NULL, NULL),
-(65, 18, 'IDTRJKT5', NULL, NULL);
+INSERT INTO `user_distributors` (`id_user_distributor`, `id_user`, `id_dist`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, NULL, NULL),
+(2, 2, 1, NULL, NULL),
+(3, 3, 1, NULL, NULL),
+(4, 4, 1, NULL, NULL),
+(5, 5, 1, NULL, NULL),
+(6, 6, 1, NULL, NULL),
+(7, 7, 1, NULL, NULL),
+(8, 8, 1, NULL, NULL),
+(9, 9, 2, NULL, NULL),
+(10, 10, 3, NULL, NULL),
+(11, 11, 4, NULL, NULL),
+(12, 12, 2, NULL, NULL),
+(13, 13, 2, NULL, NULL),
+(14, 14, 1, NULL, NULL),
+(15, 15, 1, NULL, NULL),
+(16, 16, 1, NULL, NULL),
+(17, 17, 1, NULL, NULL),
+(18, 18, 1, NULL, NULL),
+(19, 3, 1, NULL, NULL),
+(20, 4, 2, NULL, NULL),
+(21, 5, 3, NULL, NULL),
+(22, 6, 2, NULL, NULL),
+(23, 7, 2, NULL, NULL),
+(26, 10, 0, NULL, NULL),
+(27, 11, 0, NULL, NULL),
+(67, 19, 4, '2017-07-20 00:46:17', '2017-07-20 00:46:17');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_roles`
+--
+
+CREATE TABLE `user_roles` (
+  `id_user_roles` int(10) UNSIGNED NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `id_role` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `user_roles`
+--
+
+INSERT INTO `user_roles` (`id_user_roles`, `id_user`, `id_role`) VALUES
+(1, 1, 2),
+(2, 2, 3);
 
 --
 -- Indexes for dumped tables
@@ -723,6 +707,12 @@ ALTER TABLE `user_distributors`
   ADD UNIQUE KEY `user_distributors_id_user_distributor_unique` (`id_user_distributor`);
 
 --
+-- Indexes for table `user_roles`
+--
+ALTER TABLE `user_roles`
+  ADD PRIMARY KEY (`id_user_roles`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -745,7 +735,7 @@ ALTER TABLE `category_accesses`
 -- AUTO_INCREMENT for table `category_details`
 --
 ALTER TABLE `category_details`
-  MODIFY `id_categorydetail` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_categorydetail` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `claim_attachments`
 --
@@ -780,17 +770,17 @@ ALTER TABLE `log_claims`
 -- AUTO_INCREMENT for table `marketings`
 --
 ALTER TABLE `marketings`
-  MODIFY `id_marketing` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_marketing` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
 --
 -- AUTO_INCREMENT for table `programs`
 --
 ALTER TABLE `programs`
-  MODIFY `id_program` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_program` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `roles`
 --
@@ -805,7 +795,12 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `user_distributors`
 --
 ALTER TABLE `user_distributors`
-  MODIFY `id_user_distributor` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `id_user_distributor` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+--
+-- AUTO_INCREMENT for table `user_roles`
+--
+ALTER TABLE `user_roles`
+  MODIFY `id_user_roles` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
