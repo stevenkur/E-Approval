@@ -31,6 +31,18 @@ Route::get('/listclaim', function () {
     return view('user/listclaim');
 });
 
+Route::get('/lsfbudgetreport', function () {
+    return view('user/lsfbudgetreport');
+});
+
+Route::get('/monitoringreport', function () {
+    return view('user/monitoringreport');
+});
+
+Route::get('/resolutionreport', function () {
+    return view('user/resolutionreport');
+});
+
 Route::resource('masteraccount', 'AccountController');
 Route::resource('masterrole', 'RoleController');
 Route::resource('mastercategory', 'CategoryController');
@@ -45,6 +57,7 @@ Route::resource('mastermarketing', 'MarketingController');
 Route::resource('masterprogram', 'ProgramController');
 Route::resource('masteruserrole', 'UserRoleController');
 Route::any('query', ['as'=>'query', 'uses'=>'AdminController@query']);
+Route::any('queryresult', ['as'=>'queryresult', 'uses'=>'AdminController@queryresult']);
 Route::any('listticket', ['as'=>'listticket', 'uses'=>'AdminController@listticket']);
 Route::any('listattachment', ['as'=>'listattachment', 'uses'=>'AdminController@listattachment']);
 Route::any('listperiod', ['as'=>'listperiod', 'uses'=>'AdminController@listperiod']);

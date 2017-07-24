@@ -6,7 +6,7 @@
     <section class="content">
     <center>
         <div class="box box-primary">
-        <form role="form" action="" method="post" id="formquery">
+        <form role="form" action="{{ route('queryresult') }}" method="post" id="formquery">
         {{csrf_field()}}
             <div class="box-header with-border">
                 <h3 class="box-title">Put your query down here...</h3>

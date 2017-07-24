@@ -11,6 +11,11 @@ class AdminController extends Controller
         return view('admin/query');
     }
 
+    public function queryresult()
+    {
+        return view('admin/query');
+    }
+
     public function listticket()
     {
         return view('admin/listticket');

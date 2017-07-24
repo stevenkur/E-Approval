@@ -27,40 +27,40 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
+                        <td><a href="#">Reg. No</a></td>
+                        <td>Registered On</td>
+                        <td>BP Name</td>
+                        <td>Claim Type</td>
+                        <td>Program Name</td>
+                        <td>Value</td>
+                        <td>Status</td>
+                        <td>Comment</td>
+                        <td>PRNumber</td>
+                        <td>InvoiceNumber</td>
                     </tr>
                     <tr>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
+                        <td><a href="#">Reg. No</a></td>
+                        <td>Registered On</td>
+                        <td>BP Name</td>
+                        <td>Claim Type</td>
+                        <td>Program Name</td>
+                        <td>Value</td>
+                        <td>Status</td>
+                        <td>Comment</td>
+                        <td>PRNumber</td>
+                        <td>InvoiceNumber</td>
                     </tr>
                     <tr>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
+                        <td><a href="#">Reg. No</a></td>
+                        <td>Registered On</td>
+                        <td>BP Name</td>
+                        <td>Claim Type</td>
+                        <td>Program Name</td>
+                        <td>Value</td>
+                        <td>Status</td>
+                        <td>Comment</td>
+                        <td>PRNumber</td>
+                        <td>InvoiceNumber</td>
                     </tr>
                     </tbody>
                 </table>

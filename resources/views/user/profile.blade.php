@@ -14,31 +14,31 @@
 				<div class="form-group">
 				    <label class="control-label col-sm-2">Email</label>
 				    <div class="col-sm-4">
-						<input type="text" class="form-control" id="email" name="email" value="test@email.com" style="text-align: right;" disabled>
+						<input type="text" class="form-control" id="email" name="email" value="test@email.com" disabled>
 				    </div>
 			    </div>
 			    <div class="form-group">
 				    <label class="control-label col-sm-2">Name</label>
 				    <div class="col-sm-4">          
-						<input type="text" class="form-control" id="name" name="name" value="Full Name" style="text-align: right;">
+						<input type="text" class="form-control" id="name" name="name" value="Full Name">
 				    </div>
 			    </div>
 			    <div class="form-group">
 				    <label class="control-label col-sm-2">Old Password</label>
 				    <div class="col-sm-4">
-						<input type="password" class="form-control" id="old" name="old" value="" style="text-align: right;">
+						<input type="password" class="form-control" id="old" name="old" value="">
 				    </div>
 			    </div>
 			    <div class="form-group">
 				    <label class="control-label col-sm-2">New Password</label>
 				    <div class="col-sm-4">
-						<input type="password" class="form-control" id="new" name="new" value="" style="text-align: right;">
+						<input type="password" class="form-control" id="new" name="new" value="">
 				    </div>
 			    </div>
 			    <div class="form-group">
 				    <label class="control-label col-sm-2">Confirm New Password</label>
 				    <div class="col-sm-4">
-						<input type="password" class="form-control" id="confirm" name="confirm" value="" style="text-align: right;">
+						<input type="password" class="form-control" id="confirm" name="confirm" value="">
 				    </div>
 			    </div>			    
 		    </div>
