@@ -55,7 +55,7 @@ Route::resource('masteruserdistributor', 'UserDistributorController');
 Route::resource('masterdistributor', 'DistributorController');
 Route::resource('mastermarketing', 'MarketingController');
 Route::resource('masterprogram', 'ProgramController');
-Route::resource('masteruserrole', 'UserRoleController');
+Route::resource('masterperiod', 'PeriodController');
 Route::any('query', ['as'=>'query', 'uses'=>'AdminController@query']);
 Route::any('queryresult', ['as'=>'queryresult', 'uses'=>'AdminController@queryresult']);
 Route::any('listticket', ['as'=>'listticket', 'uses'=>'AdminController@listticket']);

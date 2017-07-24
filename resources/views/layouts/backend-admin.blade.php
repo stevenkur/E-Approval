@@ -54,7 +54,8 @@
                 <li><a href="{{ route('masteraccount.index') }}">Master Account</a></li>
                 <li><a href="{{ route('masterrole.index') }}">Master Role</a></li>
                 <li><a href="{{ route('mastercategory.index') }}">Master Category</a></li>
-                <li><a href="{{ route('mastercategoryaccess.index') }}">Master Category Access</a></li>
+                <!-- <li><a href="{{ route('mastercategoryaccess.index') }}">Master Category Access</a></li>
+                 -->
                 <li><a href="{{ route('mastercategorydetail.index') }}">Master Category Detail</a></li>
                 <li><a href="{{ route('masteractivity.index') }}">Master Activity</a></li>
                 <li><a href="{{ route('masterflow.index') }}">Master Flow</a></li>
@@ -63,7 +64,7 @@
                 <li><a href="{{ route('masterdistributor.index') }}">Master Distributor</a></li>
                 <li><a href="{{ route('mastermarketing.index') }}">Master Marketing</a></li>
                 <li><a href="{{ route('masterprogram.index') }}">Master Program</a></li>
-                <li><a href="{{ route('masteruserrole.index') }}">Master User Role</a></li>
+                <li><a href="{{ route('masterperiod.index') }}">Master Period</a></li>
               </ul>
             </li>
             <li class="dropdown">
@@ -71,7 +72,7 @@
               <ul class="dropdown-menu" role="menu">
                 <li><a href="{{ route('listticket') }}">List Ticket</a></li>
                 <li><a href="{{ route('listattachment') }}">List Attachment</a></li>
-                <li><a href="{{ route('listperiod') }}">List Period</a></li>
+                <!-- <li><a href="{{ route('listperiod') }}">List Period</a></li> -->
               </ul>
             </li>
             <li><a href="{{ route('query') }}">Query</a></li>

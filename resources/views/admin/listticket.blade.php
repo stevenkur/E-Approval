@@ -4,72 +4,69 @@
 
     <!-- Main content -->
     <section class="content">
-    <div class="row">
-    <div class="col-md-4">
-        <div class="box box-primary">
-            <form action="#" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewactivity">
-            {{csrf_field()}}
-            <div class="box-header with-border">
-                <h3 class="box-title">Add Activity</h3>
-            </div>
-            <div class="box-body">
-                <div class="form-group">
-                    <label class="col-md-3 control-label">Activity</label>
-                    <div class="col-md-9">
-                        <input type="text" class="form-control" id="activity" name="activity" placeholder="" required="required" style="text-align: right;" />
-                    </div>
-                </div>
-            </div>
-            <div class="box-footer" align="right">
-                <button type="reset" class="btn btn-ok">Reset</button>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
-            </form>
-        </div>
-    </div>
-
-    <div class="col-md-8">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">List Activity</h3>
+                <h3 class="box-title">List Ticket</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                <table id="table" class="table table-bordered table-striped">
+                <table id="claim" class="table table-bordered table-striped">
                     <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Activity</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
+                        <th>Reg. No</th>
+                        <th>Registered On</th>
+                        <th>BP Name</th>
+                        <th>Claim Type</th>
+                        <th>Program Name</th>
+                        <th>Value</th>
+                        <th>Status</th>
+                        <th>Comment</th>
+                        <th>PRNumber</th>
+                        <th>InvoiceNumber</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
+                        <td><a href="#">Reg. No</a></td>
+                        <td>Registered On</td>
+                        <td>BP Name</td>
+                        <td>Claim Type</td>
+                        <td>Program Name</td>
+                        <td>Value</td>
+                        <td>Status</td>
+                        <td>Comment</td>
+                        <td>PRNumber</td>
+                        <td>InvoiceNumber</td>
                     </tr>
                     <tr>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
+                        <td><a href="#">Reg. No</a></td>
+                        <td>Registered On</td>
+                        <td>BP Name</td>
+                        <td>Claim Type</td>
+                        <td>Program Name</td>
+                        <td>Value</td>
+                        <td>Status</td>
+                        <td>Comment</td>
+                        <td>PRNumber</td>
+                        <td>InvoiceNumber</td>
                     </tr>
                     <tr>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
+                        <td><a href="#">Reg. No</a></td>
+                        <td>Registered On</td>
+                        <td>BP Name</td>
+                        <td>Claim Type</td>
+                        <td>Program Name</td>
+                        <td>Value</td>
+                        <td>Status</td>
+                        <td>Comment</td>
+                        <td>PRNumber</td>
+                        <td>InvoiceNumber</td>
                     </tr>
                     </tbody>
                 </table>
             </div>
             <!-- /.box-body -->
         </div>
-    </div>
-    </div>
     </section>
     <!-- /.content -->
 
@@ -93,7 +90,7 @@
 <!-- page script -->
 <script>
 $(function() {
-    $('#table').DataTable({
+    $('#claim').DataTable({
       'paging'      : true,
       'lengthChange': true,
       'searching'   : true,
