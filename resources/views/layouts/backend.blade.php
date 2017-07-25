@@ -87,7 +87,7 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Profile <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
                 <li><a href="{{ route('profile') }}">Change Password</a></li>
-                <li><a href="#">Logout</a></li>
+                <li><a href="{{ route('logout') }}">Logout</a></li>
               </ul>
             </li>
             

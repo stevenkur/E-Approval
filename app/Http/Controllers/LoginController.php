@@ -26,19 +26,19 @@ class LoginController extends Controller
         
        
 
-        $result=DB::select(DB::raw("SELECT A.id_user, C.email, B.nama_role FROM user_roles A, roles B, users C WHERE C.email='$email' and A.id_user=C.id_user and A.id_role=B.id_role "));
+        $result=DB::select(DB::raw("SELECT A.id_user, C.email, B.nama_role, D.nama_category FROM category_accesses A, roles B, users C, categories D WHERE C.email='$email' and A.id_user=C.id_user and A.id_role=B.id_role and A.id_category=D.id_category"));
         
         
         if(isset($result[0])){
-            // dd($result[0]);
-            $id_user = $result[0]->id_user;
-            $email =   $result[0]->email;
-            $nama_role = $result[0]->nama_role;
-
+             dd($result);
+            $id_user = collect($result->id_user);
+            $email =   collect($result->email);
+            $nama_role = collect($result->nama_role);
+            $nama_category = collect($result->nama_category);
             $request->session()->put('id_user', $id_user);
             $request->session()->put('email', $email);
             $request->session()->put('nama_role', $nama_role);
-            
+            $request->session()->put('nama_category', $nama_category);
             if(strcasecmp($nama_role, 'administrator')==0){	
             return redirect()->route('dashboard');
 			}
