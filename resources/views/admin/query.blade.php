@@ -41,7 +41,7 @@
               <tbody>
               @foreach($result as $results)
               <tr>
-                 
+                 dd($result);
               </tr>
               @endforeach
               </tbody>

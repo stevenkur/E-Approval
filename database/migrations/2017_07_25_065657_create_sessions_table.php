@@ -18,6 +18,7 @@ class CreateSessionsTable extends Migration
             $table->integer('id_user')->nullable();
             $table->string('email', 50)->nullable();
             $table->string('role', 30)->nullable();
+            $table->string('category', 30)->nullable();
             $table->string('ip_address', 45)->nullable();
             $table->text('user_agent')->nullable();
             $table->text('payload');
