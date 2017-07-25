@@ -5,33 +5,12 @@
     <!-- Main content -->
     <section class="content">
     <div class="row">
-    <div class="col-md-4">
-        <div class="box box-primary">
-            <form action="#" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewactivity">
-            {{csrf_field()}}
-            <div class="box-header with-border">
-                <h3 class="box-title">Add Activity</h3>
-            </div>
-            <div class="box-body">
-                <div class="form-group">
-                    <label class="col-md-3 control-label">Activity</label>
-                    <div class="col-md-9">
-                        <input type="text" class="form-control" id="activity" name="activity" placeholder="" required="required" style="text-align: right;" />
-                    </div>
-                </div>
-            </div>
-            <div class="box-footer" align="right">
-                <button type="reset" class="btn btn-ok">Reset</button>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
-            </form>
-        </div>
-    </div>
+    
 
-    <div class="col-md-8">
+    <div class="col-md-12">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">List Activity</h3>
+                <h3 class="box-title">List Attachment</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -39,30 +18,27 @@
                     <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Activity</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
+                        <th>Nama Distributor</th>
+                        <th>Payment Requistion Form</th>
+                        <th>Airway Bill Number</th>
+                        <th>Original tax & supplier invoices</th>
+                        <th>Other Document</th>
+                        
                     </tr>
                     </thead>
                     <tbody>
+                    @foreach($listattachment as $listattachments)
                     <tr>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
+                        <td>{{ $listattachments->id_claim }}</td>
+                        <td>{{ $listattachments->nama_distributor }}</td>
+                        <td>{{ $listattachments->airwaybill }}</td>
+                        <td>{{ $listattachments->payment_form }}</td>
+                        <td>{{ $listattachments->original_tax }}</td>
+                        <td>{{ $listattachments->nama_attachment }}</td>
+                        
+                        
                     </tr>
-                    <tr>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                    </tr>
-                    <tr>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                    </tr>
+                    @endforeach
                     </tbody>
                 </table>
             </div>
