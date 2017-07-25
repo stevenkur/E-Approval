@@ -30,9 +30,10 @@ class LoginController extends Controller
         
         
         if(isset($result)){
-            $id_user = {{$result->id_user}};
-            $email =   {{$result->email}};
-            $nama_role = {{$result->nama_role}};
+            dd($result);
+            $id_user = $result->id_user;
+            $email =   $result->email;
+            $nama_role = $result->nama_role;
 
             $request->session()->put('id_user', $id_user);
             $request->session()->put('email', $email);

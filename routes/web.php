@@ -13,8 +13,10 @@
 
 // Auth::routes();
 
-// Route::get('/', function () {
-//     return view('auth/login');
+Route::get('/', function () {
+    return view('auth/login');
+});
+
 Route::get('login', ['as'=>'login', 'uses'=>'LoginController@index']);
 Route::post('login', ['as'=>'login', 'uses'=>'LoginController@login']);
 Route::get('logout', ['as'=>'logout', 'uses'=>'LoginController@logout']);
