@@ -24,15 +24,16 @@ class LoginController extends Controller
         $email = $request->email;
         $pwd = hash('md5', $request->password);              
 
+
         $result=DB::select(DB::raw("SELECT A.id_user, C.email, B.nama_role, D.nama_category FROM category_accesses A, roles B, users C, categories D WHERE C.email='$email' and C.password='$pwd' and A.id_user=C.id_user and A.id_role=B.id_role and A.id_category=D.id_category"));
         
         if(isset($result[0])){
-             // dd($result);
+            
             $id_user = $result[0]->id_user;
             $email =   $result[0]->email;
             $role = array();
             $nama_category = array();
-            if(strcasecmp($result[0]->nama_role, 'administrator')==0){
+            if(strcasecmp($result[0]->nama_role, 'Administrator')==0){
                 $request->session()->put('id_user', $id_user);
                 $request->session()->put('email', $email);
                 return redirect()->route('dashboard');
