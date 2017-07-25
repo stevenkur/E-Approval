@@ -26,14 +26,14 @@ class LoginController extends Controller
         
        
 
-        $result=DB::select(DB::raw("SELECT A.id_user, C.email, B.nama_role FROM user_roles A, roles B, users C WHERE A.id_user=C.id_user and A.id_role=B.id_role "));
+        $result=DB::select(DB::raw("SELECT A.id_user, C.email, B.nama_role FROM user_roles A, roles B, users C WHERE C.email='$email' and A.id_user=C.id_user and A.id_role=B.id_role "));
         
         
-        if(isset($result)){
-            dd($result);
-            $id_user = $result->id_user;
-            $email =   $result->email;
-            $nama_role = $result->nama_role;
+        if(isset($result[0])){
+            // dd($result[0]);
+            $id_user = $result[0]->id_user;
+            $email =   $result[0]->email;
+            $nama_role = $result[0]->nama_role;
 
             $request->session()->put('id_user', $id_user);
             $request->session()->put('email', $email);
