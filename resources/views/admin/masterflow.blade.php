@@ -1,10 +1,14 @@
 @extends('layouts.backend-admin')
 
 @section('content')
-    <?php $i=1; ?>
+    <?php $i=0; ?>
+
     <script type="text/javascript">
-        $(document).on("click", '.addrow', function (){            
-            newrow = '<div class="form-group"><label class="col-md-2 control-label">Flow Level <?php echo $i; ?></label><div class="col-md-4"><select class="form-control" id="role" name="role"><option value="#">-- Please Choose Role --</option><option value="1">Role A</option><option value="2">Role B</option><option value="3">Role C</option></select></div></div><?php $i++; ?>';  
+
+        $(document).on("click", '.addrow', function (){   
+    
+            <?php ++$i; ?>
+            newrow = '<div class="form-group"><label class="col-md-2 control-label">Flow Level <?php echo $i; ?></label><div class="col-md-4"><select class="form-control" id="role" name="role"><option value="#">-- Please Choose Role --</option><option value="1">Role A</option><option value="2">Role B</option><option value="3">Role C</option></select></div></div>';  
 
             $(this).parent().before(newrow);
         });
@@ -20,6 +24,7 @@
             <div class="box-header with-border">
                 <h3 class="box-title">Add Flow</h3>
             </div>
+            
             <div class="box-body">
                 <div class="form-group">
                     <label class="col-md-2 control-label">Flow Code</label>
@@ -50,11 +55,9 @@
             </div>
             <div class="box-footer" align="right">
                 <button type="reset" class="btn btn-ok">Reset</button>
-                @if($flag)
-                <button type="submit" class="btn btn-primary">Update</button>
-                @else
+                
                 <button type="submit" class="btn btn-primary">Submit</button>
-                @endif
+               
             </div>
             </form>
         </div>
