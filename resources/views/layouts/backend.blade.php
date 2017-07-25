@@ -39,7 +39,7 @@
     <nav class="navbar navbar-static-top">
       <div class="container">
         <div class="navbar-header">
-          <a href="#" class="navbar-brand"><b>E-Approval</b></a>
+          <a href="{{ route('home.index') }}" class="navbar-brand"><b>E-Approval</b></a>
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
             <i class="fa fa-bars"></i>
           </button>
@@ -51,15 +51,15 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Claim <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="#">New Claim</a></li>
-                <li><a href="#">List Claim</a></li>
+                <li><a href="{{ route('newclaim') }}">New Claim</a></li>
+                <li><a href="{{ route('listclaim') }}">List Claim</a></li>
               </ul>
             </li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Report <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="#">Monitoring Report</a></li>
-                <li><a href="#">Resolution Report</a></li>
+                <li><a href="{{ route('monitoringreport') }}">Monitoring Report</a></li>
+                <li><a href="{{ route('resolutionreport') }}">Resolution Report</a></li>
                 <!-- <li><a href="#">LSF Budget Report</a></li> -->
               </ul>
             </li>
@@ -101,7 +101,7 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Profile <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="#">Change Password</a></li>
+                <li><a href="{{ route('profile') }}">Change Password</a></li>
                 <li><a href="#">Logout</a></li>
               </ul>
             </li>

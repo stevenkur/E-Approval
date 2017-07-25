@@ -49,7 +49,7 @@
                     <div class="form-group required">
                         <label class="col-md-4 control-label">Reg. No</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="regno" name="regno" placeholder="" required="required" disabled/>
+                            <input type="text" class="form-control" id="regno" name="regno" value="201707-00001" required="required" disabled/>
                         </div>
                     </div>
                     <div class="form-group required">
@@ -78,7 +78,7 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label">Claim Type</label>
                         <div class="col-md-8">
-                            <select class="form-control" id="claimtype" name="claimtype" style="text-align: right;" disabled>
+                            <select class="form-control" id="claimtype" name="claimtype" disabled>
                                 <option value="Marcom">Marcom</option>
                                 <option value="RDP">RDP</option>
                                 <option value="BDF">BDF</option>

@@ -4,12 +4,42 @@
   
     <!-- Main content -->
     <section class="content">
-        <center>
-        <h1>
-          Welcome to Philips E-Approval Application
-        </h1>
-        <img src="public/img/banner-marketing.jpg">
-        </center>
+        <div class="col-md-12">
+        <div class="box box-primary">        
+        <h1><center>Welcome to Philips E-Approval Application</center></h1>
+            <div class="box-header with-border">
+                <h3 class="box-title">???</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <table id="table" class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th>Pending On</th>
+                        <th>Marcomm</th>
+                        <th>RDP</th>
+                        <th>BDF</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>DIN</td>
+                        <td>Rp 10.000</td>
+                        <td>Rp 10.000</td>
+                        <td>Rp 10.000</td>
+                    </tr>
+                    <tr>
+                        <td>FA</td>
+                        <td>Rp 10.000</td>
+                        <td>Rp 10.000</td>
+                        <td>Rp 10.000</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.box-body -->
+        </div>
+        </div>
     </section>
     <!-- /.content -->
 
@@ -30,3 +60,16 @@
 <script src="public/adminlte/dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="public/adminlte/dist/js/demo.js"></script>
+<!-- page script -->
+<script>
+$(function() {
+    $('#table').DataTable({
+      'paging'      : true,
+      'lengthChange': true,
+      'searching'   : true,
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : true
+    })
+  });
+</script>

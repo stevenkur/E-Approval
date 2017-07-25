@@ -17,31 +17,12 @@ Route::get('/', function () {
     return view('auth/login');
 });
 
-Route::get('index', 'IndexController@index');
-
-Route::get('/profile', function () {
-    return view('user/profile');
-});
-
-Route::get('/newclaim', function () {
-    return view('user/newclaim');
-});
-
-Route::get('/listclaim', function () {
-    return view('user/listclaim');
-});
-
-Route::get('/lsfbudgetreport', function () {
-    return view('user/lsfbudgetreport');
-});
-
-Route::get('/monitoringreport', function () {
-    return view('user/monitoringreport');
-});
-
-Route::get('/resolutionreport', function () {
-    return view('user/resolutionreport');
-});
+Route::resource('home', 'HomeController');
+Route::any('newclaim', ['as'=>'newclaim', 'uses'=>'ClaimController@newclaim']);
+Route::any('listclaim', ['as'=>'listclaim', 'uses'=>'ClaimController@listclaim']);
+Route::any('monitoringreport', ['as'=>'monitoringreport', 'uses'=>'ReportController@monitoringreport']);
+Route::any('resolutionreport', ['as'=>'resolutionreport', 'uses'=>'ReportController@resolutionreport']);
+Route::any('profile', ['as'=>'profile', 'uses'=>'ProfileController@changepassword']);
 
 Route::resource('masteraccount', 'AccountController');
 Route::resource('masterrole', 'RoleController');
@@ -56,6 +37,7 @@ Route::resource('masterdistributor', 'DistributorController');
 Route::resource('mastermarketing', 'MarketingController');
 Route::resource('masterprogram', 'ProgramController');
 Route::resource('masterperiod', 'PeriodController');
+Route::any('dashboard', ['as'=>'dashboard', 'uses'=>'AdminController@dashboard']);
 Route::any('query', ['as'=>'query', 'uses'=>'AdminController@query']);
 Route::any('queryresult', ['as'=>'queryresult', 'uses'=>'AdminController@queryresult']);
 Route::any('listticket', ['as'=>'listticket', 'uses'=>'AdminController@listticket']);
