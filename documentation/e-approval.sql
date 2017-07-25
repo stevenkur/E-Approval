@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 24, 2017 at 06:29 AM
+-- Generation Time: Jul 25, 2017 at 12:05 PM
 -- Server version: 10.1.8-MariaDB
 -- PHP Version: 5.6.14
 
@@ -152,7 +152,8 @@ INSERT INTO `category_accesses` (`id_access`, `id_user`, `id_category`, `id_role
 (58, 18, 2, 18, 5, NULL, NULL),
 (59, 18, 3, 18, 5, NULL, NULL),
 (60, 18, 5, 18, 5, NULL, NULL),
-(61, 18, 6, 18, 5, NULL, NULL);
+(61, 18, 6, 18, 5, NULL, NULL),
+(70, 19, 1, 1, 5, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -188,7 +189,7 @@ INSERT INTO `category_details` (`id_categorydetail`, `nama_category`, `category_
 --
 
 CREATE TABLE `claims` (
-  `id_claim` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_claim` varchar(12) COLLATE utf8mb4_unicode_ci NOT NULL,
   `nama_category` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
   `category_type` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
   `nama_program` varchar(75) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -318,7 +319,8 @@ CREATE TABLE `holidays` (
 
 INSERT INTO `holidays` (`id_holiday`, `tanggal_libur`, `date_name`, `created_at`, `updated_at`) VALUES
 (1, '2017-07-22', 'Sabtu', NULL, NULL),
-(2, '2017-07-23', 'Minggu', NULL, NULL);
+(2, '2017-07-23', 'Minggu', NULL, NULL),
+(3, '2017-07-29', 'Saturday', '2017-07-24 01:00:56', '2017-07-24 01:00:56');
 
 -- --------------------------------------------------------
 
@@ -393,7 +395,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (86, '2017_07_17_094601_create_claim_attachments_table', 1),
 (87, '2017_07_17_094636_create_activities_table', 1),
 (88, '2017_07_17_094707_create_log_claims_table', 1),
-(89, '2017_07_24_041741_create_user_roles_table', 2);
+(90, '2017_07_24_041741_create_user_roles_table', 2),
+(92, '2017_07_24_085252_create_periods_table', 3);
 
 -- --------------------------------------------------------
 
@@ -405,6 +408,24 @@ CREATE TABLE `password_resets` (
   `email` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `periods`
+--
+
+CREATE TABLE `periods` (
+  `id_period` int(10) UNSIGNED NOT NULL,
+  `tahun` int(11) NOT NULL,
+  `kuarter` int(11) NOT NULL,
+  `bulan` int(11) NOT NULL,
+  `minggu` int(11) NOT NULL,
+  `start_date` int(11) NOT NULL,
+  `end_date` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -472,6 +493,24 @@ INSERT INTO `roles` (`id_role`, `nama_role`, `created_at`, `updated_at`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `sessions`
+--
+
+CREATE TABLE `sessions` (
+  `id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_user` int(11) DEFAULT NULL,
+  `email` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `role` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `category` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ip_address` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_agent` text COLLATE utf8mb4_unicode_ci,
+  `payload` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `last_activity` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -517,7 +556,7 @@ INSERT INTO `users` (`id_user`, `nama_user`, `email`, `password`, `email1`, `ema
 (16, 'Luella Luhukay', 'luella.luhukay@philips.com', 'c6d3a24f43029753e6a4282f47396124', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
 (17, 'Riste Milev', 'riste.milev@philips.com', 'b9323347bbfb06fc8a93a6e5fad345a4', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
 (18, 'Rami Hajjar', 'rami.hajjar@philips.com', '7190450dd391c8d4f3d568a9601eb8bd', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
-(19, 'Administrator', 'Administrator', '7b7bc2512ee1fedcd76bdc68926d4f7b', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL);
+(19, 'Administrator', 'administrator@philips.com', '753326adaa4a35eb577785c4b55b93c8', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -574,16 +613,18 @@ INSERT INTO `user_distributors` (`id_user_distributor`, `id_user`, `id_dist`, `c
 CREATE TABLE `user_roles` (
   `id_user_roles` int(10) UNSIGNED NOT NULL,
   `id_user` int(11) NOT NULL,
-  `id_role` int(11) NOT NULL
+  `id_role` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `user_roles`
 --
 
-INSERT INTO `user_roles` (`id_user_roles`, `id_user`, `id_role`) VALUES
-(1, 1, 2),
-(2, 2, 3);
+INSERT INTO `user_roles` (`id_user_roles`, `id_user`, `id_role`, `created_at`, `updated_at`) VALUES
+(1, 1, 2, '2017-07-23 23:51:22', '2017-07-23 23:51:22'),
+(2, 2, 3, '2017-07-23 23:51:29', '2017-07-23 23:51:29');
 
 --
 -- Indexes for dumped tables
@@ -679,6 +720,13 @@ ALTER TABLE `password_resets`
   ADD KEY `password_resets_email_index` (`email`);
 
 --
+-- Indexes for table `periods`
+--
+ALTER TABLE `periods`
+  ADD PRIMARY KEY (`id_period`),
+  ADD UNIQUE KEY `periods_id_period_unique` (`id_period`);
+
+--
 -- Indexes for table `programs`
 --
 ALTER TABLE `programs`
@@ -730,7 +778,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `category_accesses`
 --
 ALTER TABLE `category_accesses`
-  MODIFY `id_access` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `id_access` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 --
 -- AUTO_INCREMENT for table `category_details`
 --
@@ -760,7 +808,7 @@ ALTER TABLE `flows`
 -- AUTO_INCREMENT for table `holidays`
 --
 ALTER TABLE `holidays`
-  MODIFY `id_holiday` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_holiday` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `log_claims`
 --
@@ -770,12 +818,17 @@ ALTER TABLE `log_claims`
 -- AUTO_INCREMENT for table `marketings`
 --
 ALTER TABLE `marketings`
-  MODIFY `id_marketing` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_marketing` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
+--
+-- AUTO_INCREMENT for table `periods`
+--
+ALTER TABLE `periods`
+  MODIFY `id_period` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `programs`
 --
