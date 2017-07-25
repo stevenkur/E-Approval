@@ -105,7 +105,7 @@
       <section class="content-header">
         <h1>
           Hello,
-          <small><b>User Name (Role)</b></small>
+          <small><b>{{ Session::get('email') }}</b></small>
         </h1>
         <!-- <h4 align="right">{{ date('l, d M Y') }}</h4> -->
         <!-- <ol class="breadcrumb">

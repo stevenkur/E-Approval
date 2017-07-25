@@ -11,6 +11,12 @@ use DB;
 
 class AccountController extends Controller
 {
+    // public function __construct(Request $request)
+    // {
+    //     if(!$request->session()->has('email'))
+    //         return view('auth/login');
+    // }
+
     /**
      * Display a listing of the resource.
      *
