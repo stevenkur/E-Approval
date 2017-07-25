@@ -4,15 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
-<<<<<<< HEAD
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\DB;
-=======
 use App\Claim;
 use App\Claim_attachment;
 use DB;
-
->>>>>>> origin/master
 
 class AdminController extends Controller
 {
