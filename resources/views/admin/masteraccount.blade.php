@@ -4,50 +4,92 @@
     <script type="text/javascript">
         var i=2;
         $(document).on("click", '.addrow', function (){            
-            newrow = '<div class="form-group"><label class="col-md-4 control-label">Email *</label><div class="col-md-8"><input type="text" class="form-control" id="email" name="email" placeholder="" required="required" style="text-align: right;" /></div>   </div>';                    
+            newrow = '<div class="form-group"><label class="col-md-4 control-label">Email *</label><div class="col-md-8"><input type="text" class="form-control" id="email" name="email" placeholder="" style="text-align: right;" /></div>   </div>';                    
             $(this).parent().before(newrow);
             i++;      
         });
     </script>
 
+    <?php 
+        if(isset($_GET['idactivity'])){
+            dd($activity);
+            foreach($activity as $activities){
+                if($activities['id_activity']==$_GET['idactivity']){
+                    $idactivity = $activities['id_activity'];
+                    $namaactivity = $activities['nama_activity'];
+                 
+                }
+            }
+            $flag=true;
+        }
+        else 
+            $flag=false;
+    ?>  
+
     <!-- Main content -->
     <section class="content">
     <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-12">
         <div class="box box-primary">
             <form action="#" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewaccount">
             {{csrf_field()}}
             <div class="box-header with-border">
                 <h3 class="box-title">Create Account</h3>
             </div>
-            <div class="box-body">
-                <div class="form-group">
-                    <label class="col-md-4 control-label">Primary Email</label>
-                    <div class="col-md-8">
-                        <input type="text" class="form-control" id="email" name="email" placeholder="" required="required" style="text-align: right;" />
+            <div class="box-body">            
+                <div class="row">
+                <div class="col-md-5"><br>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Primary Email</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" id="email" name="email" placeholder="" required="required" />
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-4 control-label">Name</label>
-                    <div class="col-md-8">
-                        <input type="text" class="form-control" id="name" name="name" placeholder="" required="required" style="text-align: right;" />
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Name</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" id="name" name="name" placeholder="" required="required" />
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-4 control-label">Password</label>
-                    <div class="col-md-8">
-                        <input type="text" class="form-control" id="password" name="password" placeholder="" required="required" style="text-align: right;" />
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Password</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" id="password" name="password" placeholder="" required="required" />
+                        </div>
                     </div>
+                    <div class="col-md-12" align="center">
+                        <button class="btn btn-primary addrow">Add Email CC</button>
+                    </div> 
                 </div>
-                 <div class="form-group">
-                    <label class="col-md-4 control-label">Other Email</label>
-                    <div class="col-md-8">
-                        <input type="text" class="form-control" id="password" name="otheremail" placeholder="" required="required" style="text-align: right;" />
-                    </div>
+                <div class="col-md-7">
+                    <table id="tableinput" class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Checklist</th>
+                            <th>Department</th>
+                            <th>Auto Approve Day</th>
+                            <th>Role</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($category as $categories)
+                        <tr>
+                            <td align="center"><input type="checkbox" name="{{ $categories->id_category }}"></td>
+                            <td>{{ $categories->nama_category }}</td>
+                            <td align="center"><input class="form-control" type="text" name="" style="width: 75px;"></td>
+                            <td>
+                                <select class="form-control" id="role" name="role">
+                                    @foreach($role as $roles)
+                                    <option value="{{ $roles->id_role }}">{{ $roles->nama_role }}</option>
+                                    @endforeach
+                                </select>
+                            </td>
+                        </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
                 </div>
-                <div class="col-md-12" align="center">
-                    <button class="btn btn-primary addrow">Add Email CC</button>
-                </div> 
+                </div>
             </div>
 
             <div class="box-footer" align="right">
@@ -75,6 +117,7 @@
                         <th>Email</th>
                         <th>Name</th>
                         <th>Password</th>
+                        <th>Category</th>
                         <th>Role</th>
                         <th>Distributor ID</th>
                         <th>Edit</th>
@@ -82,33 +125,23 @@
                     </tr>
                     </thead>
                     <tbody>
+                    @foreach($user as $users)
                     <tr>
+                        <td>{{ $users->email }}</td>
+                        <td>{{ $users->nama_user }}</td>
+                        <td>{{ $users->password }}</td>
                         <td>tes</td>
                         <td>tes</td>
                         <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
+                        <td>Edit</td>
+                        <td>
+                            {{ Form::open(array('url' => 'masteraccount/' . $users->id_user)) }}
+                            {{ Form::hidden('_method', 'DELETE') }}
+                            {{ Form::submit('Delete', array('onclick'=>"return confirm('Anda yakin akan menghapus data ?');", 'class' => 'btn btn-danger')) }}
+                            {{ Form::close() }}
+                        </td>
                     </tr>
-                    <tr>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                    </tr>
-                    <tr>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                    </tr>
+                    @endforeach
                     </tbody>
                 </table>
             </div>
@@ -146,6 +179,14 @@ $(function() {
       'ordering'    : true,
       'info'        : true,
       'autoWidth'   : true
+    })
+    $('#tableinput').DataTable({
+      'paging'      : false,
+      'lengthChange': false,
+      'searching'   : false,
+      'ordering'    : false,
+      'info'        : false,
+      'autoWidth'   : false
     })
   });
 </script>

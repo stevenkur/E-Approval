@@ -98,7 +98,7 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         //
-         $category = Category::where('id_category',$id)->delete(); 
+        $category = Category::where('id_category',$id)->delete(); 
         
         return redirect()->route('mastercategory.index')->with('alert-success', 'Data Berhasil Dihapus.');
    

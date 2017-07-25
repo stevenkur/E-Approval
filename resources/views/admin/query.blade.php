@@ -20,6 +20,37 @@
       		  </div>
         </form>
         </div>
+        @if(isset($Message))
+          <div class="alert alert-success">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            {{ $Message }}
+          </div>
+        @endif
+        @if(isset($result))
+        <div class="col-md-12">
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Hasil Query</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <table id="table" class="table table-bordered table-striped">
+              <thead>
+
+              </thead>
+              <tbody>
+              @foreach($result as $results)
+              <tr>
+                 
+              </tr>
+              @endforeach
+              </tbody>
+              </table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+        </div>
+        @endif
     </center>
     </section>
     <!-- /.content -->

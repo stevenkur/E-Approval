@@ -14,7 +14,7 @@ class CreateClaimsTable extends Migration
     public function up()
     {
         Schema::create('claims', function (Blueprint $table) {
-            $table->string('id_claim',11)->unique;
+            $table->string('id_claim',12)->unique;
             $table->string('nama_category', 30);
             $table->string('category_type', 30);
             $table->string('nama_program', 75);

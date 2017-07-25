@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
 use App\User;
+use App\Category;
+use App\Role;
 use DB;
 
 class AccountController extends Controller
@@ -18,7 +20,9 @@ class AccountController extends Controller
     {
         //
         $user=User::all();
-        return view('admin/masteruser')->with('user', $user);
+        $category=Category::all();
+        $role=Role::all();
+        return view('admin/masteraccount')->with('user', $user)->with('role', $role)->with('category', $category);
     }
 
     /**
@@ -85,5 +89,8 @@ class AccountController extends Controller
     public function destroy($id)
     {
         //
+        $user = User::where('id_user',$id)->delete(); 
+        
+        return redirect()->route('masteraccount.index')->with('alert-success', 'Data Berhasil Dihapus.');
     }
 }
