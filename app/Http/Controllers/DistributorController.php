@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Distributor;
+use Session;
 
 class DistributorController extends Controller
 {
@@ -15,8 +16,15 @@ class DistributorController extends Controller
     public function index()
     {
         //
-        $distributor=Distributor::all();
-        return view('admin/masterdistributor')->with('distributor', $distributor);
+        if (strcasecmp(Session::get('email'),'administrator@philips.com')!=0)
+        {
+            return view('auth/login'); 
+        }
+        else
+        {
+            $distributor=Distributor::all();
+            return view('admin/masterdistributor')->with('distributor', $distributor);
+        }
     }
 
     /**

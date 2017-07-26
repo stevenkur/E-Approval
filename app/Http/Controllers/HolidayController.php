@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use DateTime;
 use App\Holiday;
 use DB;
+use Session;
 
 class HolidayController extends Controller
 {
@@ -17,9 +18,15 @@ class HolidayController extends Controller
     public function index()
     {
         //
-        $holiday=Holiday::all();
-        return view('admin/masterholiday')->with('holiday',$holiday);
-
+        if (strcasecmp(Session::get('email'),'administrator@philips.com')!=0)
+        {
+            return view('auth/login'); 
+        }
+        else
+        {
+            $holiday=Holiday::all();
+            return view('admin/masterholiday')->with('holiday',$holiday);
+        }
     }
 
     /**

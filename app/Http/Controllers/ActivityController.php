@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
 use App\Activity;
 use DB;
+use Session;
 
 
 class ActivityController extends Controller
@@ -18,8 +19,15 @@ class ActivityController extends Controller
     public function index()
     {
         //
-        $activity=Activity::all();
-        return view('admin/masteractivity')->with('activity', $activity);
+        if (strcasecmp(Session::get('email'),'administrator@philips.com')!=0)
+        {
+            return view('auth/login'); 
+        }
+        else
+        {
+            $activity=Activity::all();
+            return view('admin/masteractivity')->with('activity', $activity);
+        }
     }
 
     /**

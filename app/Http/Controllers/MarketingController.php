@@ -8,7 +8,7 @@ use App\Marketing;
 use App\Program;
 use App\Distributor;
 use DB;
-
+use Session;
 
 class MarketingController extends Controller
 {
@@ -20,12 +20,18 @@ class MarketingController extends Controller
     public function index()
     {
         //
-        $marketing=DB::select(DB::raw("SELECT A.id_marketing, A.id_dist, B.nama_distributor, A.id_program, C.nama_program, A.entitlement,  A.maxclaim_date FROM marketings A, distributors B, programs C WHERE A.id_dist=B.id_dist and A.id_program=C.id_program "));
-        $program=Program::all();
-        $distributor=Distributor::all();
-      
-        return view('admin/mastermarketing')->with('program', $program)->with('distributor', $distributor)->with('marketing', $marketing);
-
+        if (strcasecmp(Session::get('email'),'administrator@philips.com')!=0)
+        {
+            return view('auth/login'); 
+        }
+        else
+        {
+            $marketing=DB::select(DB::raw("SELECT A.id_marketing, A.id_dist, B.nama_distributor, A.id_program, C.nama_program, A.entitlement,  A.maxclaim_date FROM marketings A, distributors B, programs C WHERE A.id_dist=B.id_dist and A.id_program=C.id_program "));
+            $program=Program::all();
+            $distributor=Distributor::all();
+          
+            return view('admin/mastermarketing')->with('program', $program)->with('distributor', $distributor)->with('marketing', $marketing);
+        }
     }
 
     /**

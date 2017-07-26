@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
 use App\Role;
 use App\Flow;
+use Session;
 use DB;
 
 class FlowController extends Controller
@@ -18,10 +19,16 @@ class FlowController extends Controller
     public function index()
     {
         //
-        $role=Role::all();
-        $flow=Flow::all();
-        return view('admin/masterflow')->with('flow', $flow);
-
+        if (strcasecmp(Session::get('email'),'administrator@philips.com')!=0)
+        {
+            return view('auth/login'); 
+        }
+        else
+        {
+            $role=Role::all();
+            $flow=Flow::all();
+            return view('admin/masterflow')->with('flow', $flow);
+        }
     }
 
     /**

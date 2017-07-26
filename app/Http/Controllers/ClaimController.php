@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Session;
 
 class ClaimController extends Controller
 {
@@ -15,12 +16,26 @@ class ClaimController extends Controller
     public function newclaim()
     {
         //
-        return view('user/newclaim');
+        if (!(Session::has('email')))
+        {
+            return view('auth/login'); 
+        }
+        else
+        {
+            return view('user/newclaim');
+        }
     }
 
     public function listclaim()
     {
         //
-        return view('user/listclaim');
+        if (!(Session::has('email')))
+        {
+            return view('auth/login'); 
+        }
+        else
+        {
+            return view('user/listclaim');
+        }
     }
 }

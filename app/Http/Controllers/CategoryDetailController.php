@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\CategoryDetail;
 use App\Category;
 use DB;
+use Session;
 
 class CategoryDetailController extends Controller
 {
@@ -18,10 +19,16 @@ class CategoryDetailController extends Controller
     public function index()
     {
         //
-        $categorydetail=CategoryDetail::all();
-        $category=Category::all();
-        return view('admin/mastercategorydetail')->with('categorydetail', $categorydetail)->with('category',$category);
-
+        if (strcasecmp(Session::get('email'),'administrator@philips.com')!=0)
+        {
+            return view('auth/login'); 
+        }
+        else
+        {
+            $categorydetail=CategoryDetail::all();
+            $category=Category::all();
+            return view('admin/mastercategorydetail')->with('categorydetail', $categorydetail)->with('category',$category);
+        }
        
     }
 

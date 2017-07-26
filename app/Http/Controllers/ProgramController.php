@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
 use App\Program;
 use DB;
+use Session;
 
 class ProgramController extends Controller
 {
@@ -15,9 +16,15 @@ class ProgramController extends Controller
      */
     public function index()
     {
-
-        $program=Program::all();
-        return view('admin/masterprogram')->with('program', $program);
+        if (strcasecmp(Session::get('email'),'administrator@philips.com')!=0)
+        {
+            return view('auth/login'); 
+        }
+        else
+        {
+            $program=Program::all();
+            return view('admin/masterprogram')->with('program', $program);
+        }
     }
 
     /**

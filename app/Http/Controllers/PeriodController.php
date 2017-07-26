@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
 use App\Period;
 use DB;
+use Session;
 
 class PeriodController extends Controller
 {
@@ -17,9 +18,15 @@ class PeriodController extends Controller
     public function index()
     {
         //
-
-        $period=Period::all();
-        return view('admin/masterperiod')->with('period', $period);
+        if (strcasecmp(Session::get('email'),'administrator@philips.com')!=0)
+        {
+            return view('auth/login'); 
+        }
+        else
+        {
+            $period=Period::all();
+            return view('admin/masterperiod')->with('period', $period);
+        }
     }
 
     /**

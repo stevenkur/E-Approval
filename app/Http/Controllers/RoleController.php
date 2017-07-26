@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
 use App\Role;
 use DB;
+use Session;
 
 class RoleController extends Controller
 {
@@ -17,8 +18,15 @@ class RoleController extends Controller
     public function index()
     {
         //
-        $role=Role::all();
-        return view('admin/masterrole')->with('role', $role);
+        if (strcasecmp(Session::get('email'),'administrator@philips.com')!=0)
+        {
+            return view('auth/login'); 
+        }
+        else
+        {
+            $role=Role::all();
+            return view('admin/masterrole')->with('role', $role);
+        }
     }
 
     /**

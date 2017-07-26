@@ -8,6 +8,7 @@ use App\User;
 use App\Category;
 use App\Role;
 use DB;
+use Session;
 
 class AccountController extends Controller
 {
@@ -25,10 +26,17 @@ class AccountController extends Controller
     public function index()
     {
         //
-        $user=User::all();
-        $category=Category::all();
-        $role=Role::all();
-        return view('admin/masteraccount')->with('user', $user)->with('role', $role)->with('category', $category);
+         if (strcasecmp(Session::get('email'),'administrator@philips.com')!=0)
+        {
+            return view('auth/login'); 
+        }
+        else
+        {
+            $user=User::all();
+            $category=Category::all();
+            $role=Role::all();
+            return view('admin/masteraccount')->with('user', $user)->with('role', $role)->with('category', $category);
+        }
     }
 
     /**
