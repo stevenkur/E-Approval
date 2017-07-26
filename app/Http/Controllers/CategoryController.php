@@ -18,15 +18,14 @@ class CategoryController extends Controller
     public function index()
     {
         //
-
         if (strcasecmp(Session::get('email'),'administrator@philips.com')!=0)
         {
             return view('auth/login'); 
         }
         else
         {
-        $category=Category::all();
-        return view('admin/mastercategory')->with('category', $category);
+            $category=Category::all();
+            return view('admin/mastercategory')->with('category', $category);
         }
     }
 
