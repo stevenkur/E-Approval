@@ -27,7 +27,8 @@ Route::any('newclaim', ['as'=>'newclaim', 'uses'=>'ClaimController@newclaim']);
 Route::any('listclaim', ['as'=>'listclaim', 'uses'=>'ClaimController@listclaim']);
 Route::any('monitoringreport', ['as'=>'monitoringreport', 'uses'=>'ReportController@monitoringreport']);
 Route::any('resolutionreport', ['as'=>'resolutionreport', 'uses'=>'ReportController@resolutionreport']);
-Route::any('profile', ['as'=>'profile', 'uses'=>'ProfileController@changepassword']);
+Route::any('profile', ['as'=>'profile', 'uses'=>'ProfileController@index']);
+Route::any('profilechange', ['as'=>'profilechange', 'uses'=>'ProfileController@changepassword']);
 
 Route::resource('masteraccount', 'AccountController');
 Route::resource('masterrole', 'RoleController');

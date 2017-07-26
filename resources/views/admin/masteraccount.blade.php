@@ -11,9 +11,9 @@
     </script>
 
     <?php 
-        if(isset($_GET['idactivity'])){
-            dd($activity);
-            foreach($activity as $activities){
+        if(isset($_GET['iduser'])){
+            
+            foreach($user as $activities){
                 if($activities['id_activity']==$_GET['idactivity']){
                     $idactivity = $activities['id_activity'];
                     $namaactivity = $activities['nama_activity'];
@@ -111,6 +111,7 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
+                <div class="table-responsive" style="overflow:auto">
                 <table id="table" class="table table-bordered table-striped">
                     <thead>
                     <tr>
@@ -130,10 +131,11 @@
                         <td>{{ $users->email }}</td>
                         <td>{{ $users->nama_user }}</td>
                         <td>{{ $users->password }}</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>Edit</td>
+                        <td>{{ $users->category }}</td>
+                        <td>{{ $users->role }}</td>
+                        <td>{{ $users->distributor }}</td>
+
+                        <td><a class="btn btn-primary" type ="submit" href="./masteraccount?iduser={{$users->id_user}}">Edit</a></td>
                         <td>
                             {{ Form::open(array('url' => 'masteraccount/' . $users->id_user)) }}
                             {{ Form::hidden('_method', 'DELETE') }}
@@ -144,6 +146,7 @@
                     @endforeach
                     </tbody>
                 </table>
+            </div>
             </div>
             <!-- /.box-body -->
         </div>

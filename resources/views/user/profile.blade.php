@@ -4,8 +4,26 @@
 
     <!-- Main content -->
     <section class="content">
+		    	@if(isset($Message))
+					<div class="alert alert-success">
+			        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+			        {{ $Message }}
+			        </div>
+		        @endif
+		        @if(isset($FailOldMessage))
+					<div class="alert alert-danger">
+			        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+			        {{ $FailOldMessage }}
+			        </div>
+		        @endif
+		        @if(isset($FailConfirmMessage))
+					<div class="alert alert-danger">
+			        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+			        {{ $FailConfirmMessage }}
+			        </div>
+		        @endif
         <div class="box box-primary">
-      		<form class="form-horizontal" role="form" action="" method="post">
+      		<form class="form-horizontal" role="form" action="{{ route('profilechange') }}" method="post">
       		{{csrf_field()}}
       	    <div class="box-header with-border">
       	    	<h3 class="box-title">Change Password</h3>
@@ -14,13 +32,14 @@
 				<div class="form-group">
 				    <label class="control-label col-sm-2">Email</label>
 				    <div class="col-sm-4">
-						<input type="text" class="form-control" id="email" name="email" value="test@email.com" disabled>
+						<input type="text" class="form-control" id="email" name="email" value="{{ $user[0]->email }}" disabled>
+				    	
 				    </div>
 			    </div>
 			    <div class="form-group">
 				    <label class="control-label col-sm-2">Name</label>
 				    <div class="col-sm-4">          
-						<input type="text" class="form-control" id="name" name="name" value="Full Name" disabled>
+						<input type="text" class="form-control" id="name" name="name" value="{{ $user[0]->nama_user }}" disabled>
 				    </div>
 			    </div>
 			    <div class="form-group">
@@ -44,10 +63,11 @@
 		    </div>
 		    <div class="box-footer" align="left">
 		    	<button type="reset" class="btn btn-ok">Reset</button>
-		    	<button type="submit" class="btn btn-primary">Update</button>
+		    	<button type="submit" class="btn btn-primary" >Update</button>
 		    </div>
       		</form>
         </div>
+
     </section>
     <!-- /.content -->
 

@@ -41,7 +41,7 @@
               <tbody>
               @foreach($result as $results)
               <tr>
-                 
+                 <!-- <td>{{$results->id_user}}</td> -->
               </tr>
               @endforeach
               </tbody>

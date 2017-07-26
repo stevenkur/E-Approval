@@ -51,7 +51,10 @@ class AdminController extends Controller
                 $raw=explode(" ", $query);
                 if(strcasecmp($raw[0], 'select')==0)
                 {
-                    // dd($result);
+                    // dd($result[0]);
+                    // $columns= array();
+                    $columns = \DB::connection()->getSchemaBuilder()->getColumnListing($result[0]);
+                    dd($columns);
                     return view('admin/query')->with('result', $result);
 
                 }
