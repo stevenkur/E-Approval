@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
 use App\Category;
+use Session;
 use DB;
 
 class CategoryController extends Controller
@@ -17,8 +18,16 @@ class CategoryController extends Controller
     public function index()
     {
         //
+        dd(strcasecmp(Session::get('email'),'administrator@philips.com');
+        if (strcasecmp(Session::get('email'),'administrator@philips.com')==0)
+        {
+            return view('auth/login'); 
+        }
+        else
+        {
         $category=Category::all();
         return view('admin/mastercategory')->with('category', $category);
+        }
     }
 
     /**
