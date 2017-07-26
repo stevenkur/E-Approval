@@ -18,8 +18,8 @@ class CategoryController extends Controller
     public function index()
     {
         //
-        dd(strcasecmp(Session::get('email'),'administrator@philips.com');
-        if (strcasecmp(Session::get('email'),'administrator@philips.com')==0)
+
+        if (strcasecmp(Session::get('email'),'administrator@philips.com')!=0)
         {
             return view('auth/login'); 
         }
