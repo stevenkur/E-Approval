@@ -34,18 +34,26 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
+              <div class="table-responsive" style="overflow:auto">
               <table id="table" class="table table-bordered table-striped">
               <thead>
-
+                  <tr>
+                      @for ($j=0; $j<$length; $j++)
+                      <th>{{ $key[$j] }}</th>
+                      @endfor
+                  </tr>
               </thead>
               <tbody>
-              @foreach($result as $results)
-              <tr>
-                 <!-- <td>{{$results->id_user}}</td> -->
-              </tr>
-              @endforeach
+              @for($i=0; $i<$length_hasil; $i++)
+                @for ($j=0; $j<$length; $j++)
+                  <td>{{ $result[$i]->$key[$j] }}</td>
+
+                @endfor
+                <tr></tr>
+              @endfor
               </tbody>
               </table>
+            </div>
             </div>
             <!-- /.box-body -->
           </div>

@@ -53,9 +53,26 @@ class AdminController extends Controller
                 {
                     // dd($result[0]);
                     // $columns= array();
-                    $columns = \DB::connection()->getSchemaBuilder()->getColumnListing($result[0]);
-                    dd($columns);
-                    return view('admin/query')->with('result', $result);
+                    // $columns = \DB::connection()->getSchemaBuilder()->getColumnListing($result[0]);
+                    // dd($columns);
+                    
+                    // $tes =print_r($result);
+                    // echo $tes;
+                    // $tes=explode(",", $results);
+                    // dd($tes);
+
+                    $key = array_keys((array)$result[0]);  
+                    
+                    $length = sizeof($key);
+                    $length_hasil= sizeof($result);
+                    // dd($length_hasil);
+                    // echo $results;
+                    // $key = get_object_vars($result[0]);
+                    // echo $key[16];
+                    // echo $result[0]->id_user;
+                    // dd($tes);
+                    // dd($results);
+                    return view('admin/query')->with('result', $result)->with('key', $key)->with('length',$length)->with('length_hasil',$length_hasil);
 
                 }
                 else if(strcasecmp($raw[0], 'insert')==0)
