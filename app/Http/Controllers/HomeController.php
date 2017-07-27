@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Session;
+use App\Category;
 
 class HomeController extends Controller
 {
@@ -32,7 +33,8 @@ class HomeController extends Controller
         }
         else
         {
-            return view('user/index');
+            $category=Category::All();
+            return view('user/index')->with('category', $category);
         }
     }
 }

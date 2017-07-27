@@ -158,7 +158,7 @@
                 </div>
 
             </div>
-            <div class="box-footer" align="left">
+            <div class="box-footer" align="right">
                 <button type="reset" class="btn btn-ok">Reset</button>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>

@@ -8,7 +8,7 @@
         <div class="box box-primary">        
         <h1><center>Welcome to Philips E-Approval Application</center></h1>
             <div class="box-header with-border">
-                <h3 class="box-title">???</h3>
+                <h3 class="box-title">Pending Approval</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -16,20 +16,17 @@
                     <thead>
                     <tr>
                         <th>Pending On</th>
-                        <th>Marcomm</th>
-                        <th>RDP</th>
-                        <th>BDF</th>
+                        @foreach($category as $categories) 
+                        <th>{{ $categories->nama_category }}</th>
+                        @endforeach
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody>                   
                     <tr>
                         <td>DIN</td>
                         <td>Rp 10.000</td>
                         <td>Rp 10.000</td>
                         <td>Rp 10.000</td>
-                    </tr>
-                    <tr>
-                        <td>FA</td>
                         <td>Rp 10.000</td>
                         <td>Rp 10.000</td>
                         <td>Rp 10.000</td>
