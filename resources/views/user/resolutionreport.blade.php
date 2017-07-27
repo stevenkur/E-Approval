@@ -2,11 +2,52 @@
 
 @section('content')
   
-    <!-- Main content -->
     <section class="content">
-        
+    
+
+    <div class="col-md-12">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Resolution Report</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <table id="table" class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th>Nama Role 1</th>
+                        <th>Nama Role 2</th>
+                        <th>Durasi (hari)</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                   
+                    <tr>
+                        <td>Distributor Manager</td>
+                        <td>Sales Manager</td>
+                        <td>3</td>
+                    </tr>
+
+                    <tr>
+                        <td>Sales Manager</td>
+                        <td>Sales Analyst Manager</td>
+                        <td>4</td>
+                    </tr>
+
+                    <tr>
+                        <td>Sales Analyst Manager</td>
+                        <td>Marketing Manager</td>
+                        <td>5</td>
+                    </tr>
+                    
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.box-body -->
+        </div>
+    </div>
+    </div>
     </section>
-    <!-- /.content -->
 
 @stop
 

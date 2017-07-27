@@ -26,42 +26,20 @@
                     </tr>
                     </thead>
                     <tbody>
+                    @foreach($monitoring as $monitorings)
                     <tr>
-                        <td><a href="#">Reg. No</a></td>
-                        <td>Registered On</td>
-                        <td>BP Name</td>
-                        <td>Claim Type</td>
-                        <td>Program Name</td>
-                        <td>Value</td>
-                        <td>Status</td>
-                        <td>Comment</td>
-                        <td>PRNumber</td>
-                        <td>InvoiceNumber</td>
+                        <td><a href="#">{{ $monitorings->id_claim }}<a></td>
+                        <td>{{ $monitorings->created_at }}</td>
+                        <td>{{ $monitorings->nama_distributor }}</td>
+                        <td>{{ $monitorings->category_type }}</td>
+                        <td>{{ $monitorings->nama_program }}</td>
+                        <td>{{ $monitorings->value }}</td>
+                        <td>{{ $monitorings->status }}</td>
+                        <td>{{ $monitorings->comment }}</td>
+                        <td>{{ $monitorings->pr_number }}</td>
+                        <td>{{ $monitorings->invoice_number }}</td>
                     </tr>
-                    <tr>
-                        <td><a href="#">Reg. No</a></td>
-                        <td>Registered On</td>
-                        <td>BP Name</td>
-                        <td>Claim Type</td>
-                        <td>Program Name</td>
-                        <td>Value</td>
-                        <td>Status</td>
-                        <td>Comment</td>
-                        <td>PRNumber</td>
-                        <td>InvoiceNumber</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#">Reg. No</a></td>
-                        <td>Registered On</td>
-                        <td>BP Name</td>
-                        <td>Claim Type</td>
-                        <td>Program Name</td>
-                        <td>Value</td>
-                        <td>Status</td>
-                        <td>Comment</td>
-                        <td>PRNumber</td>
-                        <td>InvoiceNumber</td>
-                    </tr>
+                    @endforeach
                     </tbody>
                 </table>
             </div>

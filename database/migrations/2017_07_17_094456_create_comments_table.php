@@ -17,6 +17,7 @@ class CreateCommentsTable extends Migration
             
             $table->increments('id_comment')->unique();
             $table->text('comment');
+            $table->string('id_claim',12);
             $table->integer('id_user');
             
             $table->timestamps();
