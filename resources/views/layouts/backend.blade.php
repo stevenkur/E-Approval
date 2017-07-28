@@ -1,3 +1,18 @@
+<?php
+  
+  $category_length = sizeof(Session::get('nama_category'));
+  $category = Session::get('nama_category');
+  // $tes=Session::get('category');
+  // dd($tes);
+  // if(isset(Session::get('category')))
+  // {
+  session()->put('categories', $category[0]);
+  $category_now = Session::get('categories');
+  // }
+  // dd($category);
+  // dd($category_length);
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -70,15 +85,22 @@
               </ul>
             </li>            
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Change Area (Marcom) <span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Change Area ({{$category_now}}) <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="#">Marcom</a></li>
+                <!-- <li><a href="#">Marcom</a></li>
                 <li><a href="#">RDP</a></li>
-                <li><a href="#">BDF</a></li>
+                <li><a href="#">BDF</a></li> -->
+                @for($i=0;$i<$category_length;$i++)
+                    <?php $category_now=$category[$i]; ?>
+                    
+                    <li><a href="{{route('home.index')}}">{{ $category[$i] }}</a></li>
+                @endfor
+                
               </ul>
             </li>
           </ul>
         </div>
+
         <!-- /.navbar-collapse -->
         <!-- Navbar Right Menu -->
         <div class="navbar-custom-menu">
