@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Program;
 use DB;
 use Session;
 
@@ -23,7 +24,8 @@ class ClaimController extends Controller
         }
         else
         {
-            return view('user/newclaim');
+            $program=Program::all();
+            return view('user/newclaim')->with('program',$program);
         }
     }
 

@@ -26,8 +26,8 @@ class FlowController extends Controller
         else
         {
             $role=Role::all();
-            $flow=Flow::all();
-            return view('admin/masterflow')->with('flow', $flow);
+            $flow=DB::select(DB::raw("SELECT F.id_flow AS id_flow, F.kode_flow AS kode_flow, F.nama_flow AS nama_flow, F.level_flow AS level_flow, F.id_role, R.nama_role AS nama_role FROM flows F, roles R WHERE F.id_role=R.id_role "));            
+            return view('admin/masterflow')->with('flow', $flow)->with('role', $role);
         }
     }
 

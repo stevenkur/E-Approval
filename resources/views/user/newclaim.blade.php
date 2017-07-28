@@ -27,10 +27,16 @@
             }
             objek.value = d + c;
         }
-    // $(document).on("click", '.addrow', function (){
-    //         newrow = '<label class="custom-file">Another Document<input type="file" id="file" name="file" class="custom-file-input"><span class="custom-file-control"></span></label>';                    
-    //         $(this).parent().parent().before(newrow);
-    //     });
+        updateList = function() {
+            var input = document.getElementById('another');
+            var output = document.getElementById('fileList');
+
+            output.innerHTML = '<tr><td><b>Selected Files:</b></td>';
+            for (var i = 0; i < input.files.length; ++i) {
+                output.innerHTML += '<td> - ' + input.files.item(i).name + ' (' + input.files.item(i).size + ' bytes) </td>';
+            }
+            output.innerHTML += '</tr>';
+        }
     </script>
   
     <!-- Main content -->
@@ -57,9 +63,9 @@
                         <div class="col-md-8">
                             <select class="form-control" id="programname" name="programname">
                                 <option value="#">-- Please Choose One --</option>
-                                <option value="1">Program A</option>
-                                <option value="2">Program B</option>
-                                <option value="3">Program C</option>
+                                @foreach($program as $programs)
+                                <option value="{{ $programs->id_program }}">{{ $programs->nama_program }}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -68,8 +74,8 @@
                         <div class="col-md-8">
                             <select class="form-control" id="programyear" name="programyear">
                                 <option value="#">-- Please Choose One --</option>
-                                <option value="2016">2016</option>
-                                <option value="2017">2017</option>
+                                <option value="<?php echo date("Y")-1; ?>"><?php echo date("Y")-1; ?></option>
+                                <option value="<?php echo date("Y"); ?>"><?php echo date("Y"); ?></option>
                             </select>
                         </div>
                     </div>
@@ -88,7 +94,7 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label">Entitlement</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="entitlement" name="entitlement" value="Rp 1.000.000" required="required" style="text-align: right;" disabled />
+                            <input type="text" class="form-control" id="entitlement" name="entitlement" value="Rp 1.000.000 (WRONG)" required="required" style="text-align: right;" disabled />
                         </div>
                     </div>
                     <div class="form-group required">
@@ -103,20 +109,22 @@
                     <label class="col-md-3 control-label">Attachment</label>
                     <div class="col-md-9">
                         <label class="custom-file">Payment Requisition Form
-                            <input type="file" id="file1" name="file1" class="custom-file-input">
+                            <input type="file" id="file1" name="file1" class="custom-file-input" required>
                             <span class="custom-file-control"></span>
                         </label>
                         <label class="custom-file">Original Tax & Supplier Invoices
-                            <input type="file" id="file2" name="file2" class="custom-file-input">
+                            <input type="file" id="file2" name="file2" class="custom-file-input" required>
                             <span class="custom-file-control"></span>
                         </label>
                         <label class="custom-file">AirwayBill Number
-                            <input type="file" id="file3" name="file3" class="custom-file-input">
+                            <input type="file" id="file3" name="file3" class="custom-file-input" required>
                             <span class="custom-file-control"></span>
                         </label>
-                        <!-- <div class="col-md-2">
-                            <button class="btn btn-primary addrow">Add</button>
-                        </div> -->
+                        <label class="custom-file">Another Attachment
+                            <input type="file" id="another" name="another" class="custom-file-input" multiple onchange="updateList()">
+                            <span class="custom-file-control"></span>
+                        </label>
+                        <div><table id="fileList"></table></div>
                     </div>
                 </div>
 
@@ -127,25 +135,25 @@
                             <label><input type="checkbox" value="1">Payment Requisition Form (Please attached the scanned document on this claim)</label>
                         </div>
                         <div class="checkbox">
-                            <label><input type="checkbox" value="2">Marketing Program Letter/BDF proposal Approval/Natura template</label>
+                            <label><input type="checkbox" value="2">Original Tax & Supplier Invoices. Tax must be addressed to PT Philips Indonesia (Please attached the scanned document on this claim)</label>
                         </div>
                         <div class="checkbox">
-                            <label><input type="checkbox" value="3">Marketing activity report with achievement</label>
+                            <label><input type="checkbox" value="3">AirwayBill Number (Please attached the scanned document on this claim)</label>
                         </div>
                         <div class="checkbox">
-                            <label><input type="checkbox" value="4">Original Tax & Supplier Invoices. Tax must be addressed to PT Philips Indonesia (Please attached the scanned document on this claim)</label>
+                            <label><input type="checkbox" value="4">Marketing Program Letter/BDF proposal Approval/Natura template</label>
                         </div>
                         <div class="checkbox">
-                            <label><input type="checkbox" value="5">BP Invoice to Philips with BP signed & stamp</label>
+                            <label><input type="checkbox" value="5">Marketing activity report with achievement</label>
                         </div>
                         <div class="checkbox">
-                            <label><input type="checkbox" value="6">Marketing Activity Picture</label>
+                            <label><input type="checkbox" value="6">BP Invoice to Philips with BP signed & stamp</label>
                         </div>
                         <div class="checkbox">
-                            <label><input type="checkbox" value="7">Other supporting document</label>
+                            <label><input type="checkbox" value="7">Marketing Activity Picture</label>
                         </div>
                         <div class="checkbox">
-                            <label><input type="checkbox" value="8">AirwayBill Number (Please attached the scanned document on this claim)</label>
+                            <label><input type="checkbox" value="8">Other supporting document</label>
                         </div>
                     </div>
                 </div>

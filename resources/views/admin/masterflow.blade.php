@@ -43,9 +43,9 @@
                     <div class="col-md-4">
                         <select class="form-control" id="role" name="role">
                             <option value="#">-- Please Choose Role --</option>
-                            <option value="1">Role A</option>
-                            <option value="2">Role B</option>
-                            <option value="3">Role C</option>
+                            @foreach($role as $roles)
+                            <option value="{{ $roles->id_role }}">{{ $roles->nama_role }}</option>
+                            @endforeach
                         </select>
                     </div>          
                 </div>         
@@ -83,33 +83,17 @@
                     </tr>
                     </thead>
                     <tbody>
+                    @foreach($flow as $flows)
                     <tr>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
+                        <td>{{ $flows->id_flow }}</td>
+                        <td>{{ $flows->kode_flow }}</td>
+                        <td>{{ $flows->level_flow }}</td>
+                        <td>{{ $flows->nama_flow }}</td>
+                        <td>{{ $flows->nama_role }}</td>
+                        <td>edit</td>
+                        <td>delete</td>
                     </tr>
-                    <tr>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                    </tr>
-                    <tr>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                        <td>tes</td>
-                    </tr>
+                    @endforeach
                     </tbody>
                 </table>
             </div>
