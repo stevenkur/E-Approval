@@ -34,7 +34,7 @@ class AccountController extends Controller
         }
         else
         {
-            $user=DB::select(DB::raw("SELECT A.id_user,A.email, A.nama_user,A.password, GROUP_CONCAT(DISTINCT C.nama_category SEPARATOR ' ') as category, GROUP_CONCAT(DISTINCT D.nama_role SEPARATOR ' ') as role, GROUP_CONCAT(DISTINCT E.distributor_id SEPARATOR ' ') as distributor, GROUP_CONCAT(DISTINCT B.id_category SEPARATOR ' ') as id_category, GROUP_CONCAT(DISTINCT B.id_role SEPARATOR ' ') as id_role, GROUP_CONCAT(DISTINCT F.id_dist SEPARATOR ' ') as id_dist FROM users A, category_accesses B, categories C, roles D, distributors E, user_distributors F WHERE (B.id_user=A.id_user and B.id_category=C.id_category and B.id_role=D.id_role and F.id_dist=E.id_dist and A.id_user=F.id_user) group by A.id_user, A.email, A.nama_user, A.password" ));
+            $user=DB::select(DB::raw("SELECT A.id_user,A.email, A.nama_user,A.password, GROUP_CONCAT(DISTINCT C.nama_category SEPARATOR ', ') as category, GROUP_CONCAT(DISTINCT D.nama_role SEPARATOR ' ') as role, GROUP_CONCAT(DISTINCT E.distributor_id SEPARATOR ', ') as distributor, GROUP_CONCAT(DISTINCT B.id_category SEPARATOR ' ') as id_category, GROUP_CONCAT(DISTINCT B.id_role SEPARATOR ', ') as id_role, GROUP_CONCAT(DISTINCT F.id_dist SEPARATOR ' ') as id_dist FROM users A, category_accesses B, categories C, roles D, distributors E, user_distributors F WHERE (B.id_user=A.id_user and B.id_category=C.id_category and B.id_role=D.id_role and F.id_dist=E.id_dist and A.id_user=F.id_user) group by A.id_user, A.email, A.nama_user, A.password" ));
             $category=Category::all();
             $role=Role::all();
             return view('admin/masteraccount')->with('user', $user)->with('role', $role)->with('category',$category);

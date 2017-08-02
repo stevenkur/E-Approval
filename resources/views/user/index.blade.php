@@ -21,17 +21,30 @@
                         @endforeach
                     </tr>
                     </thead>
-                    <tbody>                   
-                    
+                    <tbody>
                     <tr>
-                        <td>Release</td>
+                        <td>DM</td>
                         <td>Rp 10.000</td>
                         <td>Rp 10.000</td>
                         <td>Rp 10.000</td>
                         <td>Rp 10.000</td>
                     </tr>
                     <tr>
-                        <td>Total</td>
+                        <td>Finance</td>
+                        <td>Rp 10.000</td>
+                        <td>Rp 10.000</td>
+                        <td>Rp 10.000</td>
+                        <td>Rp 10.000</td>
+                    </tr>
+                    <tr>
+                        <td><b>Release</b></td>
+                        <td>Rp 10.000</td>
+                        <td>Rp 10.000</td>
+                        <td>Rp 10.000</td>
+                        <td>Rp 10.000</td>
+                    </tr>
+                    <tr>
+                        <td><b>Total</b></td>
                         <td>Rp 10.000</td>
                         <td>Rp 10.000</td>
                         <td>Rp 10.000</td>
@@ -67,12 +80,12 @@
 <script>
 $(function() {
     $('#table').DataTable({
-      'paging'      : true,
-      'lengthChange': true,
-      'searching'   : true,
-      'ordering'    : true,
-      'info'        : true,
-      'autoWidth'   : true
+      'paging'      : false,
+      'lengthChange': false,
+      'searching'   : false,
+      'ordering'    : false,
+      'info'        : false,
+      'autoWidth'   : false
     })
   });
 </script>
