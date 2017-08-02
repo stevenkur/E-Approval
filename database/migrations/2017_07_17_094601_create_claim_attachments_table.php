@@ -18,7 +18,15 @@ class CreateClaimAttachmentsTable extends Migration
             $table->string('id_claim', 10);
             $table->string('path_attachment', 50);
             $table->string('nama_attachment', 25);
-            
+            $table->integer('reserve1')->nullable();
+            $table->integer('reserve2')->nullable();
+            $table->integer('reserve3')->nullable();
+            $table->string('reserve4',255)->nullable();
+            $table->string('reserve5',255)->nullable();
+            $table->string('reserve6',255)->nullable();
+            $table->timestamps('reserve7')->nullable();
+            $table->timestamps('reserve8')->nullable();
+            $table->timestamps('reserve9')->nullable();
            
             $table->timestamps();
         });

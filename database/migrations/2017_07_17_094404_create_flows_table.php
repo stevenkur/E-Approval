@@ -19,7 +19,15 @@ class CreateFlowsTable extends Migration
             $table->string('nama_flow', 50);
             $table->integer('id_role');
             $table->integer('level_flow');
-            
+            $table->integer('reserve1')->nullable();
+            $table->integer('reserve2')->nullable();
+            $table->integer('reserve3')->nullable();
+            $table->string('reserve4',255)->nullable();
+            $table->string('reserve5',255)->nullable();
+            $table->string('reserve6',255)->nullable();
+            $table->timestamps('reserve7')->nullable();
+            $table->timestamps('reserve8')->nullable();
+            $table->timestamps('reserve9')->nullable();
             $table->timestamps();
         });
     }

@@ -20,9 +20,9 @@ pake chart
 staf bisa lihat report
 
 -------------------------
-user ada categorynya
+user ada categorynya (sudah)
 
-tambah 1 kategori ctb
+tambah 1 kategori ctb (sudah)
 
 home user tambah row release, total
 
@@ -34,7 +34,7 @@ di semua user ada report summary claim bentuk grafik ada filternya(pending)
 -entitlement/program 
 -entitlement/category
 
-tambah 9 reserve kolom tiap tabel  
+tambah 9 reserve kolom tiap tabel  (sudah di codingan migrate di sql belum)
 --------------------------
 sell thru summary dikasih batas 100 persen
 dibalik urutannya besar ke kecil
