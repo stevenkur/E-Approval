@@ -27,13 +27,13 @@
                 <div class="form-group">
                     <label class="col-md-2 control-label">Flow Code</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control" id="email" name="email" placeholder="" required="required" style="text-align: right;" />
+                        <input type="text" class="form-control" id="flowcode" name="flowcode" placeholder="" required="required"  />
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Flow Name</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control" id="email" name="email" placeholder="" required="required" style="text-align: right;" />
+                        <input type="text" class="form-control" id="flowname" name="flowname" placeholder="" required="required"  />
                     </div>
                 </div>
                 <div class="form-group">

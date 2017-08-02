@@ -50,10 +50,25 @@ class FlowController extends Controller
     public function store(Request $request)
     {
         //
-        // dd(Input::all());
-        $count = sizeof(Input::all());
-        dd($count);
-    }
+         // dd(Input::all());
+        $flows=Input::all();
+        // dd($flow['flow1']);
+        $count = sizeof(Input::all())-3;
+
+        // dd($count);
+        for($i=1; $i<=$count; $i++)
+        {        
+        $flow= new Flow();
+        $flow->id_role = $flows['flow'.$i];   
+        $flow->kode_flow = $flows['flowcode'];
+        $flow->nama_flow = $flows['flowname'];
+        $flow->level_flow = $i;
+        $flow->save();        
+        
+        }
+        return redirect()->route('masterflow.index')
+            ->with('alert-success', 'Data Berhasil Disimpan.');
+     }
 
     /**
      * Display the specified resource.
