@@ -1,12 +1,19 @@
 @extends('layouts.backend-admin')
 
 @section('content')
-    <script type="text/javascript">
-        var i=2;
-        $(document).on("click", '.addrow', function (){            
-            newrow = '<div class="form-group"><label class="col-md-4 control-label">Email *</label><div class="col-md-8"><input type="text" class="form-control" id="email" name="email" placeholder="" style="text-align: right;" /></div>   </div>';                    
+
+    <script type="text/javascript">        
+        i=2;
+        $(document).on("click", '.addrow', function (){   
+            newrow = '<div class="form-group"><label class="col-md-4 control-label">Email ' + i + '</label><div class="col-md-8"><input type="text" class="form-control" id="email' + i + '" name="email' + i + '" placeholder="" /></div></div>';  
+
+            if(i==9)
+            {
+                document.getElementById('addemail').style.visibility = 'hidden';
+            }
+            
+            i++;
             $(this).parent().before(newrow);
-            i++;      
         });
     </script>
 
@@ -42,23 +49,23 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label">Primary Email</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="email" name="email" placeholder="" required="required" />
+                            <input type="text" class="form-control" id="email" name="email" placeholder="" required />
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-4 control-label">Name</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="name" name="name" placeholder="" required="required" />
+                            <input type="text" class="form-control" id="name" name="name" placeholder="" required />
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-4 control-label">Password</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="password" name="password" placeholder="" required="required" />
+                            <input type="text" class="form-control" id="password" name="password" placeholder="" required />
                         </div>
                     </div>
                     <div class="col-md-12" align="center">
-                        <button class="btn btn-primary addrow">Add Email CC</button>
+                        <a id="addemail" class="btn btn-primary addrow">Add Email CC</a>
                     </div> 
                 </div>
                 <div class="col-md-7">
