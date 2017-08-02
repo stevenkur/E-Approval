@@ -6,7 +6,7 @@
   // dd($tes);
   // if(isset(Session::get('category')))
   // {
-  session()->put('categories', $category[0]);
+  // session()->put('categories', $category[0]);
   $category_now = Session::get('categories');
   // }
   // dd($category);
@@ -91,9 +91,10 @@
                 <li><a href="#">RDP</a></li>
                 <li><a href="#">BDF</a></li> -->
                 @for($i=0;$i<$category_length;$i++)
-                    <?php $category_now=$category[$i]; ?>
                     
-                    <li><a href="{{route('home.index')}}">{{ $category[$i] }}</a></li>
+                    
+                    <li><a href="{{route('changearea',$category[$i])}}">{{ $category[$i] }}</a></li>
+                    
                 @endfor
                 
               </ul>

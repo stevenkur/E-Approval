@@ -48,7 +48,9 @@ class LoginController extends Controller
                 }
                 $request->session()->put('role', $role);
                 $request->session()->put('nama_category', $nama_category);
-                
+                $category = Session::get('nama_category');
+                session()->put('categories', $category[0]);
+                $category_now = Session::get('categories');
                 // dd(Session()->all());
                 return redirect()->route('home.index');
         	}

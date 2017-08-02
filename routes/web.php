@@ -23,6 +23,8 @@ Route::get('logout', ['as'=>'logout', 'uses'=>'LoginController@logout']);
 
 
 Route::resource('home', 'HomeController');
+Route::any('changearea/{category}', ['as'=>'changearea', 'uses'=>'HomeController@changearea']);
+
 Route::any('newclaim', ['as'=>'newclaim', 'uses'=>'ClaimController@newclaim']);
 Route::any('listclaim', ['as'=>'listclaim', 'uses'=>'ClaimController@listclaim']);
 Route::any('monitoringreport', ['as'=>'monitoringreport', 'uses'=>'ReportController@monitoringreport']);

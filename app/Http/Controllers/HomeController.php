@@ -40,4 +40,19 @@ class HomeController extends Controller
             return view('user/index')->with('category', $category);
         }
     }
+
+    public function changearea($category)
+    {
+        if (!(Session::has('email')))
+        {
+            return view('auth/login'); 
+        }
+        else
+        {
+            // var_dump($category);
+            session()->put('categories', $category);
+            return redirect()->route('home.index');
+            
+        }
+    }
 }
