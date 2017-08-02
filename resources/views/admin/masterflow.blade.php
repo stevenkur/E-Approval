@@ -5,7 +5,7 @@
     <script type="text/javascript">        
         i=2;
         $(document).on("click", '.addrow', function (){   
-            newrow = '<div class="form-group"><label class="col-md-2 control-label">Flow Level ' + i + '</label><div class="col-md-4"><select class="form-control" id="role' + i + '" name="role' + i + '"><option value="#">-- Please Choose Role --</option>@foreach($role as $roles)<option value="{{ $roles->id_role }}">{{ $roles->nama_role }}</option>@endforeach</select></div></div>';  
+            newrow = '<div class="form-group"><label class="col-md-2 control-label">Flow Level ' + i + '</label><div class="col-md-4"><select class="form-control" id="flow' + i + '" name="flow' + i + '"><option value="#">-- Please Choose Role --</option>@foreach($role as $roles)<option value="{{ $roles->id_role }}">{{ $roles->nama_role }}</option>@endforeach</select></div></div>';  
 
             i++;
             $(this).parent().before(newrow);
@@ -39,7 +39,7 @@
                 <div class="form-group">
                     <label class="col-md-2 control-label">Flow Level 1</label>                    
                     <div class="col-md-4">
-                        <select class="form-control" id="role1" name="role">
+                        <select class="form-control" id="flow1" name="flow1">
                             <option value="#">-- Please Choose Role --</option>
                             @foreach($role as $roles)
                             <option value="{{ $roles->id_role }}">{{ $roles->nama_role }}</option>
@@ -85,8 +85,9 @@
                     <tr>
                         <td>{{ $flows->id_flow }}</td>
                         <td>{{ $flows->kode_flow }}</td>
-                        <td>{{ $flows->level_flow }}</td>
                         <td>{{ $flows->nama_flow }}</td>
+                        <td>{{ $flows->level_flow }}</td>
+                        
                         <td>{{ $flows->nama_role }}</td>
                         <td>edit</td>
                         <td>delete</td>

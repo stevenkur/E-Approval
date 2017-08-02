@@ -7,6 +7,7 @@ use App\User_role;
 use App\Role;
 use App\Users;
 use DB;
+use Session;
 
 class LoginController extends Controller
 {

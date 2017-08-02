@@ -50,7 +50,9 @@ class FlowController extends Controller
     public function store(Request $request)
     {
         //
-        dd(Input::all());
+        // dd(Input::all());
+        $count = sizeof(Input::all());
+        dd($count);
     }
 
     /**
