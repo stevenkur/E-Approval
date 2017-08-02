@@ -42,10 +42,10 @@
     <!-- Main content -->
     <section class="content">
         <div class="box box-primary">
-            <form action="#" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewclaim">
+            <form action="#" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formeditclaim">
             {{csrf_field()}}
             <div class="box-header with-border">
-                <h3 class="box-title">New Claim Registration</h3>
+                <h3 class="box-title">Edit Claim Registration Number. 201701-00001</h3>
             </div>
             <div class="box-body">
                 <div align="left">
@@ -168,7 +168,7 @@
                 <div class="form-group">
                     <label class="col-md-3 control-label">Comment</label>
                     <div class="col-md-9">
-                        <textarea class="form-control" rows="3" name="comment" form="formnewclaim"></textarea>
+                        <textarea class="form-control" rows="3" name="comment" form="formeditclaim"></textarea>
                     </div>
                 </div>
 
