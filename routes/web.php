@@ -14,7 +14,7 @@
 // Auth::routes();
 
 Route::get('/', function () {
-    return view('auth/login');
+    return redirect('login');
 });
 
 Route::get('login', ['as'=>'login', 'uses'=>'LoginController@index']);
