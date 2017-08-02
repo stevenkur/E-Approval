@@ -22,10 +22,16 @@
                     </tr>
                     </thead>
                     <tbody>                   
+                    
                     <tr>
-                        <td>DIN</td>
+                        <td>Release</td>
                         <td>Rp 10.000</td>
                         <td>Rp 10.000</td>
+                        <td>Rp 10.000</td>
+                        <td>Rp 10.000</td>
+                    </tr>
+                    <tr>
+                        <td>Total</td>
                         <td>Rp 10.000</td>
                         <td>Rp 10.000</td>
                         <td>Rp 10.000</td>

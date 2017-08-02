@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 25, 2017 at 12:05 PM
+-- Generation Time: Aug 02, 2017 at 06:11 AM
 -- Server version: 10.1.8-MariaDB
 -- PHP Version: 5.6.14
 
@@ -73,7 +73,8 @@ INSERT INTO `categories` (`id_category`, `nama_category`, `created_at`, `updated
 (3, 'RDP', NULL, NULL),
 (4, 'Natura', NULL, NULL),
 (5, 'BDFConsLum', NULL, NULL),
-(6, 'MarcomConslum', NULL, NULL);
+(6, 'MarcomConslum', NULL, NULL),
+(7, 'CTB', '2017-07-31 20:25:07', '2017-07-31 20:25:07');
 
 -- --------------------------------------------------------
 
@@ -205,6 +206,16 @@ CREATE TABLE `claims` (
   `kode_flow` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
   `level_flow` int(11) NOT NULL,
   `status` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `courier` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `doc_check1` int(11) DEFAULT NULL,
+  `doc_check2` int(11) DEFAULT NULL,
+  `doc_check3` int(11) DEFAULT NULL,
+  `doc_check4` int(11) DEFAULT NULL,
+  `doc_check5` int(11) DEFAULT NULL,
+  `doc_check6` int(11) DEFAULT NULL,
+  `doc_check7` int(11) DEFAULT NULL,
+  `doc_check8` int(11) DEFAULT NULL,
+  `doc_check9` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -232,6 +243,7 @@ CREATE TABLE `claim_attachments` (
 
 CREATE TABLE `comments` (
   `id_comment` int(10) UNSIGNED NOT NULL,
+  `id_claim` varchar(12) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `comment` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `id_user` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -538,7 +550,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id_user`, `nama_user`, `email`, `password`, `email1`, `email2`, `email3`, `email4`, `email5`, `email6`, `email7`, `email8`, `email9`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Distributor A', 'distributor@philips.com', '62959c7041947dbb114dba4e12d74669', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
+(1, 'Distributor A', 'distributor@philips.com', '62959c7041947dbb114dba4e12d74669', '', '', '', '', '', '', '', '', '', NULL, NULL, '2017-07-26 02:57:40'),
 (2, 'mariootto poluan', 'mariootto.poluan@philips.com', 'ea6974be86d52240e12db44819b5344c', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
 (3, 'Heri Dono', 'heri.dono1@philips.com', 'c8184539461c19f227b099dcfa0e3145', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
 (4, 'Admin Marketing', 'admin.marketing@philips.com', '6c8f14f76cb7777b1f171a9139fb8d92', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
@@ -773,7 +785,7 @@ ALTER TABLE `activities`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id_category` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_category` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `category_accesses`
 --

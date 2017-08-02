@@ -31,6 +31,16 @@ class CreateClaimsTable extends Migration
             $table->integer('level_flow');
             $table->string('status', 50);
             $table->timestamps('tanggal_claim');
+            $table->string('courier',100)->nullable();
+            $table->integer('doc_check1')->nullable();
+            $table->integer('doc_check2')->nullable();
+            $table->integer('doc_check3')->nullable();
+            $table->integer('doc_check4')->nullable();
+            $table->integer('doc_check5')->nullable();
+            $table->integer('doc_check6')->nullable();
+            $table->integer('doc_check7')->nullable();
+            $table->integer('doc_check8')->nullable();
+            $table->integer('doc_check9')->nullable();
             $table->integer('reserve1')->nullable();
             $table->integer('reserve2')->nullable();
             $table->integer('reserve3')->nullable();
