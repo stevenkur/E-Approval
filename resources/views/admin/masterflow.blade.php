@@ -76,10 +76,8 @@
                     <label class="col-md-2 control-label">Flow Level <?php echo $i+1; ?></label> 
                     <div class="col-md-4">                        
                         <select class="form-control" id="flow".$i name="flow".$i>
-                            <option value="$idrole[$i]">{{$namarole[$i]}}</option>
-                            @foreach($role as $roles)
-                            <option value="{{ $roles->id_role }}" 
-                            > {{ $roles->nama_role }}</option>
+                            @foreach($role as $roles)                            
+                            <option value="{{ $roles->id_role }}" <?php if($namarole[$i]==$roles->nama_role) echo 'selected'; ?>> {{ $roles->nama_role }}</option>
                             @endforeach
                         </select>
                     </div>

@@ -24,8 +24,10 @@ class ClaimController extends Controller
         }
         else
         {
+            $date=date('Ym');
             $program=Program::all();
-            return view('user/newclaim')->with('program',$program);
+            $regno=DB::select(DB::raw("SELECT LPAD(SUBSTRING_INDEX(id_claim,'-',-1)+1, 5, '0') as number FROM claims WHERE id_claim LIKE '$date%'"));
+            return view('user/newclaim')->with('program',$program)->with('regno',$regno);
         }
     }
 
@@ -42,5 +44,11 @@ class ClaimController extends Controller
             return view('user/listclaim')->with('monitoring',$monitoring);
             
         }
+    }
+
+    public function editclaim()
+    {
+        //
+
     }
 }
