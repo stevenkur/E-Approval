@@ -54,7 +54,7 @@ class FlowController extends Controller
         $flows=Input::all();
         // dd($flow['flow1']);
         $count = sizeof(Input::all())-3;
-
+        // dd($flows);
         // dd($count);
         for($i=1; $i<=$count; $i++)
         {        
@@ -101,9 +101,33 @@ class FlowController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-    }
+        // //
+        // dd($id);
+        $flows=Input::all();
+        dd($flows);
+        // dd($flow['flow1']);
+        $count = sizeof(Input::all())-3;
 
+        // dd($flows);
+        // dd($count);
+        for($i=1; $i<=$count; $i++)
+        {        
+        
+        $flow = Flow::where('id_program',$id); 
+        $program->update([
+            'nama_program' => $request->program,
+            'tahun' => $request->year
+        ]);
+        $flow->id_role = $flows['flow'.$i];   
+        $flow->kode_flow = $flows['flowcode'];
+        $flow->nama_flow = $flows['flowname'];
+        $flow->level_flow = $i;
+        $flow->save();        
+        
+        }
+        return redirect()->route('masterflow.index')
+            ->with('alert-success', 'Data Berhasil Disimpan.');
+    }
     /**
      * Remove the specified resource from storage.
      *
@@ -114,4 +138,6 @@ class FlowController extends Controller
     {
         //
     }
+
+    
 }

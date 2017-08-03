@@ -32,6 +32,7 @@ Route::any('resolutionreport', ['as'=>'resolutionreport', 'uses'=>'ReportControl
 Route::any('profile', ['as'=>'profile', 'uses'=>'ProfileController@index']);
 Route::any('profilechange', ['as'=>'profilechange', 'uses'=>'ProfileController@changepassword']);
 
+
 Route::resource('masteraccount', 'AccountController');
 Route::resource('masterrole', 'RoleController');
 Route::resource('mastercategory', 'CategoryController');
