@@ -1,6 +1,33 @@
 @extends('layouts.backend-admin')
 
 @section('content')
+     
+    <?php 
+        
+        if(isset($_GET['kodeflow'])){
+            $idflow = [];
+            $idrole = [];
+            $levelflow = [];
+            $namarole = [];
+            for($i=0;$i<sizeof($flow);$i++){
+                if( $flow[$i]->kode_flow==$_GET['kodeflow']){
+
+                    $idflow[] =  $flow[$i]->id_flow;
+                    $idrole[] =  $flow[$i]->id_role;
+                    $kodeflow =  $flow[$i]->kode_flow;
+                    $levelflow[] =  $flow[$i]->level_flow;
+                    $namaflow =  $flow[$i]->nama_flow;
+                    $namarole[] = $flow[$i]->nama_role;
+                }
+            }
+            $flag=true;
+            $length= sizeof($idflow);
+            // dd($idrole);
+        }
+        else 
+            $flag=false;
+    ?>
+
 
     <script type="text/javascript">        
         i=2;
@@ -17,7 +44,13 @@
     <div class="row">
     <div class="col-md-12">
         <div class="box box-primary">
-            <form action="{{ route('masterflow.store') }}" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewclaim">
+            @if($flag)
+            <form action="{{ route('masterflow.update', $kodeflow) }}" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewflow">
+            <input name="_method" type="hidden" value="PATCH">
+            @else 
+            <form action="{{ route('masterflow.store') }}" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewflow">
+            <input name="_method" type="hidden" value="POST">
+            @endif
             {{csrf_field()}}
             <div class="box-header with-border">
                 <h3 class="box-title">Add Flow</h3>
@@ -27,25 +60,44 @@
                 <div class="form-group">
                     <label class="col-md-2 control-label">Flow Code</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control" id="flowcode" name="flowcode" placeholder="" required="required"  />
+                        <input type="text" class="form-control" id="flowcode" name="flowcode" placeholder="" required="required" <?php if($flag) echo 'value='."'$kodeflow'"; ?> />
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-2 control-label">Flow Name</label>
                     <div class="col-md-4">
-                        <input type="text" class="form-control" id="flowname" name="flowname" placeholder="" required="required"  />
+                        <input type="text" class="form-control" id="flowname" name="flowname" placeholder="" required="required" <?php if($flag) echo 'value='."'$namaflow'"; ?> />
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-md-2 control-label">Flow Level 1</label>                    
+                    
+                    @if($flag)            
+                    @for($i=0;$i<$length;$i++)      
+                    <label class="col-md-2 control-label">Flow Level <?php echo $i+1; ?></label> 
+                    <div class="col-md-4">                        
+                        <select class="form-control" id="flow".$i name="flow".$i>
+                            <option value="$idrole[$i]">{{$namarole[$i]}}</option>
+                            @foreach($role as $roles)
+                            <option value="{{ $roles->id_role }}" 
+                            > {{ $roles->nama_role }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <br>
+                    <br>
+
+                    @endfor
+                    @else
+                    <label class="col-md-2 control-label">Flow Level 1</label> 
                     <div class="col-md-4">
                         <select class="form-control" id="flow1" name="flow1">
                             <option value="#">-- Please Choose Role --</option>
                             @foreach($role as $roles)
-                            <option value="{{ $roles->id_role }}">{{ $roles->nama_role }}</option>
+                            <option value="{{ $roles->id_role }}" >{{ $roles->nama_role }}</option>
                             @endforeach
                         </select>
-                    </div>          
+                    </div>
+                    @endif          
                 </div>         
                 <div class="col-md-12" align="center">
                     <a class="btn btn-primary addrow">Add Level</a>
@@ -89,7 +141,8 @@
                         <td>{{ $flows->level_flow }}</td>
                         
                         <td>{{ $flows->nama_role }}</td>
-                        <td>edit</td>
+                         <td><a class="btn btn-primary" type ="submit" href="./masterflow?kodeflow={{$flows->kode_flow}}">Edit</a></td>
+                       
                         <td>delete</td>
                     </tr>
                     @endforeach

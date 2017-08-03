@@ -26,15 +26,15 @@ tambah 1 kategori ctb (sudah)
 
 home user tambah row release, total
 
-tampilan new claim airway billnumber ditambah kurirnya
+tampilan new claim airway billnumber ditambah kurirnya 
 
-new claim document completition wajib dicentang
+tambah 9 reserve kolom tiap tabel  (sudah di codingan migrate di sql belum)
+
+new claim document completition wajib dicentang 
 
 di semua user ada report summary claim bentuk grafik ada filternya(pending)
 -entitlement/program 
 -entitlement/category
-
-tambah 9 reserve kolom tiap tabel  (sudah di codingan migrate di sql belum)
 --------------------------
 sell thru summary dikasih batas 100 persen
 dibalik urutannya besar ke kecil
