@@ -1,6 +1,13 @@
 @extends('layouts.backend')
 
 @section('content')
+
+<?php  
+    $category_length = sizeof(Session::get('nama_category'));
+    $category = Session::get('nama_category');
+    $category_now = Session::get('categories');
+?>
+
     <style type="text/css">
         .form-group.required .control-label:after {
             content:"*";
@@ -42,7 +49,7 @@
     <!-- Main content -->
     <section class="content">
         <div class="box box-primary">
-            <form action="#" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewclaim">
+            <form action="{{ route('saveclaim') }}" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewclaim" id="formnewclaim">
             {{csrf_field()}}
             <div class="box-header with-border">
                 <h3 class="box-title">New Claim Registration</h3>
@@ -55,7 +62,7 @@
                     <div class="form-group required">
                         <label class="col-md-4 control-label">Reg. No</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="regno" name="regno" value="<?php echo date('Ym'); ?>-{{$regno[0]->number}}" disabled/>
+                            <input type="text" class="form-control" id="regno" name="regno" value="<?php echo date('Ym'); ?>-{{$regno[0]->number}}" readonly/>
                         </div>
                     </div>
                     <div class="form-group required">
@@ -84,17 +91,13 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label">Claim Type</label>
                         <div class="col-md-8">
-                            <select class="form-control" id="claimtype" name="claimtype" disabled>
-                                <option value="Marcom">Marcom</option>
-                                <option value="RDP">RDP</option>
-                                <option value="BDF">BDF</option>
-                            </select>
+                            <input type="text" class="form-control" id="claimtype" name="claimtype" value="{{$category_now}}" readonly/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-4 control-label">Entitlement</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="entitlement" name="entitlement" value="Rp 1.000.000 (WRONG)" required="required" style="text-align: right;" disabled />
+                            <input type="text" class="form-control" id="entitlement" name="entitlement" value="Rp 1.000.000 (WRONG)" required="required" style="text-align: right;" readonly />
                         </div>
                     </div>
                     <div class="form-group required">
@@ -117,14 +120,14 @@
                             <span class="custom-file-control"></span>
                         </label>
                         <label class="custom-file">AirwayBill Number
-                            <input type="file" id="file3" name="file3" class="custom-file-input" required>
+                            <input type="file" id="file3" name="file3" class="custom-file-input">
                             <span class="custom-file-control"></span>
                         </label>
                         <label class="custom-file">Another Attachment
-                            <input type="file" id="another" name="another" class="custom-file-input" multiple onchange="updateList()">
+                            <input type="file" id="another" name="another" class="custom-file-input" onchange="updateList()" multiple>
                             <span class="custom-file-control"></span>
                         </label>
-                        <div><table id="fileList"></table></div>
+                        <div class="form-group"><table id="fileList"></table></div>
                     </div>
                 </div>
 
@@ -139,28 +142,28 @@
                     <label class="col-md-3 control-label">Document Completion</label>
                     <div class="col-md-9">
                         <div class="checkbox">
-                            <label><input type="checkbox" value="1" required>Payment Requisition Form (Please attached the scanned document on this claim)</label>
+                            <label><input type="hidden" value="0" name="checkbox1"><input type="checkbox" value="1" name="checkbox1" required>Payment Requisition Form (Please attached the scanned document on this claim)</label>
                         </div>
                         <div class="checkbox">
-                            <label><input type="checkbox" value="2" required>Original Tax & Supplier Invoices. Tax must be addressed to PT Philips Indonesia (Please attached the scanned document on this claim)</label>
+                            <label><input type="hidden" value="0" name="checkbox2"><input type="checkbox" value="1" name="checkbox2" required>Original Tax & Supplier Invoices. Tax must be addressed to PT Philips Indonesia (Please attached the scanned document on this claim)</label>
                         </div>
                         <div class="checkbox">
-                            <label><input type="checkbox" value="3">AirwayBill Number (Please attached the scanned document on this claim)</label>
+                            <label><input type="hidden" value="0" name="checkbox3"><input type="checkbox" value="1" name="checkbox3">AirwayBill Number (Please attached the scanned document on this claim)</label>
                         </div>
                         <div class="checkbox">
-                            <label><input type="checkbox" value="4">Marketing Program Letter/BDF proposal Approval/Natura template</label>
+                            <label><input type="hidden" value="0" name="checkbox4"><input type="checkbox" value="1" name="checkbox4">Marketing Program Letter/BDF proposal Approval/Natura template</label>
                         </div>
                         <div class="checkbox">
-                            <label><input type="checkbox" value="5">Marketing activity report with achievement</label>
+                            <label><input type="hidden" value="0" name="checkbox5"><input type="checkbox" value="1" name="checkbox5">Marketing activity report with achievement</label>
                         </div>
                         <div class="checkbox">
-                            <label><input type="checkbox" value="6">BP Invoice to Philips with BP signed & stamp</label>
+                            <label><input type="hidden" value="0" name="checkbox6"><input type="checkbox" value="1" name="checkbox6">BP Invoice to Philips with BP signed & stamp</label>
                         </div>
                         <div class="checkbox">
-                            <label><input type="checkbox" value="7">Marketing Activity Picture</label>
+                            <label><input type="hidden" value="0" name="checkbox7"><input type="checkbox" value="1" name="checkbox7">Marketing Activity Picture</label>
                         </div>
                         <div class="checkbox">
-                            <label><input type="checkbox" value="8">Other supporting document</label>
+                            <label><input type="hidden" value="0" name="checkbox8"><input type="checkbox" value="1" name="checkbox8">Other supporting document</label>
                         </div>
                     </div>
                 </div>
@@ -168,7 +171,7 @@
                 <div class="form-group">
                     <label class="col-md-3 control-label">Comment</label>
                     <div class="col-md-9">
-                        <textarea class="form-control" rows="3" name="comment" form="formnewclaim"></textarea>
+                        <textarea class="form-control" rows="3" id="comment" name="comment" form="formnewclaim"></textarea>
                     </div>
                 </div>
 

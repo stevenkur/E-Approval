@@ -1,18 +1,9 @@
-<?php
-  
-  $category_length = sizeof(Session::get('nama_category'));
-  $category = Session::get('nama_category');
-  // $tes=Session::get('category');
-  // dd($tes);
-  // if(isset(Session::get('category')))
-  // {
-  // session()->put('categories', $category[0]);
-  $category_now = Session::get('categories');
-  // }
-  // dd($category);
-  // dd($category_length);
-
+<?php  
+    $category_length = sizeof(Session::get('nama_category'));
+    $category = Session::get('nama_category');
+    $category_now = Session::get('categories');
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
