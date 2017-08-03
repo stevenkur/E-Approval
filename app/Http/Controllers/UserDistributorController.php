@@ -18,11 +18,18 @@ class UserDistributorController extends Controller
     public function index()
     {
         //
-        $userdistributor=DB::select(DB::raw("SELECT A.id_user_distributor, A.id_user, B.nama_user, A.id_dist, C.nama_distributor FROM user_distributors A, users B, distributors C WHERE A.id_user=B.id_user and A.id_dist=C.id_dist"));
-        $user=User::all();        
-        $distributor=Distributor::all();
+        if (strcasecmp(Session::get('email'),'administrator@philips.com')!=0)
+        {
+            return redirect('login');
+        }
+        else
+        {
+            $userdistributor=DB::select(DB::raw("SELECT A.id_user_distributor, A.id_user, B.nama_user, A.id_dist, C.nama_distributor FROM user_distributors A, users B, distributors C WHERE A.id_user=B.id_user and A.id_dist=C.id_dist"));
+            $user=User::all();        
+            $distributor=Distributor::all();
 
-        return view('admin/masteruserdistributor')->with('userdistributor', $userdistributor)->with('user', $user)->with('distributor', $distributor);
+            return view('admin/masteruserdistributor')->with('userdistributor', $userdistributor)->with('user', $user)->with('distributor', $distributor);
+        }
     }
 
     /**

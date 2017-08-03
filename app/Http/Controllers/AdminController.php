@@ -15,7 +15,7 @@ class AdminController extends Controller
     {
         if (strcasecmp(Session::get('email'),'administrator@philips.com')!=0)
         {
-            return view('auth/login'); 
+            return redirect('login');
         }
         else
         {
@@ -27,7 +27,7 @@ class AdminController extends Controller
     {
         if (strcasecmp(Session::get('email'),'administrator@philips.com')!=0)
         {
-            return view('auth/login'); 
+            return redirect('login');
         }
         else
         {
@@ -41,7 +41,7 @@ class AdminController extends Controller
         // dd(Input::all());
             if (strcasecmp(Session::get('email'),'administrator@philips.com')!=0)
             {
-                return view('auth/login'); 
+                return redirect('login');
             }
             else
             {
@@ -102,7 +102,7 @@ class AdminController extends Controller
     {
         if (strcasecmp(Session::get('email'),'administrator@philips.com')!=0)
         {
-            return view('auth/login'); 
+            return redirect('login');
         }
         else
         {
@@ -114,7 +114,7 @@ class AdminController extends Controller
     {
         if (strcasecmp(Session::get('email'),'administrator@philips.com')!=0)
         {
-            return view('auth/login'); 
+            return redirect('login');
         }
         else
         {
@@ -127,7 +127,7 @@ class AdminController extends Controller
     {
         if (strcasecmp(Session::get('email'),'administrator@philips.com')!=0)
         {
-            return view('auth/login'); 
+            return redirect('login');
         }
         else
         {

@@ -13,7 +13,7 @@ class ProfileController extends Controller
     {
     	if (!(Session::has('email')))
         {
-            return view('auth/login'); 
+            return redirect('login');
         }
         else
         {

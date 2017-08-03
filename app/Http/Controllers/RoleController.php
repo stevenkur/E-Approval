@@ -20,7 +20,7 @@ class RoleController extends Controller
         //
         if (strcasecmp(Session::get('email'),'administrator@philips.com')!=0)
         {
-            return view('auth/login'); 
+            return redirect('login');
         }
         else
         {

@@ -15,7 +15,7 @@ class LoginController extends Controller
     public function index(Request $request)
     {   
         if(!$request->session()->has('email'))
-            return view('auth/login');
+            return redirect('login');
         else
             return redirect()->route('home.index');
     }
