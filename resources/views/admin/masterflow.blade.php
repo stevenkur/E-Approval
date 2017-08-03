@@ -9,6 +9,7 @@
             $idrole = [];
             $levelflow = [];
             $namarole = [];
+            $idflow[0] = 0;
             for($i=0;$i<sizeof($flow);$i++){
                 if( $flow[$i]->kode_flow==$_GET['kodeflow']){
 
@@ -21,7 +22,7 @@
                 }
             }
             $flag=true;
-            $length= sizeof($idflow);
+            $length= sizeof($idflow)-1;
             // dd($idflow);
         }
         else 

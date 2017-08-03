@@ -52,8 +52,8 @@ class FlowController extends Controller
         //
          // dd(Input::all());
         $flows=Input::all();
-        // dd($flow['flow1']);
-        $count = sizeof(Input::all())-3;
+        // dd($flows);
+        $count = sizeof(Input::all())-4;
         // dd($flows);
         // dd($count);
         for($i=1; $i<=$count; $i++)
@@ -102,27 +102,38 @@ class FlowController extends Controller
     public function update(Request $request, $id)
     {
         // //
-        // dd($id);
+        // // dd($id);
         $flows=Input::all();
-        dd($flows);
-        // dd($flow['flow1']);
-        $count = sizeof(Input::all())-3;
-
         // dd($flows);
+        $jumlah = (sizeof($flows)-4)/2;
+        // dd($jumlah);
+        $key = array_keys((array)$flows); 
+        // dd($key);
+        $idflow = [];
+        for($i=(sizeof($flows)-$jumlah);$i<=sizeof($flows)-1;$i++)
+        {
+            $idflow[] = $key[$i];
+        }
+        // dd($idflow);
+        // $count = sizeof(Input::all())-4;
+        // dd($request->flowcode);
+        // dd($jumlah);
+        dd($flows);
         // dd($count);
-        for($i=1; $i<=$count; $i++)
+        // dd($flows);
+        for($i=0; $i<$jumlah; $i++)
         {        
-        
-        $flow = Flow::where('id_program',$id); 
-        $program->update([
-            'nama_program' => $request->program,
-            'tahun' => $request->year
+        $nama= 'flow'.$i;
+        // dd($flow);
+        $flow = Flow::where('id_flow',$idflow[$i] ); 
+        $flow->update([
+            'kode_flow' => $request->flowcode,
+            'nama_flow' => $request->flowname,
+            'id_role' => $request->$nama,
+            'level_flow' => $i+1
         ]);
-        $flow->id_role = $flows['flow'.$i];   
-        $flow->kode_flow = $flows['flowcode'];
-        $flow->nama_flow = $flows['flowname'];
-        $flow->level_flow = $i;
-        $flow->save();        
+          
+            
         
         }
         return redirect()->route('masterflow.index')
@@ -139,5 +150,5 @@ class FlowController extends Controller
         //
     }
 
-    
+
 }
