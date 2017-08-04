@@ -30,6 +30,7 @@ Route::any('saveclaim', ['as'=>'saveclaim', 'uses'=>'ClaimController@saveclaim']
 Route::any('listclaim', ['as'=>'listclaim', 'uses'=>'ClaimController@listclaim']);
 Route::any('monitoringreport', ['as'=>'monitoringreport', 'uses'=>'ReportController@monitoringreport']);
 Route::any('resolutionreport', ['as'=>'resolutionreport', 'uses'=>'ReportController@resolutionreport']);
+Route::any('summaryclaimreport', ['as'=>'summaryclaimreport', 'uses'=>'ReportController@summaryclaimreport']);
 Route::any('profile', ['as'=>'profile', 'uses'=>'ProfileController@index']);
 Route::any('profilechange', ['as'=>'profilechange', 'uses'=>'ProfileController@changepassword']);
 

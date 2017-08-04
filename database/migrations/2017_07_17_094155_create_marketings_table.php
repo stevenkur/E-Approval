@@ -17,6 +17,7 @@ class CreateMarketingsTable extends Migration
             $table->increments('id_marketing')->unique();
             $table->integer('id_dist');
             $table->integer('id_program');
+            $table->integer('id_category');
             $table->integer('entitlement');
             $table->date('maxclaim_date');
             $table->integer('reserve1')->nullable();

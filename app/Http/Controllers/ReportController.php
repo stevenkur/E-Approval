@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Claim;
 use App\Comment;
+use App\Marketing;
 use Session;
 use DB;
 
@@ -34,6 +35,20 @@ class ReportController extends Controller
         else
         {
             return view('user/resolutionreport');
+        }
+    }
+
+    public function summaryclaimreport()
+    {
+        //
+        if (!(Session::has('email')))
+        {
+            return redirect('login');
+        }
+        else
+        {
+            $marketing=DB::select(DB::raw("SELECT A.id_marketing, A.id_dist, B.nama_distributor, A.id_program, C.nama_program, A.entitlement,  A.maxclaim_date, D.nama_category, D.id_category FROM marketings A, distributors B, programs C, categories D WHERE A.id_dist=B.id_dist and A.id_program=C.id_program and A.id_category=D.id_category"));
+            return view('user/summaryclaimreport')->with('marketing',$marketing);
         }
     }
 }

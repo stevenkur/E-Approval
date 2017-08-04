@@ -65,6 +65,7 @@
               <ul class="dropdown-menu" role="menu">
                 <li><a href="{{ route('monitoringreport') }}">Monitoring Report</a></li>
                 <li><a href="{{ route('resolutionreport') }}">Resolution Report</a></li>
+                <li><a href="{{ route('summaryclaimreport') }}">Summary Claim Report</a></li>
                 <!-- <li><a href="#">LSF Budget Report</a></li> -->
               </ul>
             </li>

@@ -5,12 +5,13 @@
     <?php 
         
         if(isset($_GET['idmarketing'])){
-           
+            
             for($i=0;$i<sizeof($marketing);$i++){
                 if( $marketing[$i]->id_marketing==$_GET['idmarketing']){
                     $idmarketing =  $marketing[$i]->id_marketing;
                     $iddist =  $marketing[$i]->id_dist;
                     $idprogram =  $marketing[$i]->id_program;
+                    $idcategory = $marketing[$i]->id_category;
                     $entitlement =  $marketing[$i]->entitlement;
                     $maxclaimdate =  $marketing[$i]->maxclaim_date;
                     break;
@@ -58,6 +59,16 @@
                         </select>
                     </div>
                 </div>
+                 <div class="form-group">
+                    <label class="col-md-4 control-label">Category Name</label>
+                    <div class="col-md-8">
+                        <select class="form-control" id="category" name="category">
+                            @foreach($category as $categories)
+                            <option value="{{ $categories->id_category }}" <?php if($flag&&$idcategory==$categories->id_category) echo 'selected'; ?> >{{ $categories-> nama_category }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
                 <div class="form-group">
                     <label class="col-md-4 control-label">Entitlement</label>
                     <div class="col-md-8">
@@ -96,6 +107,7 @@
                         <th>ID Marketing</th>
                         <th>Nama Distributor</th>
                         <th>Program Name</th>
+                        <th>Category Name</th>
                         <th>Entitlement</th>
                         <th>Max Claim Date</th>
                         <th>Edit</th>
@@ -108,6 +120,7 @@
                         <td>{{ $marketings->id_marketing }}</td>
                         <td>{{ $marketings->nama_distributor }}</td>
                         <td>{{ $marketings->nama_program }}</td>
+                        <td>{{ $marketings->nama_category }}</td>
                         <td>{{ $marketings->entitlement }}</td>
                         <td>{{ $marketings->maxclaim_date }}</td>
                         

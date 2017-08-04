@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Marketing;
 use App\Program;
 use App\Distributor;
+use App\Category;
 use DB;
 use Session;
 
@@ -26,11 +27,11 @@ class MarketingController extends Controller
         }
         else
         {
-            $marketing=DB::select(DB::raw("SELECT A.id_marketing, A.id_dist, B.nama_distributor, A.id_program, C.nama_program, A.entitlement,  A.maxclaim_date FROM marketings A, distributors B, programs C WHERE A.id_dist=B.id_dist and A.id_program=C.id_program "));
+            $marketing=DB::select(DB::raw("SELECT A.id_marketing, A.id_dist, B.nama_distributor, A.id_program, C.nama_program, A.entitlement,  A.maxclaim_date, D.nama_category, D.id_category FROM marketings A, distributors B, programs C, categories D WHERE A.id_dist=B.id_dist and A.id_program=C.id_program and A.id_category=D.id_category"));
             $program=Program::all();
             $distributor=Distributor::all();
-          
-            return view('admin/mastermarketing')->with('program', $program)->with('distributor', $distributor)->with('marketing', $marketing);
+            $category=Category::all();
+            return view('admin/mastermarketing')->with('category', $category)->with('program', $program)->with('distributor', $distributor)->with('marketing', $marketing);
         }
     }
 
@@ -55,7 +56,8 @@ class MarketingController extends Controller
         //
         $marketing = new Marketing();               
         $marketing->id_dist = $request->distributor; 
-        $marketing->id_program = $request->program;        
+        $marketing->id_program = $request->program;    
+        $marketing->id_category = $request->category;       
         $marketing->entitlement = $request->entitlement; 
         $marketing->maxclaim_date = $request->maxclaim;
         $marketing->save();        
@@ -99,6 +101,7 @@ class MarketingController extends Controller
         $marketing->update([
             'id_dist' => $request->distributor,       
             'id_program' => $request->program,
+            'id_category' => $request->category,
             'entitlement' => $request->entitlement,        
             'maxclaim_date' => $request->maxclaim 
             
