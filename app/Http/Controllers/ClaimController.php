@@ -82,12 +82,12 @@ class ClaimController extends Controller
 
         $claim = new Claim();
         $claim->id_claim = $input['regno'];
-        $claim->nama_category = $input['regno'];
-        $claim->category_type = $input['regno'];
-        $claim->nama_program = $input['regno'];
-        $claim->value = $input['regno'];
+        // $claim->nama_category = $input['regno'];
+        // $claim->category_type = $input['regno'];
+        $claim->nama_program = $input['programname'];
+        $claim->value = $input['value'];
         $claim->entitlement = $input['entitlement'];
-        $claim->programforyear = $input['value'];
+        $claim->programforyear = $input['programyear'];
         $claim->airwaybill = $fileName3;
         $claim->payment_form = $fileName1;
         $claim->original_tax = $fileName2;
@@ -106,6 +106,13 @@ class ClaimController extends Controller
         $claim->doc_check8 = $input['checkbox8'];
         $claim->save();
 
+        $comment = new Comment();
+        $comment->id_claim = $input['regno'];
+        $comment->comment = $input['comment'];
+        $comment->id_user = Session::get('id_user');
+        $comment->save();
+
+        return redirect('listclaim');
     }
 
     public function editclaim()

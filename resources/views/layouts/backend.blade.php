@@ -78,16 +78,9 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Change Area ({{$category_now}}) <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <!-- <li><a href="#">Marcom</a></li>
-                <li><a href="#">RDP</a></li>
-                <li><a href="#">BDF</a></li> -->
                 @for($i=0;$i<$category_length;$i++)
-                    
-                    
-                    <li><a href="{{route('changearea',$category[$i])}}">{{ $category[$i] }}</a></li>
-                    
+                  <li><a href="{{route('changearea',$category[$i])}}">{{ $category[$i] }}</a></li>                    
                 @endfor
-                
               </ul>
             </li>
           </ul>

@@ -1,10 +1,15 @@
 @extends('layouts.backend')
 
 @section('content')
-  
+
+<?php  
+    $category_length = sizeof(Session::get('nama_category'));
+    $category = Session::get('nama_category');
+    $category_now = Session::get('categories');
+?>
+
     <!-- Main content -->
     <section class="content">
-        <div class="col-md-12">
         <div class="box box-primary">        
         <h1><center>Welcome to Philips E-Approval Application</center></h1>
             <div class="box-header with-border">
@@ -14,47 +19,46 @@
             <div class="box-body">
                 <table id="table" class="table table-bordered table-striped">
                     <thead>
-                    <tr>
+                    <tr style="font-size: 20px;">
                         <th>Pending On</th>
-                        @foreach($category as $categories) 
-                        <th>{{ $categories->nama_category }}</th>
-                        @endforeach
+                        @for($i=0;$i<$category_length;$i++)
+                            <th><a href="{{route('changearea',$category[$i])}}"><u>{{ $category[$i] }}</u></a></th>                    
+                        @endfor
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
                         <td>DM</td>
                         <td>Rp 10.000</td>
-                        <td>Rp 10.000</td>
-                        <td>Rp 10.000</td>
-                        <td>Rp 10.000</td>
+                        <td>Rp 12.000</td>
+                        <td>Rp 14.000</td>
+                        <td>Rp 16.000</td>
                     </tr>
                     <tr>
                         <td>Finance</td>
                         <td>Rp 10.000</td>
-                        <td>Rp 10.000</td>
-                        <td>Rp 10.000</td>
-                        <td>Rp 10.000</td>
+                        <td>Rp 12.000</td>
+                        <td>Rp 14.000</td>
+                        <td>Rp 16.000</td>
                     </tr>
                     <tr>
                         <td><b>Release</b></td>
-                        <td>Rp 10.000</td>
-                        <td>Rp 10.000</td>
-                        <td>Rp 10.000</td>
-                        <td>Rp 10.000</td>
+                        <td>Rp 100.000</td>
+                        <td>Rp 120.000</td>
+                        <td>Rp 130.000</td>
+                        <td>Rp 140.000</td>
                     </tr>
                     <tr>
                         <td><b>Total</b></td>
-                        <td>Rp 10.000</td>
-                        <td>Rp 10.000</td>
-                        <td>Rp 10.000</td>
-                        <td>Rp 10.000</td>
+                        <td>Rp 150.000</td>
+                        <td>Rp 170.000</td>
+                        <td>Rp 190.000</td>
+                        <td>Rp 180.000</td>
                     </tr>
                     </tbody>
                 </table>
             </div>
             <!-- /.box-body -->
-        </div>
         </div>
     </section>
     <!-- /.content -->
