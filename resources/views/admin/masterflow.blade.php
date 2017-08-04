@@ -143,7 +143,12 @@
                         <td>{{ $flows->nama_role }}</td>
                          <td><a class="btn btn-primary" type ="submit" href="./masterflow?kodeflow={{$flows->kode_flow}}">Edit</a></td>
                        
-                        <td>delete</td>
+                        <td>
+                            {{ Form::open(array('url' => 'masterflow/' . $flows->id_flow)) }}
+                            {{ Form::hidden('_method', 'DELETE') }}
+                            {{ Form::submit('Delete', array('onclick'=>"return confirm('Anda yakin akan menghapus data ?');", 'class' => 'btn btn-danger')) }}
+                            {{ Form::close() }}
+                        </td>
                     </tr>
                     @endforeach
                     </tbody>

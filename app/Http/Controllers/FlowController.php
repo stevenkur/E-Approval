@@ -118,7 +118,7 @@ class FlowController extends Controller
         // $count = sizeof(Input::all())-4;
         // dd($request->flowcode);
         // dd($jumlah);
-        dd($flows);
+        // dd($flows);
         // dd($count);
         // dd($flows);
         for($i=0; $i<$jumlah; $i++)
@@ -148,6 +148,11 @@ class FlowController extends Controller
     public function destroy($id)
     {
         //
+        $flow = FLow::where('id_flow',$id)->delete(); 
+        $kodeflow=DB::select(DB::raw("SELECT kode_flow FROM flows WHERE id_flow=$id"));
+        dd($kodeflow);
+        return redirect()->route('masterflow.index')->with('alert-success', 'Data Berhasil Dihapus.');
+   
     }
 
 
