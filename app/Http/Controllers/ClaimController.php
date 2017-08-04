@@ -30,7 +30,12 @@ class ClaimController extends Controller
             $date=date('Ym');
             $program=Program::all();
             $entitlement=DB::select(DB::raw('SELECT * FROM programs'));
-            $regno=DB::select(DB::raw("SELECT LPAD(SUBSTRING_INDEX(id_claim,'-',-1)+1, 5, '0') as number FROM claims WHERE id_claim LIKE '$date%'"));
+            $query=DB::select(DB::raw("SELECT LPAD(SUBSTRING_INDEX(id_claim,'-',-1)+1, 5, '0') as number FROM claims WHERE id_claim LIKE '$date%'"));
+            if($query==NULL)
+            {
+                $regno='00001';
+            }
+            else $regno=$query[0]->number;
             return view('user/newclaim')->with('program',$program)->with('regno',$regno);
         }
     }
@@ -77,31 +82,28 @@ class ClaimController extends Controller
 
         $claim = new Claim();
         $claim->id_claim = $input['regno'];
-        $claim->nama_category = 
-        $claim->category_type = 
-        $claim->nama_program = 
-        $claim->value = 
-        $claim->entitlement = 
-        $claim->programforyear = 
-        $claim->pr_number = 
-        $claim->invoice_number = 
-        $claim->airwaybill = 
-        $claim->payment_form = 
-        $claim->original_tax = 
-        $claim->nama_distributor = 
+        $claim->nama_category = $input['regno'];
+        $claim->category_type = $input['regno'];
+        $claim->nama_program = $input['regno'];
+        $claim->value = $input['regno'];
+        $claim->entitlement = $input['entitlement'];
+        $claim->programforyear = $input['value'];
+        $claim->airwaybill = $fileName3;
+        $claim->payment_form = $fileName1;
+        $claim->original_tax = $fileName2;
+        $claim->nama_distributor = Session::get('nama_user');
         $claim->kode_flow = 
-        $claim->level_flow = 
-        $claim->status = 
-        $claim->courier = 
-        $claim->doc_check1 = 
-        $claim->doc_check2 = 
-        $claim->doc_check3 = 
-        $claim->doc_check4 = 
-        $claim->doc_check5 = 
-        $claim->doc_check6 = 
-        $claim->doc_check7 = 
-        $claim->doc_check8 = 
-        $claim->doc_check9 = 
+        $claim->level_flow = '0';
+        $claim->status = 'Submitted';
+        $claim->courier = $input['kurir'];
+        $claim->doc_check1 = $input['checkbox1'];
+        $claim->doc_check2 = $input['checkbox2'];
+        $claim->doc_check3 = $input['checkbox3'];
+        $claim->doc_check4 = $input['checkbox4'];
+        $claim->doc_check5 = $input['checkbox5'];
+        $claim->doc_check6 = $input['checkbox6'];
+        $claim->doc_check7 = $input['checkbox7'];
+        $claim->doc_check8 = $input['checkbox8'];
         $claim->save();
 
     }

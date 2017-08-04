@@ -62,7 +62,7 @@
                     <div class="form-group required">
                         <label class="col-md-4 control-label">Reg. No</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="regno" name="regno" value="<?php echo date('Ym'); ?>-{{$regno[0]->number}}" readonly/>
+                            <input type="text" class="form-control" id="regno" name="regno" value="<?php echo date('Ym'); ?>-{{$regno}}" readonly/>
                         </div>
                     </div>
                     <div class="form-group required">

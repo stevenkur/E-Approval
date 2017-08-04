@@ -26,21 +26,24 @@ class LoginController extends Controller
         $pwd = hash('md5', $request->password);              
 
 
-        $result=DB::select(DB::raw("SELECT A.id_user, C.email, B.nama_role, D.nama_category FROM category_accesses A, roles B, users C, categories D WHERE C.email='$email' and C.password='$pwd' and A.id_user=C.id_user and A.id_role=B.id_role and A.id_category=D.id_category"));
+        $result=DB::select(DB::raw("SELECT A.id_user, C.nama_user, C.email, B.nama_role, D.nama_category FROM category_accesses A, roles B, users C, categories D WHERE C.email='$email' and C.password='$pwd' and A.id_user=C.id_user and A.id_role=B.id_role and A.id_category=D.id_category"));
         
         if(isset($result[0])){
             
             $id_user = $result[0]->id_user;
+            $nama_user = $result[0]->nama_user;
             $email =   $result[0]->email;
             $role = array();
             $nama_category = array();
             if(strcasecmp($result[0]->nama_role, 'Administrator')==0){
                 $request->session()->put('id_user', $id_user);
+                $request->session()->put('nama_user', $nama_user);
                 $request->session()->put('email', $email);
                 return redirect()->route('dashboard');
 			}
 			else{                
                 $request->session()->put('id_user', $id_user);
+                $request->session()->put('nama_user', $nama_user);
                 $request->session()->put('email', $email);
                 for($i=0;$i<sizeof($result);$i++)
                 {
@@ -50,7 +53,7 @@ class LoginController extends Controller
                 $request->session()->put('role', $role);
                 $request->session()->put('nama_category', $nama_category);
                 $category = Session::get('nama_category');
-                session()->put('categories', $category[0]);
+                $request->session()->put('categories', $category[0]);
                 $category_now = Session::get('categories');
                 // dd(Session()->all());
                 return redirect()->route('home.index');
