@@ -60,6 +60,9 @@ class AccountController extends Controller
     public function store(Request $request)
     {
         //
+        // dd($request);
+        $flows=Input::all();
+        dd($flows);
     }
 
     /**

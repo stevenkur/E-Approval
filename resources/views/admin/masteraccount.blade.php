@@ -38,7 +38,7 @@
     <div class="row">
     <div class="col-md-12">
         <div class="box box-primary">
-            <form action="#" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewaccount">
+            <form action="{{ route('masteraccount.store') }}" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewaccount">
             {{csrf_field()}}
             <div class="box-header with-border">
                 <h3 class="box-title">Create Account</h3>
@@ -81,9 +81,9 @@
                         <tbody>
                         @foreach($category as $categories)
                         <tr>
-                            <td align="center"><input type="checkbox" name="{{ $categories->id_category }}"></td>
+                            <td align="center"><input type="checkbox" value="{{ $categories->id_category }}" name="{{ $categories->id_category }}"></td>
                             <td>{{ $categories->nama_category }}</td>
-                            <td align="center"><input class="form-control" type="text" name="" style="width: 75px;"></td>
+                            <td align="center"><input class="form-control" type="text" name="autoapproved" style="width: 75px;"></td>
                             <td>
                                 <select class="form-control" id="role" name="role">
                                     @foreach($role as $roles)

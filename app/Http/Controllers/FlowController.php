@@ -148,10 +148,26 @@ class FlowController extends Controller
     public function destroy($id)
     {
         //
-        $flow = FLow::where('id_flow',$id)->delete(); 
-        $kodeflow=DB::select(DB::raw("SELECT kode_flow FROM flows WHERE id_flow=$id"));
-        dd($kodeflow);
+         
+        $tes=DB::select(DB::raw("SELECT * FROM flows WHERE id_flow=$id"));
+        $kodeflow=($tes[0]->kode_flow);
+        $levelflow=($tes[0]->level_flow);
+        // dd($levelflow);
+        $query=DB::select(DB::raw("SELECT * FROM flows WHERE kode_flow='$kodeflow' and level_flow>$levelflow"));
+        $count=sizeof($query);
+        for ($i=0;$i<$count;$i++)
+        {
+        $idflow = $query[$i]->id_flow;
+        // dd($idflow);
+        $flow = Flow::where('id_flow',$idflow ); 
+        $flow->update([
+            'level_flow' => ($query[$i]->level_flow)-1
+        ]);     
+        }
+        $flow = FLow::where('id_flow',$id)->delete();
+        // dd($query[0]);
         return redirect()->route('masterflow.index')->with('alert-success', 'Data Berhasil Dihapus.');
+        
    
     }
 
