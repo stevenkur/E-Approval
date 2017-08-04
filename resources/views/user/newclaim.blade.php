@@ -134,7 +134,7 @@
                 <div class="form-group required">
                     <label class="col-md-3 control-label">Courier</label>
                     <div class="col-md-3">
-                        <input type="text" class="form-control" id="kurir" name="kurir" required />
+                        <input type="text" class="form-control" id="kurir" name="kurir" />
                     </div>
                 </div>
 
@@ -148,22 +148,22 @@
                             <label><input type="hidden" value="0" name="checkbox2"><input type="checkbox" value="1" name="checkbox2" required>Original Tax & Supplier Invoices. Tax must be addressed to PT Philips Indonesia (Please attached the scanned document on this claim)</label>
                         </div>
                         <div class="checkbox">
-                            <label><input type="hidden" value="0" name="checkbox3"><input type="checkbox" value="1" name="checkbox3">AirwayBill Number (Please attached the scanned document on this claim)</label>
+                            <label><input type="hidden" value="0" name="checkbox3"><input type="checkbox" value="1" name="checkbox3" required>AirwayBill Number (Please attached the scanned document on this claim)</label>
                         </div>
                         <div class="checkbox">
-                            <label><input type="hidden" value="0" name="checkbox4"><input type="checkbox" value="1" name="checkbox4">Marketing Program Letter/BDF proposal Approval/Natura template</label>
+                            <label><input type="hidden" value="0" name="checkbox4"><input type="checkbox" value="1" name="checkbox4" required>Marketing Program Letter/BDF proposal Approval/Natura template</label>
                         </div>
                         <div class="checkbox">
-                            <label><input type="hidden" value="0" name="checkbox5"><input type="checkbox" value="1" name="checkbox5">Marketing activity report with achievement</label>
+                            <label><input type="hidden" value="0" name="checkbox5"><input type="checkbox" value="1" name="checkbox5" required>Marketing activity report with achievement</label>
                         </div>
                         <div class="checkbox">
-                            <label><input type="hidden" value="0" name="checkbox6"><input type="checkbox" value="1" name="checkbox6">BP Invoice to Philips with BP signed & stamp</label>
+                            <label><input type="hidden" value="0" name="checkbox6"><input type="checkbox" value="1" name="checkbox6" required>BP Invoice to Philips with BP signed & stamp</label>
                         </div>
                         <div class="checkbox">
-                            <label><input type="hidden" value="0" name="checkbox7"><input type="checkbox" value="1" name="checkbox7">Marketing Activity Picture</label>
+                            <label><input type="hidden" value="0" name="checkbox7"><input type="checkbox" value="1" name="checkbox7" required>Marketing Activity Picture</label>
                         </div>
                         <div class="checkbox">
-                            <label><input type="hidden" value="0" name="checkbox8"><input type="checkbox" value="1" name="checkbox8">Other supporting document</label>
+                            <label><input type="hidden" value="0" name="checkbox8"><input type="checkbox" value="1" name="checkbox8" required>Other supporting document</label>
                         </div>
                     </div>
                 </div>
