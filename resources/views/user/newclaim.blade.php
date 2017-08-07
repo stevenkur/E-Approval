@@ -59,12 +59,12 @@
                     <label style="color: red;"><small>* Indicates a required field</small></label>
                 </div>
                 <div class="col-md-6">
-                    <div class="form-group required">
-                        <label class="col-md-4 control-label">Reg. No</label>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Category Claim Type</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="regno" name="regno" value="<?php echo date('Ym'); ?>-{{$regno}}" readonly/>
+                            <input type="text" class="form-control" id="categoryclaimtype" name="categoryclaimtype" value="{{$category_now}}" readonly/>
                         </div>
-                    </div>
+                    </div>                    
                     <div class="form-group required">
                         <label class="col-md-4 control-label">Program Name</label>
                         <div class="col-md-8">
@@ -88,10 +88,15 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="col-md-4 control-label">Claim Type</label>
+                    <div class="form-group required">
+                        <label class="col-md-4 control-label">Category Type</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="claimtype" name="claimtype" value="{{$category_now}}" readonly/>
+                            <select class="form-control" id="categorytype" name="categorytype">
+                                <option value="#">-- Please Choose One --</option>
+                                @foreach($categorytype as $categorytypes)
+                                <option value="{{ $categorytypes->category_type }}">{{ $categorytypes->category_type }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">
@@ -131,7 +136,7 @@
                     </div>
                 </div>
 
-                <div class="form-group required">
+                <div class="form-group">
                     <label class="col-md-3 control-label">Courier</label>
                     <div class="col-md-3">
                         <input type="text" class="form-control" id="kurir" name="kurir" />

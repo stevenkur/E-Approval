@@ -26,17 +26,12 @@ class ClaimController extends Controller
             return redirect('login');
         }
         else
-        {
-            $date=date('Ym');
+        {            
             $program=Program::all();
             $entitlement=DB::select(DB::raw('SELECT * FROM programs'));
-            $query=DB::select(DB::raw("SELECT LPAD(SUBSTRING_INDEX(id_claim,'-',-1)+1, 5, '0') as number FROM claims WHERE id_claim LIKE '$date%'"));
-            if($query==NULL)
-            {
-                $regno='00001';
-            }
-            else $regno=$query[0]->number;
-            return view('user/newclaim')->with('program',$program)->with('regno',$regno);
+            $categorytype=DB::select(DB::raw("SELECT nama_category, category_type FROM category_details"));
+            
+            return view('user/newclaim')->with('program',$program)->with('entitlement',$entitlement)->with('categorytype',$categorytype);
         }
     }
 
@@ -50,16 +45,24 @@ class ClaimController extends Controller
         else
         {
             $monitoring=DB::select(DB::raw("SELECT A.id_claim, A.created_at, A.nama_distributor, A.category_type, A.nama_program, A.value,  A.status, GROUP_CONCAT(DISTINCT B.comment SEPARATOR ' ') as comment, A.pr_number,A.invoice_number FROM claims A, comments B WHERE A.id_claim=B.id_claim and A.status NOT LIKE '%approved%' GROUP BY A.id_claim, A.created_at, A.nama_distributor, A.category_type, A.nama_program, A.value,  A.status,A.pr_number,A.invoice_number"));
-            return view('user/listclaim')->with('monitoring',$monitoring);
-            
+            return view('user/listclaim')->with('monitoring',$monitoring);            
         }
     }
 
     public function saveclaim(Request $request)
     {
         //
+        $date=date('Ym');
+        $query=DB::select(DB::raw("SELECT LPAD(SUBSTRING_INDEX(id_claim,'-',-1)+1, 5, '0') as number FROM claims WHERE id_claim LIKE '$date%'"));
+        if($query==NULL)
+        {
+            $regno='00001';
+        }
+        else $regno=$query[0]->number;
+        $id_claim=$date.'-'.$regno;
+
         $input = Input::all();
-        dd($input);
+        // dd($input);
 
         $file1 = $input['file1'];
         $file2 = $input['file2'];
@@ -81,9 +84,9 @@ class ClaimController extends Controller
         $file3->move($destinationPath, $fileName3);
 
         $claim = new Claim();
-        $claim->id_claim = $input['regno'];
-        // $claim->nama_category = $input['regno'];
-        // $claim->category_type = $input['regno'];
+        $claim->id_claim = $id_claim;
+        $claim->nama_category = $input['categoryclaimtype'];
+        $claim->category_type = $input['categorytype'];
         $claim->nama_program = $input['programname'];
         $claim->value = $input['value'];
         $claim->entitlement = $input['entitlement'];
@@ -107,7 +110,7 @@ class ClaimController extends Controller
         $claim->save();
 
         $comment = new Comment();
-        $comment->id_claim = $input['regno'];
+        $comment->id_claim = $id_claim;
         $comment->comment = $input['comment'];
         $comment->id_user = Session::get('id_user');
         $comment->save();
