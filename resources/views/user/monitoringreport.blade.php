@@ -26,9 +26,40 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($monitoring as $monitorings)
+                     @foreach($monitoring as $monitorings)
                     <tr>
-                        <td><a href="#">{{ $monitorings->id_claim }}<a></td>
+                        <td>
+                            <!-- Trigger the modal with a button -->
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">{{ $monitorings->id_claim }}</button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="myModal" role="dialog">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h4 class="modal-title">Reg. No: {{ $monitorings->id_claim }}</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Nama Distributor : {{$monitorings->nama_distributor}}</p>
+                                            <p>Registered On : {{$monitorings->created_at}}</p>
+                                            <p>Category : {{$monitorings->nama_category}}</p>
+                                            <p>Category Type : {{$monitorings->category_type}}</p>
+                                            <p>Program : {{$monitorings->nama_program}}</p>
+                                            <p>Value : {{$monitorings->value}}</p>
+                                            <p>Entitlement : {{$monitorings->entitlement}}</p>
+                                            <p>PR Number : {{$monitorings->pr_number}}</p>
+                                            <p>Invoice number : {{$monitorings->invoice_number}}</p>
+                                            <p>Comment : {{$monitorings->comment}}</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary">Accept</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
                         <td>{{ $monitorings->created_at }}</td>
                         <td>{{ $monitorings->nama_distributor }}</td>
                         <td>{{ $monitorings->category_type }}</td>

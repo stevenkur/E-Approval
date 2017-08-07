@@ -41,7 +41,16 @@
                                             <h4 class="modal-title">Reg. No: {{ $monitorings->id_claim }}</h4>
                                         </div>
                                         <div class="modal-body">
-                                            <p>This is a large modal.</p>
+                                            <p>Nama Distributor : {{$monitorings->nama_distributor}}</p>
+                                            <p>Registered On : {{$monitorings->created_at}}</p>
+                                            <p>Category : {{$monitorings->nama_category}}</p>
+                                            <p>Category Type : {{$monitorings->category_type}}</p>
+                                            <p>Program : {{$monitorings->nama_program}}</p>
+                                            <p>Value : {{$monitorings->value}}</p>
+                                            <p>Entitlement : {{$monitorings->entitlement}}</p>
+                                            <p>PR Number : {{$monitorings->pr_number}}</p>
+                                            <p>Invoice number : {{$monitorings->invoice_number}}</p>
+                                            <p>Comment : {{$monitorings->comment}}</p>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
