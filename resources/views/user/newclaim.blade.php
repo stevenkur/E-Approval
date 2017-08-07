@@ -102,7 +102,13 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label">Entitlement</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="entitlement" name="entitlement" value="Rp 1.000.000 (WRONG)" required="required" style="text-align: right;" readonly />
+                            <!-- <input type="text" class="form-control" id="entitlement" name="entitlement" value="Rp 1.000.000 (WRONG)" required="required" style="text-align: right;" readonly /> -->
+                            <select class="form-control" id="entitlement" name="entitlement">
+                                <option value="#">-- Please Choose One --</option>
+                                @foreach($entitlement as $entitlements)
+                                <option value="{{ $entitlements->entitlement }}">{{ $entitlements->entitlement }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="form-group required">
