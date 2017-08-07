@@ -20,7 +20,7 @@
                         <th>Program Name</th>
                         <th>Value</th>
                         <th>Status</th>
-                        <th>Comment</th>
+                        
                         <th>PRNumber</th>
                         <th>InvoiceNumber</th>
                     </tr>
@@ -67,7 +67,7 @@
                         <td>{{ $monitorings->nama_program }}</td>
                         <td>{{ $monitorings->value }}</td>
                         <td>{{ $monitorings->status }}</td>
-                        <td>{{ $monitorings->comment }}</td>
+                        
                         <td>{{ $monitorings->pr_number }}</td>
                         <td>{{ $monitorings->invoice_number }}</td>
                     </tr>

@@ -71,7 +71,7 @@
                             <select class="form-control" id="programname" name="programname">
                                 <option value="#">-- Please Choose One --</option>
                                 @foreach($program as $programs)
-                                <option value="{{ $programs->id_program }}">{{ $programs->nama_program }}</option>
+                                <option value="{{ $programs->nama_program }}">{{ $programs->nama_program }}</option>
                                 @endforeach
                             </select>
                         </div>
