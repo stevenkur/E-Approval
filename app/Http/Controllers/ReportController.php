@@ -33,8 +33,12 @@ class ReportController extends Controller
             return redirect('login');
         }
         else
-        {
-            return view('user/resolutionreport');
+        {   
+            $categorynow = Session::get('categories');
+            $idcategorynow = $role = DB::select(DB::raw("SELECT id_category FROM categories WHERE nama_category='$categorynow' "));            
+            $idcategory = $idcategorynow[0]->id_category;
+            $role = DB::select(DB::raw("SELECT A.id_role,A.id_user,A.id_category,B.nama_role FROM category_accesses A, roles B, categories C WHERE A.id_category=C.id_category and A.id_role=B.id_role and A.id_category=$idcategory"));            
+            return view('user/resolutionreport')->with('role',$role);
         }
     }
 

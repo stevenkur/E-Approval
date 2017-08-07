@@ -15,28 +15,42 @@
                 <table id="table" class="table table-bordered table-striped">
                     <thead>
                     <tr>
-                        <th>Nama Role 1</th>
-                        <th>Nama Role 2</th>
-                        <th>Durasi (hari)</th>
+                        <th>ID Claim</th>
+                        <th>Program</th>
+                        @foreach($role as $roles)
+                        <th> {{$roles->nama_role}} </th>
+                        @endforeach
                     </tr>
                     </thead>
                     <tbody>
                    
                     <tr>
-                        <td>Distributor Manager</td>
-                        <td>Sales Manager</td>
+                        <td>Tes 1</td>
+                        <td>Tes 1</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td>3</td>
                         <td>3</td>
                     </tr>
 
                     <tr>
-                        <td>Sales Manager</td>
-                        <td>Sales Analyst Manager</td>
+                        <td>Tes 2</td>
+                        <td>Tes 2</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
+                        <td>4</td>
                         <td>4</td>
                     </tr>
 
                     <tr>
-                        <td>Sales Analyst Manager</td>
-                        <td>Marketing Manager</td>
+                        <td>Tes 3</td>
+                        <td>Tes 3</td>
+                        <td>5</td>
+                        <td>5</td>
+                        <td>5</td>
+                        <td>5</td>
                         <td>5</td>
                     </tr>
                     
