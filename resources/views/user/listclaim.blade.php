@@ -25,12 +25,17 @@
                         <th>InvoiceNumber</th>
                     </tr>
                     </thead>
+                    <?php $length=(sizeof($monitoring));
+
+                    ?> 
+
                     <tbody>
-                    @foreach($monitoring as $monitorings)
+                    @for($i=0; $i<$length; $i++)
                     <tr>
+                                          
                         <td>
                             <!-- Trigger the modal with a button -->
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">{{ $monitorings->id_claim }}</button>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">{{ $monitoring[$i]->id_claim }}</button>
 
                             <!-- Modal -->
                             <div class="modal fade" id="myModal" role="dialog">
@@ -38,19 +43,20 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title">Reg. No: {{ $monitorings->id_claim }}</h4>
+                                            
+                                            <h4 class="modal-title">Reg. No: {{ $monitoring[$i]->id_claim }}</h4>
                                         </div>
                                         <div class="modal-body">
-                                            <p>Nama Distributor : {{$monitorings->nama_distributor}}</p>
-                                            <p>Registered On : {{$monitorings->created_at}}</p>
-                                            <p>Category : {{$monitorings->nama_category}}</p>
-                                            <p>Category Type : {{$monitorings->category_type}}</p>
-                                            <p>Program : {{$monitorings->nama_program}}</p>
-                                            <p>Value : {{$monitorings->value}}</p>
-                                            <p>Entitlement : {{$monitorings->entitlement}}</p>
-                                            <p>PR Number : {{$monitorings->pr_number}}</p>
-                                            <p>Invoice number : {{$monitorings->invoice_number}}</p>
-                                            <p>Comment : {{$monitorings->comment}}</p>
+                                            <p>Nama Distributor : {{$monitoring[$i]->nama_distributor}}</p>
+                                            <p>Registered On : {{$monitoring[$i]->created_at}}</p>
+                                            <p>Category : {{$monitoring[$i]->nama_category}}</p>
+                                            <p>Category Type : {{$monitoring[$i]->category_type}}</p>
+                                            <p>Program : {{$monitoring[$i]->nama_program}}</p>
+                                            <p>Value : {{$monitoring[$i]->value}}</p>
+                                            <p>Entitlement : {{$monitoring[$i]->entitlement}}</p>
+                                            <p>PR Number : {{$monitoring[$i]->pr_number}}</p>
+                                            <p>Invoice number : {{$monitoring[$i]->invoice_number}}</p>
+                                            <p>Comment : {{$monitoring[$i]->comment}}</p>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
@@ -60,17 +66,17 @@
                                 </div>
                             </div>
                         </td>
-                        <td>{{ $monitorings->created_at }}</td>
-                        <td>{{ $monitorings->nama_distributor }}</td>
-                        <td>{{ $monitorings->category_type }}</td>
-                        <td>{{ $monitorings->nama_program }}</td>
-                        <td>{{ $monitorings->value }}</td>
-                        <td>{{ $monitorings->status }}</td>
-                        <td>{{ $monitorings->comment }}</td>
-                        <td>{{ $monitorings->pr_number }}</td>
-                        <td>{{ $monitorings->invoice_number }}</td>
+                        <td>{{ $monitoring[$i]->created_at }}</td>
+                        <td>{{ $monitoring[$i]->nama_distributor }}</td>
+                        <td>{{ $monitoring[$i]->category_type }}</td>
+                        <td>{{ $monitoring[$i]->nama_program }}</td>
+                        <td>{{ $monitoring[$i]->value }}</td>
+                        <td>{{ $monitoring[$i]->status }}</td>
+                        <td>{{ $monitoring[$i]->comment }}</td>
+                        <td>{{ $monitoring[$i]->pr_number }}</td>
+                        <td>{{ $monitoring[$i]->invoice_number }}</td>
                     </tr>
-                    @endforeach
+                    @endfor
                     </tbody>
                 </table>
             </div>
