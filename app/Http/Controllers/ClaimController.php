@@ -66,10 +66,10 @@ class ClaimController extends Controller
 
         $file1 = $input['file1'];
         $file2 = $input['file2'];
-        $file3 = $input['file3'];
+        // $file3 = $input['file3'];
         $another = $input['another'];
 
-        $destinationPath = public_path() . '/' . $input['regno'];
+        $destinationPath = public_path() . '/' . $id_claim;
 
         $extension1 = $file1->getClientOriginalExtension();
         $fileName1 = $file1->getClientOriginalName();
@@ -79,26 +79,28 @@ class ClaimController extends Controller
         $fileName2 = $file2->getClientOriginalName();
         $file2->move($destinationPath, $fileName2);
 
-        $extension3 = $file3->getClientOriginalExtension();
-        $fileName3 = $file3->getClientOriginalName();
-        $file3->move($destinationPath, $fileName3);
+        // $extension3 = $file3->getClientOriginalExtension();
+        // $fileName3 = $file3->getClientOriginalName();
+        // $file3->move($destinationPath, $fileName3);
 
         $claim = new Claim();
         $claim->id_claim = $id_claim;
         $claim->nama_category = $input['categoryclaimtype'];
         $claim->category_type = $input['categorytype'];
         $claim->nama_program = $input['programname'];
-        $claim->value = $input['value'];
-        $claim->entitlement = $input['entitlement'];
+        $value = intval(preg_replace('/[^0-9]+/', '', $input['value']), 10);
+        $claim->value = $value;
+        $entitlement = intval(preg_replace('/[^0-9]+/', '', $input['entitlement']), 10);
+        $claim->entitlement = $entitlement;
         $claim->programforyear = $input['programyear'];
-        $claim->airwaybill = $fileName3;
+        // $claim->airwaybill = $fileName3;
         $claim->payment_form = $fileName1;
         $claim->original_tax = $fileName2;
         $claim->nama_distributor = Session::get('nama_user');
         $claim->kode_flow = 
         $claim->level_flow = '0';
         $claim->status = 'Submitted';
-        $claim->courier = $input['kurir'];
+        // $claim->courier = $input['kurir'];
         $claim->doc_check1 = $input['checkbox1'];
         $claim->doc_check2 = $input['checkbox2'];
         $claim->doc_check3 = $input['checkbox3'];

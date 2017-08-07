@@ -115,7 +115,7 @@
 
                 <div class="form-group required">
                     <label class="col-md-3 control-label">Attachment</label>
-                    <div class="col-md-9">
+                    <div class="col-md-6">
                         <label class="custom-file">Payment Requisition Form
                             <input type="file" id="file1" name="file1" class="custom-file-input" required>
                             <span class="custom-file-control"></span>
@@ -124,10 +124,10 @@
                             <input type="file" id="file2" name="file2" class="custom-file-input" required>
                             <span class="custom-file-control"></span>
                         </label>
-                        <label class="custom-file">AirwayBill Number
+                        <!-- <label class="custom-file">AirwayBill Number
                             <input type="file" id="file3" name="file3" class="custom-file-input">
                             <span class="custom-file-control"></span>
-                        </label>
+                        </label> -->
                         <label class="custom-file">Another Attachment
                             <input type="file" id="another" name="another" class="custom-file-input" onchange="updateList()" multiple>
                             <span class="custom-file-control"></span>
@@ -136,12 +136,12 @@
                     </div>
                 </div>
 
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label class="col-md-3 control-label">Courier</label>
                     <div class="col-md-3">
                         <input type="text" class="form-control" id="kurir" name="kurir" />
                     </div>
-                </div>
+                </div> -->
 
                 <div class="form-group required">
                     <label class="col-md-3 control-label">Document Completion</label>

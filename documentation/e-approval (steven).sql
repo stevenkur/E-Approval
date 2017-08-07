@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 07, 2017 at 04:54 AM
+-- Generation Time: Aug 07, 2017 at 06:55 AM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 5.6.24
 
@@ -197,9 +197,9 @@ CREATE TABLE `claims` (
   `value` int(11) NOT NULL,
   `entitlement` int(11) NOT NULL,
   `programforyear` int(11) NOT NULL,
-  `pr_number` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `invoice_number` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `airwaybill` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `pr_number` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `invoice_number` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `airwaybill` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `payment_form` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `original_tax` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `nama_distributor` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -225,7 +225,8 @@ CREATE TABLE `claims` (
 --
 
 INSERT INTO `claims` (`id_claim`, `nama_category`, `category_type`, `nama_program`, `value`, `entitlement`, `programforyear`, `pr_number`, `invoice_number`, `airwaybill`, `payment_form`, `original_tax`, `nama_distributor`, `kode_flow`, `level_flow`, `status`, `courier`, `doc_check1`, `doc_check2`, `doc_check3`, `doc_check4`, `doc_check5`, `doc_check6`, `doc_check7`, `doc_check8`, `doc_check9`, `created_at`, `updated_at`) VALUES
-('201708-00001', 'Test 1', 'Test 1', 'Test 1', 100000, 100000, 2017, 'Test 1', 'Test 1', 'Test 1', 'Test 1', 'Test 1', 'Test 1', 'Test 1', 1, 'SUBMITTED', 'JNE', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+('201708-00001', 'Test 1', 'Test 1', 'Test 1', 100000, 100000, 2017, 'Test 1', 'Test 1', 'Test 1', 'Test 1', 'Test 1', 'Test 1', 'Test 1', 1, 'SUBMITTED', 'JNE', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('201708-00002', 'Marcom', 'HM3 - ProShop', '1', 12345, 1000000, 2016, NULL, NULL, NULL, 'Lambang ITS.png', 'Logo ITS.png', 'Distributor A', '0', 0, 'Submitted', NULL, 1, 1, 1, 1, 1, 1, 1, 1, NULL, '2017-08-06 21:53:18', '2017-08-06 21:53:18');
 
 -- --------------------------------------------------------
 
@@ -262,7 +263,8 @@ CREATE TABLE `comments` (
 --
 
 INSERT INTO `comments` (`id_comment`, `id_claim`, `comment`, `id_user`, `created_at`, `updated_at`) VALUES
-(1, '201708-00001', 'Test', 19, NULL, NULL);
+(1, '201708-00001', 'Test', 19, NULL, NULL),
+(2, '201708-00002', 'Test', 1, '2017-08-06 21:53:18', '2017-08-06 21:53:18');
 
 -- --------------------------------------------------------
 
@@ -818,7 +820,7 @@ ALTER TABLE `claim_attachments`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id_comment` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_comment` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `distributors`
 --

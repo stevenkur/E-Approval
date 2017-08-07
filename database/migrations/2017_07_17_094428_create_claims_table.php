@@ -21,10 +21,10 @@ class CreateClaimsTable extends Migration
             $table->integer('value');
             $table->integer('entitlement');
             $table->integer('programforyear');
-            $table->string('pr_number', 30);
-            $table->string('invoice_number', 30);
+            $table->string('pr_number', 30)->nullable();
+            $table->string('invoice_number', 30)->nullable();
             $table->string('nama_user', 100);
-            $table->string('airwaybill', 50);
+            $table->string('airwaybill', 50)->nullable();
             $table->string('payment_form', 50);
             $table->string('original_tax', 50);
             $table->string('nama_distributor', 100);

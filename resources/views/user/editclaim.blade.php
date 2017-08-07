@@ -124,7 +124,7 @@
                             <input type="file" id="another" name="another" class="custom-file-input" multiple onchange="updateList()">
                             <span class="custom-file-control"></span>
                         </label>
-                        <div><table id="fileList"></table></div>
+                        <div class="form-group"><table id="fileList"></table></div>
                     </div>
                 </div>
 
