@@ -63,9 +63,14 @@ class ClaimController extends Controller
         {
             $regno='00001';
         }
-        else $regno=$query[0]->number;
-        $id_claim=$date.'-'.$regno;
 
+        else 
+        {
+        $length = sizeof($query);
+        $regno=$query[$length-1]->number;
+        $id_claim=$date.'-'.$regno;
+        
+        }
         $input = Input::all();
         // dd($input);
 
