@@ -45,50 +45,37 @@
             <form action="#" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formeditclaim">
             {{csrf_field()}}
             <div class="box-header with-border">
-                <h3 class="box-title">Edit Claim Registration Number. 201701-00001</h3>
+                <h3 class="box-title">Edit Claim Registration Number. {{ $regno }}</h3>
             </div>
             <div class="box-body">
                 <div align="left">
                     <label style="color: red;"><small>* Indicates a required field</small></label>
                 </div>
                 <div class="col-md-6">
-                    <div class="form-group required">
-                        <label class="col-md-4 control-label">Reg. No</label>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Category Claim Type</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="regno" name="regno" value="201707-00001" disabled/>
+                            <input type="text" class="form-control" id="categoryclaimtype" name="categoryclaimtype" value="{{$category_now}}" readonly/>
                         </div>
-                    </div>
+                    </div> 
                     <div class="form-group required">
                         <label class="col-md-4 control-label">Program Name</label>
                         <div class="col-md-8">
-                            <select class="form-control" id="programname" name="programname">
-                                <option value="#">-- Please Choose One --</option>
-                                @foreach($program as $programs)
-                                <option value="{{ $programs->id_program }}">{{ $programs->nama_program }}</option>
-                                @endforeach
-                            </select>
+                            <input type="text" class="form-control" id="programname" name="programname" value="{{ $regno }}" disabled/>
                         </div>
                     </div>
                     <div class="form-group required">
                         <label class="col-md-4 control-label">Program for Year</label>
                         <div class="col-md-8">
-                            <select class="form-control" id="programyear" name="programyear">
-                                <option value="#">-- Please Choose One --</option>
-                                <option value="<?php echo date("Y")-1; ?>"><?php echo date("Y")-1; ?></option>
-                                <option value="<?php echo date("Y"); ?>"><?php echo date("Y"); ?></option>
-                            </select>
+                            <input type="text" class="form-control" id="programyear" name="programyear" value="{{ $regno }}" disabled/>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="col-md-4 control-label">Claim Type</label>
+                    <div class="form-group required">
+                        <label class="col-md-4 control-label">Category Type</label>
                         <div class="col-md-8">
-                            <select class="form-control" id="claimtype" name="claimtype" disabled>
-                                <option value="Marcom">Marcom</option>
-                                <option value="RDP">RDP</option>
-                                <option value="BDF">BDF</option>
-                            </select>
+                            <input type="text" class="form-control" id="categorytype" name="categorytype" value="{{ $regno }}" disabled/>
                         </div>
                     </div>
                     <div class="form-group">
@@ -100,7 +87,7 @@
                     <div class="form-group required">
                         <label class="col-md-4 control-label">Value</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="value" name="value" onkeyup="convertToRupiah(this);" style="text-align: right;"/>
+                            <input type="text" class="form-control" id="value" name="value" value="{{ $value }}" onkeyup="convertToRupiah(this);" style="text-align: right;"/>
                         </div>
                     </div>
                 </div>
@@ -109,11 +96,11 @@
                     <label class="col-md-3 control-label">Attachment</label>
                     <div class="col-md-9">
                         <label class="custom-file">Payment Requisition Form
-                            <input type="file" id="file1" name="file1" class="custom-file-input" required>
+                            <input type="file" id="file1" name="file1" class="custom-file-input" value="{{ $file1 }}" required>
                             <span class="custom-file-control"></span>
                         </label>
                         <label class="custom-file">Original Tax & Supplier Invoices
-                            <input type="file" id="file2" name="file2" class="custom-file-input" required>
+                            <input type="file" id="file2" name="file2" class="custom-file-input" value="{{ $file2 }}" required>
                             <span class="custom-file-control"></span>
                         </label>
                         <label class="custom-file">AirwayBill Number
@@ -121,7 +108,7 @@
                             <span class="custom-file-control"></span>
                         </label>
                         <label class="custom-file">Another Attachment
-                            <input type="file" id="another" name="another" class="custom-file-input" multiple onchange="updateList()">
+                            <input type="file" id="another" name="another" class="custom-file-input" multiple onchange="updateList()"  value="{{ $another }}">
                             <span class="custom-file-control"></span>
                         </label>
                         <div class="form-group"><table id="fileList"></table></div>
@@ -131,7 +118,7 @@
                 <div class="form-group required">
                     <label class="col-md-3 control-label">Courier</label>
                     <div class="col-md-3">
-                        <input type="text" class="form-control" id="kurir" name="kurir" required />
+                        <input type="text" class="form-control" id="kurir" name="kurir" value="{{ $kurir }}" required />
                     </div>
                 </div>
 

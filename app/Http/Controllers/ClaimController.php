@@ -28,7 +28,7 @@ class ClaimController extends Controller
         else
         {            
             $program=Program::all();
-            $entitlement=DB::select(DB::raw('SELECT * FROM programs'));
+            $entitlement=DB::select(DB::raw('SELECT d.nama_program, f.entitlement, f.maxclaim_date FROM claims A, categories B, distributors C, programs D, user_distributors E, marketings F WHERE  E.id_user='1' AND E.id_dist=C.id_dist AND F.id_dist=C.id_dist AND F.id_program=D.id_program AND B.id_category=F.id_category AND C.nama_distributor=A.nama_distributor GROUP BY E.id_user'));
             $category = Session::get('categories');
             $categorytype=DB::select(DB::raw("SELECT nama_category, category_type FROM category_details where nama_category LIKE '%$category%'"));
             
