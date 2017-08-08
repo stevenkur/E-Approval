@@ -42,16 +42,50 @@
                                             <h4 class="modal-title">Reg. No: {{ $monitorings->id_claim }}</h4>
                                         </div>
                                         <div class="modal-body">
-                                            <p>Nama Distributor : {{$monitorings->nama_distributor}}</p>
-                                            <p>Registered On : {{$monitorings->created_at}}</p>
-                                            <p>Category : {{$monitorings->nama_category}}</p>
-                                            <p>Category Type : {{$monitorings->category_type}}</p>
-                                            <p>Program : {{$monitorings->nama_program}}</p>
-                                            <p>Value : {{$monitorings->value}}</p>
-                                            <p>Entitlement : {{$monitorings->entitlement}}</p>
-                                            <p>PR Number : {{$monitorings->pr_number}}</p>
-                                            <p>Invoice number : {{$monitorings->invoice_number}}</p>
-                                            <p>Comment : {{$monitorings->comment}}</p>
+                                            <ul class="nav nav-tabs" id="tabContent">
+                                                <li class="active"><a href="#details{{ $monitorings->id_claim }}" data-toggle="tab">Details</a></li>
+                                                <li><a href="#comment{{ $monitorings->id_claim }}" data-toggle="tab">Comment</a></li>
+                                                <li><a href="#status{{ $monitorings->id_claim }}" data-toggle="tab">Status</a></li>
+                                            </ul>
+                                              
+                                            <div class="tab-content">
+                                                <div class="tab-pane active" id="details{{ $monitorings->id_claim }}">                    
+                                                    <div class="control-group">
+                                                        <p>Nama Distributor : {{$monitorings->nama_distributor}}</p>
+                                                        <p>Registered On : {{$monitorings->created_at}}</p>
+                                                        <p>Category : {{$monitorings->nama_category}}</p>
+                                                        <p>Category Type : {{$monitorings->category_type}}</p>
+                                                        <p>Program : {{$monitorings->nama_program}}</p>
+                                                        <p>Value : {{$monitorings->value}}</p>
+                                                        <p>Entitlement : {{$monitorings->entitlement}}</p>
+                                                        <p>PR Number : {{$monitorings->pr_number}}</p>
+                                                        <p>Invoice number : {{$monitorings->invoice_number}}</p>
+                                                    </div>
+                                                </div>                                                    
+                                                <div class="tab-pane" id="comment{{ $monitorings->id_claim }}">
+                                                    <div class="control-group">
+                                                    @foreach($comment as $comments)
+                                                        @if($monitorings->id_claim==$comments->id_claim)
+                                                            <p>Comment: {{ $comments->comment }}</p>
+                                                            <p>ID: {{ $comments->id_user }}</p>
+                                                            <p>Created: {{ $comments->created_at }}</p>
+                                                        @endif
+                                                    @endforeach
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane" id="status{{ $monitorings->id_claim }}">
+                                                    <div class="control-group">
+                                                    @foreach($status as $stats)
+                                                        @if($monitorings->id_claim==$stats->id_claim)
+                                                            <p>IDuser: {{ $stats->id_user }}</p>
+                                                            <p>IDactivity: {{ $stats->id_activity }}</p>
+                                                            <p>Created: {{ $stats->created_at }}</p>
+                                                        @endif
+                                                    @endforeach
+                                                    </div>
+                                                </div> 
+                                            </div>
+                                            
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>

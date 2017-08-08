@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Program;
 use App\Claim;
 use App\Comment;
+use App\Log_claim;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\DB;
 use Session;
@@ -52,11 +53,12 @@ class ClaimController extends Controller
             return redirect('login');
         }
         else
-        {
-            
+        {            
             $monitoring=DB::select(DB::raw("SELECT A.id_claim, A.created_at, A.nama_distributor,A.nama_category, A.category_type, A.nama_program, A.value,  A.status, GROUP_CONCAT(DISTINCT B.comment SEPARATOR ' ') as comment, A.pr_number,A.invoice_number,A.entitlement FROM claims A, comments B WHERE A.id_claim=B.id_claim and A.status NOT LIKE '%approved%' GROUP BY A.id_claim, A.created_at, A.nama_distributor, A.category_type, A.nama_program, A.value,  A.status,A.pr_number,A.invoice_number, A.nama_category,A.entitlement"));
+            $comment=DB::select(DB::raw("SELECT id_claim, comment, id_user, created_at FROM comments"));
+            $status=DB::select(DB::raw("SELECT id_user, id_claim, id_activity, created_at FROM log_claims"));
             // dd($monitoring);
-            return view('user/listclaim')->with('monitoring',$monitoring);            
+            return view('user/listclaim')->with('monitoring',$monitoring)->with('comment',$comment)->with('status',$status);            
         }
     }
 
@@ -132,6 +134,30 @@ class ClaimController extends Controller
         $comment->comment = $input['comment'];
         $comment->id_user = Session::get('id_user');
         $comment->save();
+
+        $log = new Log_claim();
+        $log->id_user=Session::get('id_user');
+        $log->id_claim=$id_claim;
+        $log->id_activity='6';
+        $log->save();
+
+        if($file1!=NULL&&$file2!=NULL)
+        {
+            $log = new Log_claim();
+            $log->id_user=Session::get('id_user');
+            $log->id_claim=$id_claim;
+            $log->id_activity='5';
+            $log->save();
+        }
+
+        if($input['comment']!=NULL)
+        {
+            $log = new Log_claim();
+            $log->id_user=Session::get('id_user');
+            $log->id_claim=$id_claim;
+            $log->id_activity='4';
+            $log->save();
+        }
 
         return redirect('listclaim');
     }
