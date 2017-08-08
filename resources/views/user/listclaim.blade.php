@@ -16,13 +16,9 @@
                         <th>Reg. No</th>
                         <th>Registered On</th>
                         <th>BP Name</th>
-                        <th>Claim Type</th>
                         <th>Program Name</th>
                         <th>Value</th>
                         <th>Status</th>
-                        
-                        <th>PRNumber</th>
-                        <th>InvoiceNumber</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -46,6 +42,7 @@
                                                 <li class="active"><a href="#details{{ $monitorings->id_claim }}" data-toggle="tab">Details</a></li>
                                                 <li><a href="#comment{{ $monitorings->id_claim }}" data-toggle="tab">Comment</a></li>
                                                 <li><a href="#status{{ $monitorings->id_claim }}" data-toggle="tab">Status</a></li>
+                                                <li><a href="#attachment{{ $monitorings->id_claim }}" data-toggle="tab">Attachment</a></li>
                                             </ul>
                                               
                                             <div class="tab-content">
@@ -118,7 +115,35 @@
                                                         @endif
                                                     @endforeach
                                                     </table>
-                                                </div> 
+                                                </div>
+                                                <div class="tab-pane" id="attachment{{ $monitorings->id_claim }}">
+                                                    <label class="control-label">Attachment Registration Number {{ $monitorings->id_claim }}</label>
+                                                    <table id="status" class="table table-bordered table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="col-md-6">Another Attachment</th>
+                                                            <th class="col-md-6">Created</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <!-- <tr>
+                                                        <td>Payment Requisition Form:</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Original Tax & Supplier Invoices:</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>AirwayBill Number:</td>
+                                                    </tr> -->
+                                                    @foreach($attachment as $attachments)
+                                                        @if($monitorings->id_claim==$attachments->id_claim)
+                                                        <tr>
+                                                            <td><a href="public/attachment/{{ $attachments->id_claim }}/{{ $attachments->nama_attachment }}" download>{{ $attachments->nama_attachment }}</a></td>
+                                                            <td>{{ $attachments->created_at }}</td>
+                                                        </tr>
+                                                        @endif
+                                                    @endforeach
+                                                    </table>
+                                                </div>
                                             </div>
                                             
                                         </div>
@@ -132,24 +157,9 @@
                         </td>
                         <td>{{ $monitorings->created_at }}</td>
                         <td>{{ $monitorings->nama_distributor }}</td>
-                        <td>{{ $monitorings->category_type }}</td>
                         <td>{{ $monitorings->nama_program }}</td>
                         <td>{{ $monitorings->value }}</td>
-                        <td>{{ $monitorings->status }}</td>                        
-                        <td>
-                            @if($monitorings->pr_number!=NULL)                                                        
-                            {{$monitorings->pr_number}}
-                            @else
-                            -
-                            @endif
-                        </td>
-                        <td>
-                            @if($monitorings->invoice_number!=NULL)                                                        
-                            {{$monitorings->invoice_number}}
-                            @else
-                            -
-                            @endif                            
-                        </td>
+                        <td>{{ $monitorings->status }}</td>
                     </tr>
                     @endforeach
                     </tbody>

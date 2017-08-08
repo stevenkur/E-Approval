@@ -15,7 +15,25 @@
         }
     </style>
 
-    <script type="text/javascript">
+    <script type="text/javascript">        
+        function ChooseProgram(data)
+        {
+            var jsArray = <?php echo json_encode($query); ?>;
+            
+            var length = jsArray.length;
+            for(var i=0;i<length;i++)
+            {
+            if(data.value==jsArray[i].nama_program)
+                {
+                    var rupiah = '';        
+                    var angkarev = jsArray[i].entitlement.toString().split('').reverse().join('');
+                    for(var i = 0; i < angkarev.length; i++) if(i%3 == 0) rupiah += angkarev.substr(i,3)+'.';
+                    var entitlement = 'Rp '+rupiah.split('',rupiah.length-1).reverse().join('');
+                    document.getElementById("entitlement").value = entitlement;
+                }
+            }
+                        
+        }
         function convertToRupiah(objek) {
             separator = ".";
             a = objek.value;
@@ -44,32 +62,12 @@
             }
             output.innerHTML += '</tr>';
         }
-
-        function ChooseProgram(data)
-        {
-            var jsArray = <?php echo json_encode($query); ?>;
-            
-            var length = jsArray.length;
-            for(var i=0;i<length;i++)
-            {
-            if(data.value==jsArray[i].nama_program)
-                {
-                    var rupiah = '';        
-                    var angkarev = jsArray[i].entitlement.toString().split('').reverse().join('');
-                    for(var i = 0; i < angkarev.length; i++) if(i%3 == 0) rupiah += angkarev.substr(i,3)+'.';
-                    var entitlement = 'Rp '+rupiah.split('',rupiah.length-1).reverse().join('');
-                    document.getElementById("entitlement").value = entitlement;
-                }
-            }
-                        
-        }
-
     </script>
   
     <!-- Main content -->
     <section class="content">
         <div class="box box-primary">
-            <form action="{{ route('saveclaim') }}" method="post" role="form" class="form-horizontal" enctype="multipart/form-data"  name="formnewclaim" id="formnewclaim">
+            <form action="{{ route('saveclaim') }}" method="post" role="form" class="form-horizontal" name="formnewclaim" id="formnewclaim" enctype="multipart/form-data">
             {{csrf_field()}}
             <div class="box-header with-border">
                 <h3 class="box-title">New Claim Registration</h3>
@@ -89,7 +87,7 @@
                         <label class="col-md-4 control-label">Program Name</label>
                         <div class="col-md-8">
 
-                            <select class="form-control" id="programname" name="select" onchange="ChooseProgram(this);">
+                            <select class="form-control" id="programname" name="programname" onchange="ChooseProgram(this);">
                                 <option value="#">-- Please Choose One --</option>
                                 @foreach($program as $programs)
                                 <option value="{{ $programs->nama_program }}">{{ $programs->nama_program }}</option>
@@ -110,7 +108,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group required">
-                        <label class="col-md-4 control-label">Category Type</label>
+                        <label class="col-md-4 control-label">Claim Type</label>
                         <div class="col-md-8">
                             <select class="form-control" id="categorytype" name="categorytype">
                                 <option value="#">-- Please Choose One --</option>
@@ -154,7 +152,7 @@
                             <span class="custom-file-control"></span>
                         </label> -->
                         <label class="custom-file">Another Attachment
-                            <input type="file" id="another" name="another" class="custom-file-input" onchange="updateList()" multiple>
+                            <input type="file" multiple id="another" name="another[]" class="custom-file-input" onchange="updateList()">
                             <span class="custom-file-control"></span>
                         </label>
                         <div class="form-group"><table id="fileList"></table></div>
