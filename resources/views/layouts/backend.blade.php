@@ -2,6 +2,7 @@
     $category_length = sizeof(Session::get('nama_category'));
     $category = Session::get('nama_category');
     $category_now = Session::get('categories');
+    $role = Session::get('role');
 ?>
 
 <!DOCTYPE html>
@@ -56,7 +57,7 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Claim <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                @if(Session::get('role')=='Distributor')
+                @if($role[0]=='Distributor')
                 <li><a href="{{ route('newclaim') }}">New Claim</a></li>
                 @endif
                 <li><a href="{{ route('listclaim') }}">List Claim</a></li>

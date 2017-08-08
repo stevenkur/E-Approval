@@ -51,6 +51,7 @@
                                             <div class="tab-content">
                                                 <div class="tab-pane active" id="details{{ $monitorings->id_claim }}">                    
                                                     <div class="control-group">
+                                                        <label class="control-label">Details Registration Number {{ $monitorings->id_claim }}</label>
                                                         <p>Nama Distributor : {{$monitorings->nama_distributor}}</p>
                                                         <p>Registered On : {{$monitorings->created_at}}</p>
                                                         <p>Category : {{$monitorings->nama_category}}</p>
@@ -77,6 +78,7 @@
                                                     </div>
                                                 </div>                                                    
                                                 <div class="tab-pane" id="comment{{ $monitorings->id_claim }}">
+                                                    <label class="control-label">Comments Registration Number {{ $monitorings->id_claim }}</label>
                                                     <table id="comment" class="table table-bordered table-striped">
                                                     <thead>
                                                         <tr>
@@ -97,7 +99,7 @@
                                                     </table>
                                                 </div>
                                                 <div class="tab-pane" id="status{{ $monitorings->id_claim }}">
-                                                    <div class="control-group">
+                                                    <label class="control-label">Status Registration Number {{ $monitorings->id_claim }}</label>
                                                     <table id="status" class="table table-bordered table-striped">
                                                     <thead>
                                                         <tr>
@@ -116,7 +118,6 @@
                                                         @endif
                                                     @endforeach
                                                     </table>
-                                                    </div>
                                                 </div> 
                                             </div>
                                             
