@@ -51,8 +51,11 @@ class ReportController extends Controller
         }
         else
         {
-            $marketing=DB::select(DB::raw("SELECT A.id_marketing, A.id_dist, B.nama_distributor, A.id_program, C.nama_program, A.entitlement,  A.maxclaim_date, D.nama_category, D.id_category FROM marketings A, distributors B, programs C, categories D WHERE A.id_dist=B.id_dist and A.id_program=C.id_program and A.id_category=D.id_category"));
-            return view('user/summaryclaimreport')->with('marketing',$marketing);
+
+            $marketing=DB::select(DB::raw("SELECT A.id_marketing, A.id_dist, B.nama_distributor, A.id_program, C.nama_program, SUM(A.entitlement) as entitlement,  A.maxclaim_date, D.nama_category, D.id_category FROM marketings A, distributors B, programs C, categories D WHERE A.id_dist=B.id_dist and A.id_program=C.id_program and A.id_category=D.id_category GROUP BY A.id_marketing, A.id_dist, B.nama_distributor, A.id_program, C.nama_program,A.maxclaim_date, D.nama_category, D.id_category "));
+            $market=DB::select(DB::raw("SELECT  A.id_dist, B.nama_distributor ,SUM(A.entitlement) as entitlement, D.nama_category, D.id_category FROM marketings A, distributors B, programs C, categories D WHERE A.id_dist=B.id_dist and A.id_program=C.id_program and A.id_category=D.id_category GROUP BY  A.id_dist, B.nama_distributor, D.nama_category, D.id_category "));
+            
+            return view('user/summaryclaimreport')->with('marketing',$marketing)->with('market',$market);
         }
     }
 }
