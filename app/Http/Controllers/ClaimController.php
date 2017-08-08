@@ -30,11 +30,17 @@ class ClaimController extends Controller
             $program=Program::all();
             $iduser=Session::get('id_user');
             $email=Session::get('email');
-            $entitlement=DB::select(DB::raw("SELECT d.nama_program, f.entitlement, f.maxclaim_date FROM claims A, categories B, distributors C, programs D, user_distributors E, marketings F WHERE  E.id_user='$iduser' AND E.id_dist=C.id_dist AND F.id_dist=C.id_dist AND F.id_program=D.id_program AND B.id_category=F.id_category AND A.nama_distributor='$email' GROUP BY E.id_user, d.nama_program, f.entitlement, f.maxclaim_date"));
+            $query=DB::select(DB::raw("SELECT d.nama_program, f.entitlement, f.maxclaim_date FROM  categories B, distributors C, programs D, user_distributors E, marketings F WHERE  E.id_user='$iduser' AND E.id_dist=C.id_dist AND F.id_dist=C.id_dist AND F.id_program=D.id_program AND B.id_category=F.id_category  GROUP BY E.id_user, d.nama_program, f.entitlement, f.maxclaim_date"));
             $category = Session::get('categories');
             $categorytype=DB::select(DB::raw("SELECT nama_category, category_type FROM category_details where nama_category LIKE '%$category%'"));
-            
-            return view('user/newclaim')->with('program',$program)->with('entitlement',$entitlement)->with('categorytype',$categorytype);
+            $length=sizeof($query);
+            for($i=0;$i<$length;$i++)
+            {
+                $entitlement[$i]=number_format($query[$i]->entitlement, 0,".",".");
+            }
+            // $entitlement= array_merge($query,$money);
+            // dd($entitlement);
+            return view('user/newclaim')->with('program',$program)->with('$query',$query)->with('entitlement',$entitlement)->with('categorytype',$categorytype);
         }
     }
 

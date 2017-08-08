@@ -20,7 +20,6 @@
                         <th>Program Name</th>
                         <th>Value</th>
                         <th>Status</th>
-                        <th>Comment</th>
                         <th>PRNumber</th>
                         <th>InvoiceNumber</th>
                     </tr>
@@ -50,7 +49,6 @@
                                             <p>Entitlement : {{$monitorings->entitlement}}</p>
                                             <p>PR Number : {{$monitorings->pr_number}}</p>
                                             <p>Invoice number : {{$monitorings->invoice_number}}</p>
-                                            <p>Comment : {{$monitorings->comment}}</p>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>

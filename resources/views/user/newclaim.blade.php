@@ -105,16 +105,17 @@
                             <!-- <input type="text" class="form-control" id="entitlement" name="entitlement" value="Rp 1.000.000 (WRONG)" required="required" style="text-align: right;" readonly /> -->
                             <select class="form-control" id="entitlement" name="entitlement">
                                 <option value="#">-- Please Choose One --</option>
-                                @foreach($entitlement as $entitlements)
-                                <option value="{{ $entitlements->entitlement }}">{{ $entitlements->entitlement }}</option>
-                                @endforeach
+                                <?php $length=sizeof($entitlement);?>
+                                @for($i=0;$i<$length;$i++)
+                                <option value="{{ $entitlement[$i]}}">Rp {{ $entitlement[$i] }}</option>
+                                @endfor
                             </select>
                         </div>
                     </div>
                     <div class="form-group required">
                         <label class="col-md-4 control-label">Value</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="value" name="value" onkeyup="convertToRupiah(this);" style="text-align: right;"/>
+                            <input type="text" class="form-control" id="value" name="value" onkeyup="convertToRupiah(this);" />
                         </div>
                     </div>
                 </div>
@@ -159,7 +160,7 @@
                             <label><input type="hidden" value="0" name="checkbox2"><input type="checkbox" value="1" name="checkbox2" required>Original Tax & Supplier Invoices. Tax must be addressed to PT Philips Indonesia (Please attached the scanned document on this claim)</label>
                         </div>
                         <div class="checkbox">
-                            <label><input type="hidden" value="0" name="checkbox3"><input type="checkbox" value="1" name="checkbox3" required>AirwayBill Number (Please attached the scanned document on this claim)</label>
+                            <label><input type="hidden" value="0" name="checkbox3"><input type="checkbox" value="1" name="checkbox3" >AirwayBill Number (Please attached the scanned document on this claim)</label>
                         </div>
                         <div class="checkbox">
                             <label><input type="hidden" value="0" name="checkbox4"><input type="checkbox" value="1" name="checkbox4" required>Marketing Program Letter/BDF proposal Approval/Natura template</label>
