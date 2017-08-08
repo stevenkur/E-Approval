@@ -24,25 +24,16 @@
                     </tr>
                     </thead>
                     <tbody>
-                   
+                    @foreach($marketing as $marketings)
                     <tr>
-                        <td>PT Sejahtera </td>
-                        <td>program a</td>
-                        <td>300000</td>
-                        <td>09-08-2017 </td>
-                        <td>10000</td>
-                        <td>10000</td>
+                        <td>{{ $marketings->nama_distributor }}</td>
+                        <td>{{ $marketings->nama_program }}</td>
+                        <td>{{ $marketings->entitlement }}</td>
+                        <td>{{ $marketings->maxclaim_date }}</td>
+                        <td> 10000 </td>
+                        <td> 10000 </td>
                     </tr>
-                    <tr>
-                        <td>PT Sejahtera </td>
-                        <td>program a</td>
-                        <td>300000</td>
-                        <td>09-08-2017 </td>
-                        <td>10000</td>
-                        <td>10000</td>
-                    </tr>
-                    
-                    
+                    @endforeach
                     </tbody>
                 </table>
             </div>
@@ -60,31 +51,20 @@
                         <th>Nama Distributor</th>
                         <th>Category Name</th>
                         <th>Entitlement</th>
-                        <th>Max Claim Date</th>
                         <th>Pending</th>
                         <th>Closed</th>
                     </tr>
                     </thead>
-                    <tbody>
-                   
+                    <tbody>                   
+                    @foreach($market as $markets)
                     <tr>
-                        <td>PT Sejahtera </td>
-                        <td>Marcom</td>
-                        <td>300000</td>
-                        <td>09-08-2017 </td>
-                        <td>10000</td>
-                        <td>10000</td>
+                        <td>{{ $markets->nama_distributor }}</td>
+                        <td>{{ $markets->nama_category }}</td>
+                        <td>{{ $markets->entitlement }}</td>
+                        <td> 10000 </td>
+                        <td> 10000 </td>
                     </tr>
-                    <tr>
-                        <td>PT Sejahtera </td>
-                        <td>RDP</td>
-                        <td>300000</td>
-                        <td>09-08-2017 </td>
-                        <td>10000</td>
-                        <td>10000</td>
-                    </tr>
-                    
-                    
+                    @endforeach   
                     </tbody>
                 </table>
             </div>
