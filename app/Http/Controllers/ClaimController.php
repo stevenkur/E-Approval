@@ -28,20 +28,25 @@ class ClaimController extends Controller
         }
         else
         {            
-            $program=Program::all();
+            $category = Session::get('categories');
+            $program=DB::select(DB::raw("SELECT B.nama_program FROM  marketings A, programs B, categories C WHERE C.nama_category='$category' and A.id_category=C.id_category and A.id_program=B.id_program"));
             $iduser=Session::get('id_user');
             $email=Session::get('email');
-            $query=DB::select(DB::raw("SELECT d.nama_program, f.entitlement, f.maxclaim_date FROM  categories B, distributors C, programs D, user_distributors E, marketings F WHERE  E.id_user='$iduser' AND E.id_dist=C.id_dist AND F.id_dist=C.id_dist AND F.id_program=D.id_program AND B.id_category=F.id_category  GROUP BY E.id_user, d.nama_program, f.entitlement, f.maxclaim_date"));
-            $category = Session::get('categories');
-            $categorytype=DB::select(DB::raw("SELECT nama_category, category_type FROM category_details where nama_category LIKE '%$category%'"));
-            $length=sizeof($query);
-            for($i=0;$i<$length;$i++)
+            $queryvalue=DB::select(DB::raw("SELECT SUM(A.value) FROM  claims A,categories B, distributors C, programs D, user_distributors E, marketings F WHERE  A.nama_distributor='$email' AND E.id_user='$iduser' AND E.id_dist=C.id_dist AND F.id_dist=C.id_dist AND F.id_program=D.id_program AND B.id_category=F.id_category and A.status='Closed' GROUP BY E.id_user, d.nama_program, f.entitlement, f.maxclaim_date"));
+            
+            if(isset($queryvalue))
             {
-                $entitlement[$i]=number_format($query[$i]->entitlement, 0,".",".");
+                $value=0;
             }
-            // $entitlement= array_merge($query,$money);
-            // dd($entitlement);
-            return view('user/newclaim')->with('program',$program)->with('query',$query)->with('entitlement',$entitlement)->with('categorytype',$categorytype);
+            else
+            {
+                $value=json_encode($queryvalue);
+            }
+            $query=DB::select(DB::raw("SELECT d.nama_program, (f.entitlement-$value) as entitlement, f.maxclaim_date FROM  categories B, distributors C, programs D, user_distributors E, marketings F WHERE  E.id_user='$iduser' AND E.id_dist=C.id_dist AND F.id_dist=C.id_dist AND F.id_program=D.id_program AND B.id_category=F.id_category  GROUP BY E.id_user, d.nama_program, f.entitlement, f.maxclaim_date"));
+            $categorytype=DB::select(DB::raw("SELECT nama_category, category_type FROM category_details where nama_category LIKE '%$category%'"));
+            
+           
+            return view('user/newclaim')->with('program',$program)->with('query',$query)->with('categorytype',$categorytype);
         }
     }
 

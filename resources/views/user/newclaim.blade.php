@@ -57,7 +57,7 @@
                     var rupiah = '';        
                     var angkarev = jsArray[i].entitlement.toString().split('').reverse().join('');
                     for(var i = 0; i < angkarev.length; i++) if(i%3 == 0) rupiah += angkarev.substr(i,3)+'.';
-                    var entitlement = 'Rp. '+rupiah.split('',rupiah.length-1).reverse().join('');
+                    var entitlement = 'Rp '+rupiah.split('',rupiah.length-1).reverse().join('');
                     document.getElementById("entitlement").value = entitlement;
                 }
             }
@@ -128,15 +128,6 @@
                             @else
                             <input type="text" class="form-control" id="entitlement" name="entitlement" value="{{entitlement[0]}}" required="required"  readonly />
                             @endif
-
-                            <!-- <input type="text" class="form-control" id="entitlement" name="entitlement" value="Rp 1.000.000 (WRONG)" required="required" style="text-align: right;" readonly /> -->
-                            <!-- <select class="form-control" id="entitlement" name="entitlement">
-                                <option value="#">-- Please Choose One --</option>
-                                <?php $length=sizeof($entitlement);?>
-                                @for($i=0;$i<$length;$i++)
-                                <option value="{{ $entitlement[$i]}}">Rp {{ $entitlement[$i] }}</option>
-                                @endfor
-                            </select> -->
                         </div>
                     </div>
                     <div class="form-group required">
