@@ -1,6 +1,13 @@
 @extends('layouts.backend')
 
 @section('content')
+
+<?php  
+    $category_length = sizeof(Session::get('nama_category'));
+    $category = Session::get('nama_category');
+    $category_now = Session::get('categories');
+?>
+
     <style type="text/css">
         .form-group.required .control-label:after {
             content:"*";
@@ -45,7 +52,7 @@
             <form action="#" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formeditclaim">
             {{csrf_field()}}
             <div class="box-header with-border">
-                <h3 class="box-title">Edit Claim Registration Number. {{ $regno }}</h3>
+                <h3 class="box-title">Edit Claim Registration Number. {{ $result[0]->id_claim }}</h3>
             </div>
             <div class="box-body">
                 <div align="left">
@@ -61,13 +68,13 @@
                     <div class="form-group required">
                         <label class="col-md-4 control-label">Program Name</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="programname" name="programname" value="{{ $regno }}" disabled/>
+                            <input type="text" class="form-control" id="programname" name="programname" value="{{ $result[0]->nama_program }}" disabled/>
                         </div>
                     </div>
                     <div class="form-group required">
                         <label class="col-md-4 control-label">Program for Year</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="programyear" name="programyear" value="{{ $regno }}" disabled/>
+                            <input type="text" class="form-control" id="programyear" name="programyear" value="{{ $result[0]->programforyear }}" disabled/>
                         </div>
                     </div>
                 </div>
@@ -75,19 +82,19 @@
                     <div class="form-group required">
                         <label class="col-md-4 control-label">Category Type</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="categorytype" name="categorytype" value="{{ $regno }}" disabled/>
+                            <input type="text" class="form-control" id="categorytype" name="categorytype" value="{{ $result[0]->category_type }}" disabled/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-4 control-label">Entitlement</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="entitlement" name="entitlement" value="Rp 1.000.000 (WRONG)" required="required" style="text-align: right;" disabled />
+                            <input type="text" class="form-control" id="entitlement" name="entitlement" value="$result[0]->entitlement" required="required" style="text-align: right;" disabled />
                         </div>
                     </div>
                     <div class="form-group required">
                         <label class="col-md-4 control-label">Value</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="value" name="value" value="{{ $value }}" onkeyup="convertToRupiah(this);" style="text-align: right;"/>
+                            <input type="text" class="form-control" id="value" name="value" value="{{ $result[0]->value }}" onkeyup="convertToRupiah(this);" style="text-align: right;"/>
                         </div>
                     </div>
                 </div>
@@ -96,11 +103,11 @@
                     <label class="col-md-3 control-label">Attachment</label>
                     <div class="col-md-9">
                         <label class="custom-file">Payment Requisition Form
-                            <input type="file" id="file1" name="file1" class="custom-file-input" value="{{ $file1 }}" required>
+                            <input type="file" id="file1" name="file1" class="custom-file-input" value="{{ $result[0]->payment_form }}" required>
                             <span class="custom-file-control"></span>
                         </label>
                         <label class="custom-file">Original Tax & Supplier Invoices
-                            <input type="file" id="file2" name="file2" class="custom-file-input" value="{{ $file2 }}" required>
+                            <input type="file" id="file2" name="file2" class="custom-file-input" value="{{ $result[0]->original_tax }}" required>
                             <span class="custom-file-control"></span>
                         </label>
                         <label class="custom-file">AirwayBill Number
@@ -108,7 +115,7 @@
                             <span class="custom-file-control"></span>
                         </label>
                         <label class="custom-file">Another Attachment
-                            <input type="file" id="another" name="another" class="custom-file-input" multiple onchange="updateList()"  value="{{ $another }}">
+                            <input type="file" id="another" name="another" class="custom-file-input" multiple onchange="updateList()"  value="">
                             <span class="custom-file-control"></span>
                         </label>
                         <div class="form-group"><table id="fileList"></table></div>
@@ -118,7 +125,7 @@
                 <div class="form-group required">
                     <label class="col-md-3 control-label">Courier</label>
                     <div class="col-md-3">
-                        <input type="text" class="form-control" id="kurir" name="kurir" value="{{ $kurir }}" required />
+                        <input type="text" class="form-control" id="kurir" name="kurir" value="{{ $result[0]->courier }}" required />
                     </div>
                 </div>
 
@@ -172,17 +179,17 @@
 @stop
 
 <!-- jQuery 3 -->
-<script src="public/adminlte/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="{{ URL::asset('public/adminlte/bower_components/jquery/dist/jquery.min.js') }}"></script>
 <!-- Bootstrap 3.3.7 -->
-<script src="public/adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="{{ URL::asset('public/adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 <!-- DataTables -->
-<script src="public/adminlte/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="public/adminlte/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="{{ URL::asset('public/adminlte/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ URL::asset('public/adminlte/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
 <!-- SlimScroll -->
-<script src="public/adminlte/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+<script src="{{ URL::asset('public/adminlte/bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
 <!-- FastClick -->
-<script src="public/adminlte/bower_components/fastclick/lib/fastclick.js"></script>
+<script src="{{ URL::asset('public/adminlte/bower_components/fastclick/lib/fastclick.js') }}"></script>
 <!-- AdminLTE App -->
-<script src="public/adminlte/dist/js/adminlte.min.js"></script>
+<script src="{{ URL::asset('public/adminlte/dist/js/adminlte.min.js') }}"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="public/adminlte/dist/js/demo.js"></script>
+<script src="{{ URL::asset('public/adminlte/dist/js/demo.js') }}"></script>

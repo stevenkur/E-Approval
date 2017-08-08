@@ -58,30 +58,64 @@
                                                         <p>Program : {{$monitorings->nama_program}}</p>
                                                         <p>Value : {{$monitorings->value}}</p>
                                                         <p>Entitlement : {{$monitorings->entitlement}}</p>
-                                                        <p>PR Number : {{$monitorings->pr_number}}</p>
-                                                        <p>Invoice number : {{$monitorings->invoice_number}}</p>
+                                                        <p>
+                                                        PR Number :
+                                                        @if($monitorings->pr_number!=NULL)                                                        
+                                                        {{$monitorings->pr_number}}
+                                                        @else
+                                                        -
+                                                        @endif
+                                                        </p>
+                                                        <p>
+                                                        Invoice number :
+                                                        @if($monitorings->invoice_number!=NULL)                                                        
+                                                        {{$monitorings->invoice_number}}
+                                                        @else
+                                                        -
+                                                        @endif 
+                                                        </p>
                                                     </div>
                                                 </div>                                                    
                                                 <div class="tab-pane" id="comment{{ $monitorings->id_claim }}">
-                                                    <div class="control-group">
+                                                    <table id="comment" class="table table-bordered table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="col-md-4">User</th>
+                                                            <th class="col-md-4">Comment</th>
+                                                            <th class="col-md-4">Created</th>
+                                                        </tr>
+                                                    </thead>
                                                     @foreach($comment as $comments)
                                                         @if($monitorings->id_claim==$comments->id_claim)
-                                                            <p>Comment: {{ $comments->comment }}</p>
-                                                            <p>ID: {{ $comments->id_user }}</p>
-                                                            <p>Created: {{ $comments->created_at }}</p>
+                                                        <tr>                 
+                                                            <td>{{ $comments->id_user }}</td>                                           
+                                                            <td>{{ $comments->comment }}</td>
+                                                            <td>{{ $comments->created_at }}</td>
+                                                        </tr>
                                                         @endif
                                                     @endforeach
-                                                    </div>
+                                                    </table>
                                                 </div>
                                                 <div class="tab-pane" id="status{{ $monitorings->id_claim }}">
                                                     <div class="control-group">
+                                                    <table id="status" class="table table-bordered table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="col-md-4">User</th>
+                                                            <th class="col-md-4">Activity</th>
+                                                            <th class="col-md-4">Created</th>
+                                                        </tr>
+                                                    </thead>
                                                     @foreach($status as $stats)
                                                         @if($monitorings->id_claim==$stats->id_claim)
-                                                            <p>IDuser: {{ $stats->id_user }}</p>
-                                                            <p>IDactivity: {{ $stats->id_activity }}</p>
-                                                            <p>Created: {{ $stats->created_at }}</p>
+                                                        <tr>
+                                                            <td>{{ $stats->id_user }}</td>
+                                                            <td>{{ $stats->id_activity }}</td>
+                                                            <td>{{ $stats->created_at }}</td>
+                                                        </tr>
                                                         @endif
                                                     @endforeach
+                                                    </table>
                                                     </div>
                                                 </div> 
                                             </div>
@@ -89,7 +123,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-                                            <a href="#" class="btn btn-primary">Edit</a>
+                                            <a class="btn btn-primary" type="submit" href="{{ route('editclaim', ['idclaim' => $monitorings->id_claim]) }}">Edit</a>
                                         </div>
                                     </div>
                                 </div>
@@ -100,10 +134,21 @@
                         <td>{{ $monitorings->category_type }}</td>
                         <td>{{ $monitorings->nama_program }}</td>
                         <td>{{ $monitorings->value }}</td>
-                        <td>{{ $monitorings->status }}</td>
-                        
-                        <td>{{ $monitorings->pr_number }}</td>
-                        <td>{{ $monitorings->invoice_number }}</td>
+                        <td>{{ $monitorings->status }}</td>                        
+                        <td>
+                            @if($monitorings->pr_number!=NULL)                                                        
+                            {{$monitorings->pr_number}}
+                            @else
+                            -
+                            @endif
+                        </td>
+                        <td>
+                            @if($monitorings->invoice_number!=NULL)                                                        
+                            {{$monitorings->invoice_number}}
+                            @else
+                            -
+                            @endif                            
+                        </td>
                     </tr>
                     @endforeach
                     </tbody>
@@ -117,20 +162,20 @@
 @stop
 
 <!-- jQuery 3 -->
-<script src="public/adminlte/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="{{ URL::asset('public/adminlte/bower_components/jquery/dist/jquery.min.js') }}"></script>
 <!-- Bootstrap 3.3.7 -->
-<script src="public/adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="{{ URL::asset('public/adminlte/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 <!-- DataTables -->
-<script src="public/adminlte/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="public/adminlte/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script src="{{ URL::asset('public/adminlte/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ URL::asset('public/adminlte/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
 <!-- SlimScroll -->
-<script src="public/adminlte/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+<script src="{{ URL::asset('public/adminlte/bower_components/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
 <!-- FastClick -->
-<script src="public/adminlte/bower_components/fastclick/lib/fastclick.js"></script>
+<script src="{{ URL::asset('public/adminlte/bower_components/fastclick/lib/fastclick.js') }}"></script>
 <!-- AdminLTE App -->
-<script src="public/adminlte/dist/js/adminlte.min.js"></script>
+<script src="{{ URL::asset('public/adminlte/dist/js/adminlte.min.js') }}"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="public/adminlte/dist/js/demo.js"></script>
+<script src="{{ URL::asset('public/adminlte/dist/js/demo.js') }}"></script>
 <!-- page script -->
 <script>
 $(function() {

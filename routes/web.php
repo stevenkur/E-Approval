@@ -29,6 +29,7 @@ Route::any('changearea/{category}', ['as'=>'changearea', 'uses'=>'HomeController
 Route::any('newclaim', ['as'=>'newclaim', 'uses'=>'ClaimController@newclaim']);
 Route::any('saveclaim', ['as'=>'saveclaim', 'uses'=>'ClaimController@saveclaim']);
 Route::any('listclaim', ['as'=>'listclaim', 'uses'=>'ClaimController@listclaim']);
+Route::any('/editclaim/{id_claim}', ['as'=>'editclaim', 'uses'=> 'ClaimController@editclaim']);
 Route::any('monitoringreport', ['as'=>'monitoringreport', 'uses'=>'ReportController@monitoringreport']);
 Route::any('resolutionreport', ['as'=>'resolutionreport', 'uses'=>'ReportController@resolutionreport']);
 Route::any('summaryclaimreport', ['as'=>'summaryclaimreport', 'uses'=>'ReportController@summaryclaimreport']);
