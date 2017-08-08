@@ -41,7 +41,7 @@ class ClaimController extends Controller
             }
             // $entitlement= array_merge($query,$money);
             // dd($entitlement);
-            return view('user/newclaim')->with('program',$program)->with('$query',$query)->with('entitlement',$entitlement)->with('categorytype',$categorytype);
+            return view('user/newclaim')->with('program',$program)->with('query',$query)->with('entitlement',$entitlement)->with('categorytype',$categorytype);
         }
     }
 
@@ -55,8 +55,8 @@ class ClaimController extends Controller
         else
         {            
             $monitoring=DB::select(DB::raw("SELECT A.id_claim, A.created_at, A.nama_distributor,A.nama_category, A.category_type, A.nama_program, A.value,  A.status, GROUP_CONCAT(DISTINCT B.comment SEPARATOR ' ') as comment, A.pr_number,A.invoice_number,A.entitlement FROM claims A, comments B WHERE A.id_claim=B.id_claim and A.status NOT LIKE '%approved%' GROUP BY A.id_claim, A.created_at, A.nama_distributor, A.category_type, A.nama_program, A.value,  A.status,A.pr_number,A.invoice_number, A.nama_category,A.entitlement"));
-            $comment=DB::select(DB::raw("SELECT id_claim, comment, id_user, created_at FROM comments"));
-            $status=DB::select(DB::raw("SELECT id_user, id_claim, id_activity, created_at FROM log_claims"));
+            $comment=DB::select(DB::raw("SELECT A.id_claim, A.comment, B.nama_user as id_user, A.created_at FROM comments A, users B where A.id_user=B.id_user"));
+            $status=DB::select(DB::raw("SELECT B.nama_user as id_user, A.id_claim, A.id_activity, A.created_at FROM log_claims A, users B where A.id_user=B.id_user"));
             // dd($monitoring);
             return view('user/listclaim')->with('monitoring',$monitoring)->with('comment',$comment)->with('status',$status);            
         }

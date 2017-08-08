@@ -44,12 +44,32 @@
             }
             output.innerHTML += '</tr>';
         }
+
+        function ChooseProgram(data)
+        {
+            var jsArray = <?php echo json_encode($query); ?>;
+            
+            var length = jsArray.length;
+            for(var i=0;i<length;i++)
+            {
+            if(data.value==jsArray[i].nama_program)
+                {
+                    var rupiah = '';        
+                    var angkarev = jsArray[i].entitlement.toString().split('').reverse().join('');
+                    for(var i = 0; i < angkarev.length; i++) if(i%3 == 0) rupiah += angkarev.substr(i,3)+'.';
+                    var entitlement = 'Rp. '+rupiah.split('',rupiah.length-1).reverse().join('');
+                    document.getElementById("entitlement").value = entitlement;
+                }
+            }
+                        
+        }
+
     </script>
   
     <!-- Main content -->
     <section class="content">
         <div class="box box-primary">
-            <form action="{{ route('saveclaim') }}" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewclaim" id="formnewclaim">
+            <form action="{{ route('saveclaim') }}" method="post" role="form" class="form-horizontal" enctype="multipart/form-data"  name="formnewclaim" id="formnewclaim">
             {{csrf_field()}}
             <div class="box-header with-border">
                 <h3 class="box-title">New Claim Registration</h3>
@@ -64,11 +84,12 @@
                         <div class="col-md-8">
                             <input type="text" class="form-control" id="categoryclaimtype" name="categoryclaimtype" value="{{$category_now}}" readonly/>
                         </div>
-                    </div>                    
+                    </div>              
                     <div class="form-group required">
                         <label class="col-md-4 control-label">Program Name</label>
                         <div class="col-md-8">
-                            <select class="form-control" id="programname" name="programname">
+
+                            <select class="form-control" id="programname" name="select" onchange="ChooseProgram(this);">
                                 <option value="#">-- Please Choose One --</option>
                                 @foreach($program as $programs)
                                 <option value="{{ $programs->nama_program }}">{{ $programs->nama_program }}</option>
@@ -79,7 +100,7 @@
                     <div class="form-group required">
                         <label class="col-md-4 control-label">Program for Year</label>
                         <div class="col-md-8">
-                            <select class="form-control" id="programyear" name="programyear">
+                            <select class="form-control" id="programyear" name="programyear" >
                                 <option value="#">-- Please Choose One --</option>
                                 <option value="<?php echo date("Y")-1; ?>"><?php echo date("Y")-1; ?></option>
                                 <option value="<?php echo date("Y"); ?>"><?php echo date("Y"); ?></option>
@@ -102,14 +123,20 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label">Entitlement</label>
                         <div class="col-md-8">
+                            @if(!isset($select))
+                            <input type="text" class="form-control" id="entitlement" name="entitlement" value="" required="required"  readonly />
+                            @else
+                            <input type="text" class="form-control" id="entitlement" name="entitlement" value="{{entitlement[0]}}" required="required"  readonly />
+                            @endif
+
                             <!-- <input type="text" class="form-control" id="entitlement" name="entitlement" value="Rp 1.000.000 (WRONG)" required="required" style="text-align: right;" readonly /> -->
-                            <select class="form-control" id="entitlement" name="entitlement">
+                            <!-- <select class="form-control" id="entitlement" name="entitlement">
                                 <option value="#">-- Please Choose One --</option>
                                 <?php $length=sizeof($entitlement);?>
                                 @for($i=0;$i<$length;$i++)
                                 <option value="{{ $entitlement[$i]}}">Rp {{ $entitlement[$i] }}</option>
                                 @endfor
-                            </select>
+                            </select> -->
                         </div>
                     </div>
                     <div class="form-group required">
