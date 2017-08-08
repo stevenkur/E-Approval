@@ -88,7 +88,7 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label">Entitlement</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="entitlement" name="entitlement" value="$result[0]->entitlement" required="required" style="text-align: right;" disabled />
+                            <input type="text" class="form-control" id="entitlement" name="entitlement" value="{{ $result[0]->entitlement }}" required="required" style="text-align: right;" disabled />
                         </div>
                     </div>
                     <div class="form-group required">

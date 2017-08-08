@@ -9,7 +9,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link href="public/img/philips-icon.png" rel="icon" type="image/png" />
+  <link href="{{ URL::asset('public/img/philips-icon.png') }}" rel="icon" type="image/png" />
   <title>E-Approval - Philips Indonesia</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -56,7 +56,9 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Claim <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
+                @if(Session::get('role')=='Distributor')
                 <li><a href="{{ route('newclaim') }}">New Claim</a></li>
+                @endif
                 <li><a href="{{ route('listclaim') }}">List Claim</a></li>
               </ul>
             </li>
