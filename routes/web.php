@@ -22,7 +22,6 @@ Route::get('login', ['as'=>'login', 'uses'=>'LoginController@index']);
 Route::post('login', ['as'=>'login', 'uses'=>'LoginController@login']);
 Route::get('logout', ['as'=>'logout', 'uses'=>'LoginController@logout']);
 
-
 Route::resource('home', 'HomeController');
 Route::any('changearea/{category}', ['as'=>'changearea', 'uses'=>'HomeController@changearea']);
 
@@ -30,12 +29,12 @@ Route::any('newclaim', ['as'=>'newclaim', 'uses'=>'ClaimController@newclaim']);
 Route::any('saveclaim', ['as'=>'saveclaim', 'uses'=>'ClaimController@saveclaim']);
 Route::any('listclaim', ['as'=>'listclaim', 'uses'=>'ClaimController@listclaim']);
 Route::any('/editclaim/{id_claim}', ['as'=>'editclaim', 'uses'=> 'ClaimController@editclaim']);
+Route::any('/cancelclaim/{id_claim}', ['as'=>'cancelclaim', 'uses'=> 'ClaimController@cancelclaim']);
 Route::any('monitoringreport', ['as'=>'monitoringreport', 'uses'=>'ReportController@monitoringreport']);
 Route::any('resolutionreport', ['as'=>'resolutionreport', 'uses'=>'ReportController@resolutionreport']);
 Route::any('summaryclaimreport', ['as'=>'summaryclaimreport', 'uses'=>'ReportController@summaryclaimreport']);
 Route::any('profile', ['as'=>'profile', 'uses'=>'ProfileController@index']);
 Route::any('profilechange', ['as'=>'profilechange', 'uses'=>'ProfileController@changepassword']);
-
 
 Route::resource('masteraccount', 'AccountController');
 Route::resource('masterrole', 'RoleController');

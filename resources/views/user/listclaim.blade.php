@@ -2,6 +2,16 @@
 
 @section('content')
 
+<script type="text/javascript">
+    function clicked() {
+       if (confirm('Do you want to cancel this?')) {
+           yourformelement.submit();
+       } else {
+           return false;
+       }
+    }
+</script>
+
     <!-- Main content -->
     <section class="content">
         <div class="box box-primary">
@@ -46,44 +56,95 @@
                                             </ul>
                                               
                                             <div class="tab-content">
-                                                <div class="tab-pane active" id="details{{ $monitorings->id_claim }}">                    
-                                                    <div class="control-group">
-                                                        <label class="control-label">Details Registration Number {{ $monitorings->id_claim }}</label>
-                                                        <p>Nama Distributor : {{$monitorings->nama_distributor}}</p>
-                                                        <p>Registered On : {{$monitorings->created_at}}</p>
-                                                        <p>Category : {{$monitorings->nama_category}}</p>
-                                                        <p>Category Type : {{$monitorings->category_type}}</p>
-                                                        <p>Program : {{$monitorings->nama_program}}</p>
-                                                        <p>Value : {{$monitorings->value}}</p>
-                                                        <p>Entitlement : {{$monitorings->entitlement}}</p>
-                                                        <p>
-                                                        PR Number :
-                                                        @if($monitorings->pr_number!=NULL)                                                        
-                                                        {{$monitorings->pr_number}}
-                                                        @else
-                                                        -
-                                                        @endif
-                                                        </p>
-                                                        <p>
-                                                        Invoice number :
-                                                        @if($monitorings->invoice_number!=NULL)                                                        
-                                                        {{$monitorings->invoice_number}}
-                                                        @else
-                                                        -
-                                                        @endif 
-                                                        </p>
-                                                    </div>
+                                                <div class="tab-pane active" id="details{{ $monitorings->id_claim }}"><br>
+                                                    <label class="control-label">Details Registration Number {{ $monitorings->id_claim }}</label><br><br>
+                                                    <table id="comment" class="table table-bordered table-striped">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="col-md-3">Email</td>
+                                                            <td class="col-md-9">{{$monitorings->nama_distributor}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Registered On</td>
+                                                            <td>{{$monitorings->created_at}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Category</td>
+                                                            <td>{{$monitorings->nama_category}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Category Type</td>
+                                                            <td>{{$monitorings->category_type}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Program</td>
+                                                            <td>{{$monitorings->nama_program}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Value</td>
+                                                            <td>{{$monitorings->value}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Entitlement</td>
+                                                            <td>{{$monitorings->entitlement}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Courier</td>
+                                                            <td>
+                                                                @if($monitorings->courier!=NULL)                                                        
+                                                                {{$monitorings->courier}}
+                                                                @else
+                                                                -
+                                                                @endif
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>PR Number</td>
+                                                            <td>
+                                                                @if($monitorings->pr_number!=NULL)                                                        
+                                                                {{$monitorings->pr_number}}
+                                                                @else
+                                                                -
+                                                                @endif
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Invoice Number</td>
+                                                            <td>
+                                                                @if($monitorings->invoice_number!=NULL)
+                                                                {{$monitorings->invoice_number}}
+                                                                @else
+                                                                -
+                                                                @endif
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                    </table>
                                                 </div>                                                    
-                                                <div class="tab-pane" id="comment{{ $monitorings->id_claim }}">
-                                                    <label class="control-label">Comments Registration Number {{ $monitorings->id_claim }}</label>
+                                                <div class="tab-pane" id="comment{{ $monitorings->id_claim }}"><br>
+                                                    <label class="control-label">Comments Registration Number {{ $monitorings->id_claim }}</label><br><br>
+                                                    <form action="#" method="post" role="form" class="form-horizontal" name="formaddcomment" id="formaddcomment" enctype="multipart/form-data">
+                                                    {{csrf_field()}}
+                                                    <div class="box-header with-border">
+                                                        <label class="box-title">Add Comment</label>
+                                                    </div>
+                                                    <div class="box-body">
+                                                    <!-- <label class="col-md-2 control-label">Add Comment</label> -->
+                                                    <textarea rows="3" id="comment" name="comment" form="formaddcomment" class="col-md-12"></textarea>
+                                                    </div>
+                                                    <div class="box-footer" align="right">
+                                                        <button type="reset" class="btn btn-ok">Reset</button>
+                                                        <button type="submit" class="btn btn-primary">Add</button>
+                                                    </div>
                                                     <table id="comment" class="table table-bordered table-striped">
                                                     <thead>
                                                         <tr>
-                                                            <th class="col-md-4">User</th>
-                                                            <th class="col-md-4">Comment</th>
-                                                            <th class="col-md-4">Created</th>
+                                                            <th class="col-md-3">User</th>
+                                                            <th class="col-md-6">Comment</th>
+                                                            <th class="col-md-3">Created</th>
                                                         </tr>
                                                     </thead>
+                                                    <tbody>
                                                     @foreach($comment as $comments)
                                                         @if($monitorings->id_claim==$comments->id_claim)
                                                         <tr>                 
@@ -93,10 +154,11 @@
                                                         </tr>
                                                         @endif
                                                     @endforeach
+                                                    </tbody>
                                                     </table>
                                                 </div>
-                                                <div class="tab-pane" id="status{{ $monitorings->id_claim }}">
-                                                    <label class="control-label">Status Registration Number {{ $monitorings->id_claim }}</label>
+                                                <div class="tab-pane" id="status{{ $monitorings->id_claim }}"><br>
+                                                    <label class="control-label">Status Registration Number {{ $monitorings->id_claim }}</label><br><br>
                                                     <table id="status" class="table table-bordered table-striped">
                                                     <thead>
                                                         <tr>
@@ -105,6 +167,7 @@
                                                             <th class="col-md-4">Created</th>
                                                         </tr>
                                                     </thead>
+                                                    <tbody>
                                                     @foreach($status as $stats)
                                                         @if($monitorings->id_claim==$stats->id_claim)
                                                         <tr>
@@ -114,10 +177,39 @@
                                                         </tr>
                                                         @endif
                                                     @endforeach
+                                                    </tbody>
                                                     </table>
                                                 </div>
-                                                <div class="tab-pane" id="attachment{{ $monitorings->id_claim }}">
-                                                    <label class="control-label">Attachment Registration Number {{ $monitorings->id_claim }}</label>
+                                                <div class="tab-pane" id="attachment{{ $monitorings->id_claim }}"><br>
+                                                    <label class="control-label">Attachment Registration Number {{ $monitorings->id_claim }}</label><br><br>
+                                                    <table id="status" class="table table-bordered table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="col-md-6">Primary Attachment</th>
+                                                            <th class="col-md-6">File</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                        <td>Payment Requisition Form</td>
+                                                        <td><a href="public/attachment/{{ $monitorings->id_claim }}/{{ $monitorings->payment_form }}" download>{{ $monitorings->payment_form }}</a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Original Tax & Supplier Invoices</td>
+                                                        <td><a href="public/attachment/{{ $monitorings->id_claim }}/{{ $monitorings->original_tax }}" download>{{ $monitorings->original_tax }}</a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>AirwayBill Number</td>
+                                                        <td>
+                                                            @if($monitorings->airwaybill==NULL)
+                                                            -
+                                                            @else
+                                                            <a href="public/attachment/{{ $monitorings->id_claim }}/{{ $monitorings->airwaybill }}" download>{{ $monitorings->airwaybill }}</a>
+                                                            @endif
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                    </table>
                                                     <table id="status" class="table table-bordered table-striped">
                                                     <thead>
                                                         <tr>
@@ -125,15 +217,7 @@
                                                             <th class="col-md-6">Created</th>
                                                         </tr>
                                                     </thead>
-                                                    <!-- <tr>
-                                                        <td>Payment Requisition Form:</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Original Tax & Supplier Invoices:</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>AirwayBill Number:</td>
-                                                    </tr> -->
+                                                    <tbody>
                                                     @foreach($attachment as $attachments)
                                                         @if($monitorings->id_claim==$attachments->id_claim)
                                                         <tr>
@@ -142,15 +226,17 @@
                                                         </tr>
                                                         @endif
                                                     @endforeach
+                                                    </tbody>
                                                     </table>
                                                 </div>
-                                            </div>
-                                            
+                                            </div>                                            
                                         </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                                        @if($monitorings->status!='Canceled')
+                                        <div class="modal-footer">                                            
+                                            <a class="btn btn-danger" type="submit" href="{{ route('cancelclaim', ['idclaim' => $monitorings->id_claim]) }}" onclick="clicked();">Cancel</a>
                                             <a class="btn btn-primary" type="submit" href="{{ route('editclaim', ['idclaim' => $monitorings->id_claim]) }}">Edit</a>
                                         </div>
+                                        @endif
                                     </div>
                                 </div>
                             </div>

@@ -60,7 +60,7 @@ class ClaimController extends Controller
         }
         else
         {            
-            $monitoring=DB::select(DB::raw("SELECT A.id_claim, A.created_at, A.nama_distributor,A.nama_category, A.category_type, A.nama_program, A.value,  A.status, GROUP_CONCAT(DISTINCT B.comment SEPARATOR ' ') as comment, A.pr_number,A.invoice_number,A.entitlement FROM claims A, comments B WHERE A.id_claim=B.id_claim and A.status NOT LIKE '%approved%' GROUP BY A.id_claim, A.created_at, A.nama_distributor, A.category_type, A.nama_program, A.value,  A.status,A.pr_number,A.invoice_number, A.nama_category,A.entitlement"));
+            $monitoring=DB::select(DB::raw("SELECT A.id_claim, A.created_at, A.nama_distributor ,A.nama_category, A.category_type, A.nama_program, A.value,  A.status, GROUP_CONCAT(DISTINCT B.comment SEPARATOR ' ') as comment, A.pr_number,A.invoice_number,A.entitlement, A.payment_form, A.original_tax, A.airwaybill, A.courier FROM claims A, comments B WHERE A.id_claim=B.id_claim and A.status NOT LIKE '%approved%' GROUP BY A.id_claim, A.created_at, A.nama_distributor, A.category_type, A.nama_program, A.value,  A.status, A.pr_number, A.invoice_number, A.nama_category, A.entitlement, A.payment_form, A.original_tax, A.airwaybill, A.courier"));
             $comment=DB::select(DB::raw("SELECT A.id_claim, A.comment, B.nama_user as id_user, A.created_at FROM comments A, users B WHERE A.id_user=B.id_user"));
             $status=DB::select(DB::raw("SELECT B.nama_user as id_user, A.id_claim, A.id_activity, C.nama_activity as id_activity, A.created_at FROM log_claims A, users B, activities C WHERE A.id_user=B.id_user AND A.id_activity=C.id_activity"));
             $attachment=DB::select(DB::raw("SELECT * FROM Claim_attachments"));
@@ -197,5 +197,18 @@ class ClaimController extends Controller
         $result=DB::select(DB::raw("SELECT * FROM claims WHERE id_claim='$request->id_claim'"));            
         // dd($result);
         return view('user/editclaim')->with('result',$result); 
+    }
+
+    public function cancelclaim(Request $request)
+    {
+        //
+        $cancel = Claim::where('id_claim', $request->id_claim)->update(['status'=>'Canceled']);
+        $log = new Log_claim();
+        $log->id_user=Session::get('id_user');
+        $log->id_claim=$request->id_claim;
+        $log->id_activity='9';
+        $log->save();
+
+        return redirect('listclaim');
     }
 }
