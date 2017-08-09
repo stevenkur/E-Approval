@@ -53,6 +53,40 @@ class ReportController extends Controller
         {
 
             $marketing=DB::select(DB::raw("SELECT A.id_marketing, A.id_dist, B.nama_distributor, A.id_program, C.nama_program, SUM(A.entitlement) as entitlement,  A.maxclaim_date, D.nama_category, D.id_category FROM marketings A, distributors B, programs C, categories D WHERE A.id_dist=B.id_dist and A.id_program=C.id_program and A.id_category=D.id_category GROUP BY A.id_marketing, A.id_dist, B.nama_distributor, A.id_program, C.nama_program,A.maxclaim_date, D.nama_category, D.id_category "));
+            // dd($marketing);
+            $length = sizeof($marketing);
+            $queryvalue=DB::select(DB::raw("SELECT C.nama_distributor, D.nama_program, SUM(A.value) as value FROM  claims A, users B, distributors C, programs D, user_distributors E WHERE  E.id_user=B.id_user and A.nama_distributor=B.email and E.id_dist=C.id_dist and A.nama_program=D.nama_program and A.status!='Closed' GROUP BY C.nama_distributor, D.nama_program"));
+            $lengths = sizeof($queryvalue);
+
+            $tes=DB::select(DB::raw("SELECT a.id_dist, a.nama_distributor, a.id_program, a.nama_program, a.maxclaim_date, CONCAT('Rp ',FORMAT(IFNULL(b.Pending,0),0,'de_DE')) AS Pending, CONCAT('Rp ',FORMAT(IFNULL(b.Closed,0),0,'de_DE')) AS Closed
+                    FROM ((SELECT A.id_marketing, A.id_dist, B.nama_distributor, A.id_program, C.nama_program, SUM(A.entitlement) as entitlement,  A.maxclaim_date, D.nama_category, D.id_category 
+                    FROM marketings A, distributors B, programs C, categories D 
+                    WHERE (A.id_dist=B.id_dist and A.id_program=C.id_program and A.id_category=D.id_category) 
+                    GROUP BY A.id_marketing, A.id_dist, B.nama_distributor, A.id_program, C.nama_program,A.maxclaim_date, D.nama_category, D.id_category) AS A 
+                    LEFT JOIN 
+                    (SELECT C.nama_distributor, D.nama_program, SUM(IF(A.status!='Closed',A.value,NULL)) as Pending,SUM(IF(A.status='Closed',A.value,NULL)) as Closed 
+                    FROM  claims A, users B, distributors C, programs D, user_distributors E
+                    WHERE  (E.id_user=B.id_user and A.nama_distributor=B.email and E.id_dist=C.id_dist and A.nama_program=D.nama_program) 
+                    GROUP BY C.nama_distributor, D.nama_program) as B 
+                    on (A.nama_distributor=B.nama_distributor AND A.nama_program=B.nama_program))"));
+            
+            dd($tes);
+            // dd($queryvalue);
+            // for($i=0;$i<$length;$i++)
+            // {
+            //     for($j=0;$j<$lengths;$j++)
+            //     {
+            //         if($marketing[$i]->nama_distributor == $queryvalue[$j]->nama_distributor && $marketing[$i]->nama_program == $queryvalue[$j]->nama_program)
+            //         {
+            //             $value[$i]=$queryvalue[$j]->value;
+            //         }
+            //         else 
+            //         {
+            //             $value[$i]=0;
+            //         }
+            //     }
+            // }
+            // dd($value);
             $market=DB::select(DB::raw("SELECT  A.id_dist, B.nama_distributor ,SUM(A.entitlement) as entitlement, D.nama_category, D.id_category FROM marketings A, distributors B, programs C, categories D WHERE A.id_dist=B.id_dist and A.id_program=C.id_program and A.id_category=D.id_category GROUP BY  A.id_dist, B.nama_distributor, D.nama_category, D.id_category "));
             
             return view('user/summaryclaimreport')->with('marketing',$marketing)->with('market',$market);
