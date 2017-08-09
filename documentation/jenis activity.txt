@@ -1,0 +1,13 @@
+view->waktu ngeliat halaman detail
+approved->saat user meng approved
+Reject->saat user meng Reject
+Add Comment->saat user add comment
+Attach File-> Saat user mengattach file
+Register Ticket-> saat user pertama kali submit sebelum airway bill number
+Approved by system -> Auto approved dari system
+Revised -> ga pakai
+Canceled -> Bp ngecancel
+Waiting -> waiting from role
+updated->saat edit/ ada perubahan
+
+comment tetap bisa apapun
