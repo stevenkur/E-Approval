@@ -37,7 +37,16 @@ class HomeController extends Controller
         {
             $user = Session::get('id_user');
             $category=DB::select(DB::raw("SELECT A.id_access, A.id_category, A.id_role, B.nama_category FROM category_accesses A, categories B WHERE A.id_category=B.id_category and A.id_user=$user "));
-            return view('user/index')->with('category', $category);
+            $length=sizeof($category);
+            for($i=0;$i<$length;$i++)
+            {
+            $id_category= $category[$i]->id_category;    
+            $query[]=DB::select(DB::raw("SELECT Distinct C.id_role,C.nama_role FROM category_accesses A, categories B, roles C, user_distributors D, claims E  WHERE  A.id_category=B.id_category and A.id_role=C.id_role and A.id_category=$id_category"));
+            }
+
+            $role=array_unique(array_merge($query[0],$query[1],$query[2],$query[3]), SORT_REGULAR);
+            // dd($role);
+            return view('user/index')->with('category', $category)->with('role',$role);
         }
     }
 

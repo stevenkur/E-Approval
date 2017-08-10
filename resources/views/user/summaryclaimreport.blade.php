@@ -30,8 +30,8 @@
                         <td>{{ $marketings->nama_program }}</td>
                         <td>{{ $marketings->entitlement }}</td>
                         <td>{{ $marketings->maxclaim_date }}</td>
-                        <td> 10000 </td>
-                        <td> 10000 </td>
+                        <td>{{ $marketings->Pending  }} </td>
+                        <td> {{ $marketings->Closed  }}  </td>
                     </tr>
                     @endforeach
                     </tbody>
@@ -61,8 +61,8 @@
                         <td>{{ $markets->nama_distributor }}</td>
                         <td>{{ $markets->nama_category }}</td>
                         <td>{{ $markets->entitlement }}</td>
-                        <td> 10000 </td>
-                        <td> 10000 </td>
+                        <td> {{ $markets->Pending }} </td>
+                        <td> {{ $markets->Closed }} </td>
                     </tr>
                     @endforeach   
                     </tbody>

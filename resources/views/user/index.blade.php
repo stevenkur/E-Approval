@@ -27,34 +27,14 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>DM</td>
-                        <td>Rp 10.000</td>
-                        <td>Rp 12.000</td>
-                        <td>Rp 14.000</td>
-                        <td>Rp 16.000</td>
-                    </tr>
-                    <tr>
-                        <td>Finance</td>
-                        <td>Rp 10.000</td>
-                        <td>Rp 12.000</td>
-                        <td>Rp 14.000</td>
-                        <td>Rp 16.000</td>
-                    </tr>
-                    <tr>
-                        <td><b>Release</b></td>
-                        <td>Rp 100.000</td>
-                        <td>Rp 120.000</td>
-                        <td>Rp 130.000</td>
-                        <td>Rp 140.000</td>
-                    </tr>
-                    <tr>
-                        <td><b>Total</b></td>
-                        <td>Rp 150.000</td>
-                        <td>Rp 170.000</td>
-                        <td>Rp 190.000</td>
-                        <td>Rp 180.000</td>
-                    </tr>
+                      @foreach($role as $roles)
+                            <td>{{ $roles->nama_role }}</td>  
+                            <td> 10.000 </td>
+                            <td> 10.000 </td>
+                            <td> 10.000 </td>
+                            <td> 10.000 </td>   
+                            <tr></tr>             
+                      @endforeach
                     </tbody>
                 </table>
             </div>
