@@ -20,6 +20,7 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
+                <div class="table-responsive" style="overflow: auto">
                 <table id="claim" class="table table-bordered table-striped">
                     <thead>
                     <tr>
@@ -44,7 +45,6 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            
                                             <h4 class="modal-title">Reg. No: {{ $monitorings->id_claim }}</h4>
                                         </div>
                                         <div class="modal-body">
@@ -82,11 +82,11 @@
                                                         </tr>
                                                         <tr>
                                                             <td>Value</td>
-                                                            <td>{{$monitorings->value}}</td>
+                                                            <td>Rp <?php echo number_format("$monitorings->value",0,',','.'); ?></td>
                                                         </tr>
                                                         <tr>
                                                             <td>Entitlement</td>
-                                                            <td>{{$monitorings->entitlement}}</td>
+                                                            <td>Rp <?php echo number_format("$monitorings->entitlement",0,',','.'); ?></td>
                                                         </tr>
                                                         <tr>
                                                             <td>Courier</td>
@@ -123,7 +123,7 @@
                                                 </div>                                                    
                                                 <div class="tab-pane" id="comment{{ $monitorings->id_claim }}"><br>
                                                     <label class="control-label">Comments Registration Number {{ $monitorings->id_claim }}</label><br><br>
-                                                    <form action="#" method="post" role="form" class="form-horizontal" name="formaddcomment" id="formaddcomment" enctype="multipart/form-data">
+                                                    <form action="{{ route('addcomment', ['idclaim' => $monitorings->id_claim]) }}" method="post" role="form" class="form-horizontal" name="formaddcomment" id="formaddcomment" enctype="multipart/form-data">
                                                     {{csrf_field()}}
                                                     <div class="box-header with-border">
                                                         <label class="box-title">Add Comment</label>
@@ -136,6 +136,7 @@
                                                         <button type="reset" class="btn btn-ok">Reset</button>
                                                         <button type="submit" class="btn btn-primary">Add</button>
                                                     </div>
+                                                    </form>
                                                     <table id="comment" class="table table-bordered table-striped">
                                                     <thead>
                                                         <tr>
@@ -244,12 +245,13 @@
                         <td>{{ $monitorings->created_at }}</td>
                         <td>{{ $monitorings->nama_distributor }}</td>
                         <td>{{ $monitorings->nama_program }}</td>
-                        <td>{{ $monitorings->value }}</td>
+                        <td>Rp <?php echo number_format("$monitorings->value",0,',','.'); ?></td>
                         <td>{{ $monitorings->status }}</td>
                     </tr>
                     @endforeach
                     </tbody>
                 </table>
+                </div>
             </div>
             <!-- /.box-body -->
         </div>

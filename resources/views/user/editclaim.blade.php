@@ -15,7 +15,23 @@
         }
     </style>
 
-    <script type="text/javascript">
+    <script type="text/javascript">        
+        function ChooseProgram(data)
+        {            
+            var length = data.length;
+            for(var i=0;i<length;i++)
+            {
+            if(data.value==jsArray[i].nama_program)
+                {
+                    var rupiah = '';        
+                    var angkarev = jsArray[i].entitlement.toString().split('').reverse().join('');
+                    for(var i = 0; i < angkarev.length; i++) if(i%3 == 0) rupiah += angkarev.substr(i,3)+'.';
+                    var entitlement = 'Rp '+rupiah.split('',rupiah.length-1).reverse().join('');
+                    document.getElementById("entitlement").value = entitlement;
+                }
+            }
+                        
+        }
         function convertToRupiah(objek) {
             separator = ".";
             a = objek.value;
@@ -133,34 +149,34 @@
                     <label class="col-md-3 control-label">Document Completion</label>
                     <div class="col-md-9">
                         <div class="checkbox">
-                            <label><input type="checkbox" value="1" required>Payment Requisition Form (Please attached the scanned document on this claim)</label>
+                            <label><input type="checkbox" value="1" required <?php if($result[0]->doc_check1) echo 'checked';?>>Payment Requisition Form (Please attached the scanned document on this claim)</label>
                         </div>
                         <div class="checkbox">
-                            <label><input type="checkbox" value="2" required>Original Tax & Supplier Invoices. Tax must be addressed to PT Philips Indonesia (Please attached the scanned document on this claim)</label>
+                            <label><input type="checkbox" value="2" required <?php if($result[0]->doc_check1) echo 'checked';?>>Original Tax & Supplier Invoices. Tax must be addressed to PT Philips Indonesia (Please attached the scanned document on this claim)</label>
                         </div>
                         <div class="checkbox">
-                            <label><input type="checkbox" value="3">AirwayBill Number (Please attached the scanned document on this claim)</label>
+                            <label><input type="checkbox" value="3" <?php if($result[0]->doc_check1) echo 'checked';?>>AirwayBill Number (Please attached the scanned document on this claim)</label>
                         </div>
                         <div class="checkbox">
-                            <label><input type="checkbox" value="4">Marketing Program Letter/BDF proposal Approval/Natura template</label>
+                            <label><input type="checkbox" value="4" <?php if($result[0]->doc_check1) echo 'checked';?>>Marketing Program Letter/BDF proposal Approval/Natura template</label>
                         </div>
                         <div class="checkbox">
-                            <label><input type="checkbox" value="5">Marketing activity report with achievement</label>
+                            <label><input type="checkbox" value="5" <?php if($result[0]->doc_check1) echo 'checked';?>>Marketing activity report with achievement</label>
                         </div>
                         <div class="checkbox">
-                            <label><input type="checkbox" value="6">BP Invoice to Philips with BP signed & stamp</label>
+                            <label><input type="checkbox" value="6" <?php if($result[0]->doc_check1) echo 'checked';?>>BP Invoice to Philips with BP signed & stamp</label>
                         </div>
                         <div class="checkbox">
-                            <label><input type="checkbox" value="7">Marketing Activity Picture</label>
+                            <label><input type="checkbox" value="7" <?php if($result[0]->doc_check1) echo 'checked';?>>Marketing Activity Picture</label>
                         </div>
                         <div class="checkbox">
-                            <label><input type="checkbox" value="8">Other supporting document</label>
+                            <label><input type="checkbox" value="8" <?php if($result[0]->doc_check1) echo 'checked';?>>Other supporting document</label>
                         </div>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="col-md-3 control-label">Comment</label>
+                    <label class="col-md-3 control-label">Add Comment</label>
                     <div class="col-md-9">
                         <textarea class="form-control" rows="3" name="comment" form="formeditclaim"></textarea>
                     </div>

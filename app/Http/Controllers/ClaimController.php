@@ -78,6 +78,10 @@ class ClaimController extends Controller
         {
             return redirect('newclaim');
         }
+        elseif($input['value']>$input['entitlement'])
+        {
+            return redirect('newclaim');
+        }
         else
         {
             $date=date('Ym');
@@ -157,11 +161,14 @@ class ClaimController extends Controller
                 $attachment->save();
             }       
 
-            $comment = new Comment();
-            $comment->id_claim = $id_claim;
-            $comment->comment = $input['comment'];
-            $comment->id_user = Session::get('id_user');
-            $comment->save();
+            if($input['comment']!=NULL)
+            {
+                $comment = new Comment();
+                $comment->id_claim = $id_claim;
+                $comment->comment = $input['comment'];
+                $comment->id_user = Session::get('id_user');
+                $comment->save();
+            }
 
             $log = new Log_claim();
             $log->id_user=Session::get('id_user');
@@ -207,6 +214,26 @@ class ClaimController extends Controller
         $log->id_user=Session::get('id_user');
         $log->id_claim=$request->id_claim;
         $log->id_activity='9';
+        $log->save();
+
+        return redirect('listclaim');
+    }
+
+    public function addcomment(Request $request)
+    {
+        //
+        $input = Input::all();
+
+        $comment = new Comment();
+        $comment->id_claim = $request->id_claim;
+        $comment->comment = $input['comment'];
+        $comment->id_user = Session::get('id_user');
+        $comment->save();
+
+        $log = new Log_claim();
+        $log->id_user=Session::get('id_user');
+        $log->id_claim=$request->id_claim;
+        $log->id_activity='4';
         $log->save();
 
         return redirect('listclaim');
