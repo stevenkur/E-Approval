@@ -176,21 +176,21 @@ class ClaimController extends Controller
             $log->id_activity='6';
             $log->save();
 
-            if($file1!=NULL&&$file2!=NULL)
-            {
-                $log = new Log_claim();
-                $log->id_user=Session::get('id_user');
-                $log->id_claim=$id_claim;
-                $log->id_activity='5';
-                $log->save();
-            }
-
             if($input['comment']!=NULL)
             {
                 $log = new Log_claim();
                 $log->id_user=Session::get('id_user');
                 $log->id_claim=$id_claim;
                 $log->id_activity='4';
+                $log->save();
+            }
+
+            if($file1!=NULL&&$file2!=NULL)
+            {
+                $log = new Log_claim();
+                $log->id_user=Session::get('id_user');
+                $log->id_claim=$id_claim;
+                $log->id_activity='5';
                 $log->save();
             }
 
@@ -204,6 +204,36 @@ class ClaimController extends Controller
         $result=DB::select(DB::raw("SELECT * FROM claims WHERE id_claim='$request->id_claim'"));            
         // dd($result);
         return view('user/editclaim')->with('result',$result); 
+    }
+
+    public function updateclaim(Request $request)
+    {
+        //
+        if($file1!=NULL&&$file2!=NULL)
+        {
+            $log = new Log_claim();
+            $log->id_user=Session::get('id_user');
+            $log->id_claim=$id_claim;
+            $log->id_activity='5';
+            $log->save();
+        }
+
+        if($input['comment']!=NULL)
+        {
+            $log = new Log_claim();
+            $log->id_user=Session::get('id_user');
+            $log->id_claim=$id_claim;
+            $log->id_activity='4';
+            $log->save();
+        }
+
+        $log = new Log_claim();
+        $log->id_user=Session::get('id_user');
+        $log->id_claim=$request->id_claim;
+        $log->id_activity='11';
+        $log->save();
+
+        return redirect('listclaim'); 
     }
 
     public function cancelclaim(Request $request)
