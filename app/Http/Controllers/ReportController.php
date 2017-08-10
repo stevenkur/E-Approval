@@ -36,7 +36,7 @@ class ReportController extends Controller
             return redirect('login');
         }
         else
-        {   
+        {
             $categorynow = Session::get('categories');
             $idcategorynow = $role = DB::select(DB::raw("SELECT id_category FROM categories WHERE nama_category='$categorynow' "));            
             $idcategory = $idcategorynow[0]->id_category;
@@ -44,24 +44,24 @@ class ReportController extends Controller
             $claim = DB::select(DB::raw("SELECT A.id_claim, B.nama_program,C.id_user, C.created_at FROM claims A, programs B, log_claims C where C.id_activity=2 and A.id_claim=C.id_claim and A.nama_program=B.nama_program"));            
             $length = sizeof($claim);
             $tes=array();
+            $array=array();
            
             for($i=0;$i<$length-1;$i++)
             {
-                $tes=(strtotime($claim[$i+1]->created_at)-strtotime($claim[$i]->created_at));
+                $tes=(strtotime($claim[$i+1]->created_at)-strtotime($claim[$i]->created_at));                
                 $datediff= floor($tes / (60 * 60 * 24));
-                // dd($datediff); 
                 $from= $claim[$i]->created_at;
                 $start = DateTime::createFromFormat("Y-m-d H:i:s","$from");
-                $interval = new DateInterval("P1D"); // 1 month
-                
-                $period[$i] = new DatePeriod($start,$interval,$datediff);
-                echo $period[$i];
-                foreach($period as $dt){
-                // echo $dt->format("Y-m-d");
+                $interval = new DateInterval("P1D");
+                $period = new DatePeriod($start,$interval,$datediff+1);
+                $difference=iterator_count($period);
+
+                foreach($period as $dt)
+                {
+                    $array[] = $dt->format("Y-m-d");
+                    
                 }
-            
             }
-            // dd($tes);
             return view('user/resolutionreport')->with('role',$role);
         }
     }
@@ -75,13 +75,6 @@ class ReportController extends Controller
         }
         else
         {
-
-            // $marketing=DB::select(DB::raw("SELECT A.id_marketing, A.id_dist, B.nama_distributor, A.id_program, C.nama_program, SUM(A.entitlement) as entitlement,  A.maxclaim_date, D.nama_category, D.id_category FROM marketings A, distributors B, programs C, categories D WHERE A.id_dist=B.id_dist and A.id_program=C.id_program and A.id_category=D.id_category GROUP BY A.id_marketing, A.id_dist, B.nama_distributor, A.id_program, C.nama_program,A.maxclaim_date, D.nama_category, D.id_category "));
-            // // dd($marketing);
-            // $length = sizeof($marketing);
-            // $queryvalue=DB::select(DB::raw("SELECT C.nama_distributor, D.nama_program, SUM(A.value) as value FROM  claims A, users B, distributors C, programs D, user_distributors E WHERE  E.id_user=B.id_user and A.nama_distributor=B.email and E.id_dist=C.id_dist and A.nama_program=D.nama_program and A.status!='Closed' GROUP BY C.nama_distributor, D.nama_program"));
-            // $lengths = sizeof($queryvalue);
-
             $marketing=DB::select(DB::raw("SELECT a.id_dist, a.nama_distributor, CONCAT('Rp ',FORMAT(a.entitlement,0,'de_DE')) as entitlement, a.id_program, a.nama_program, a.maxclaim_date, CONCAT('Rp ',FORMAT(IFNULL(b.Pending,0),0,'de_DE')) AS Pending, CONCAT('Rp ',FORMAT(IFNULL(b.Closed,0),0,'de_DE')) AS Closed
                     FROM ((SELECT  A.id_dist, B.nama_distributor, A.id_program, C.nama_program, SUM(A.entitlement) as entitlement,  A.maxclaim_date 
                     FROM marketings A, distributors B, programs C
@@ -93,22 +86,7 @@ class ReportController extends Controller
                     WHERE  (E.id_user=B.id_user and A.nama_distributor=B.email and E.id_dist=C.id_dist and A.nama_program=D.nama_program) 
                     GROUP BY C.nama_distributor, D.nama_program) as B 
                     on (A.nama_distributor=B.nama_distributor AND A.nama_program=B.nama_program))"));
-            // dd($queryvalue);
-            // for($i=0;$i<$length;$i++)
-            // {
-            //     for($j=0;$j<$lengths;$j++)
-            //     {
-            //         if($marketing[$i]->nama_distributor == $queryvalue[$j]->nama_distributor && $marketing[$i]->nama_program == $queryvalue[$j]->nama_program)
-            //         {
-            //             $value[$i]=$queryvalue[$j]->value;
-            //         }
-            //         else 
-            //         {
-            //             $value[$i]=0;
-            //         }
-            //     }
-            // }
-            // dd($value);
+
             $market=DB::select(DB::raw("SELECT a.id_dist, a.nama_distributor, CONCAT('Rp ',FORMAT(a.entitlement,0,'de_DE')) as entitlement, a.id_category, a.nama_category,  CONCAT('Rp ',FORMAT(IFNULL(b.Pending,0),0,'de_DE')) AS Pending, CONCAT('Rp ',FORMAT(IFNULL(b.Closed,0),0,'de_DE')) AS Closed
                     FROM ((SELECT A.id_dist, B.nama_distributor ,SUM(A.entitlement) as entitlement, D.nama_category, D.id_category 
                     FROM marketings A, distributors B, programs C, categories D 
@@ -119,8 +97,7 @@ class ReportController extends Controller
                     FROM  claims A, users B, distributors C, categories D, user_distributors E
                     WHERE  (E.id_user=B.id_user and A.nama_distributor=B.email and E.id_dist=C.id_dist and A.nama_category=D.nama_category) 
                     GROUP BY C.nama_distributor, D.nama_category) as B 
-                    on (A.nama_distributor=B.nama_distributor AND A.nama_category=B.nama_category))"));
-                     
+                    on (A.nama_distributor=B.nama_distributor AND A.nama_category=B.nama_category))"));                   
             
             return view('user/summaryclaimreport')->with('marketing',$marketing)->with('market',$market);
         }
