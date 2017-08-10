@@ -6,11 +6,11 @@
     <section class="content">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">List Claim</h3>
+                <h3 class="box-title">Monitoring Report</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                <table id="claim" class="table table-bordered table-striped">
+                <table id="table" class="table table-bordered table-striped">
                     <thead>
                     <tr>
                         <th>Reg. No</th>
@@ -97,7 +97,7 @@
 <!-- page script -->
 <script>
 $(function() {
-    $('#claim').DataTable({
+    $('#table').DataTable({
       'paging'      : true,
       'lengthChange': true,
       'searching'   : true,

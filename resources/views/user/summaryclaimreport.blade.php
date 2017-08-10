@@ -8,7 +8,7 @@
     <div class="col-md-12">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Summary Claim Report per Program</h3>
+                <h3 class="box-title">Summary Claim Report Per Program</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -41,7 +41,7 @@
         </div>
          <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Summary Claim Report per Category</h3>
+                <h3 class="box-title">Summary Claim Report Per Category</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -70,7 +70,6 @@
             </div>
             <!-- /.box-body -->
         </div>
-    </div>
     </div>
 
     

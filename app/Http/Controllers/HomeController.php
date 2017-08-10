@@ -41,7 +41,7 @@ class HomeController extends Controller
             for($i=0;$i<$length;$i++)
             {
             $id_category= $category[$i]->id_category;    
-            $query[]=DB::select(DB::raw("SELECT Distinct C.id_role,C.nama_role FROM category_accesses A, categories B, roles C, user_distributors D, claims E  WHERE  A.id_category=B.id_category and A.id_role=C.id_role and A.id_category=$id_category"));
+            $query[]=DB::select(DB::raw("SELECT Distinct C.id_role,C.nama_role FROM category_accesses A, categories B, roles C, user_distributors D, claims E  WHERE  A.id_category=B.id_category and A.id_role=C.id_role and A.id_category=$id_category and E.status!='Closed'"));
             }
 
             $role=array_unique(array_merge($query[0],$query[1],$query[2],$query[3]), SORT_REGULAR);

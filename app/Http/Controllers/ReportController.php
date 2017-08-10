@@ -40,8 +40,8 @@ class ReportController extends Controller
             $categorynow = Session::get('categories');
             $idcategorynow = $role = DB::select(DB::raw("SELECT id_category FROM categories WHERE nama_category='$categorynow' "));            
             $idcategory = $idcategorynow[0]->id_category;
-            $role = DB::select(DB::raw("SELECT A.id_role,A.id_user,A.id_category,B.nama_role FROM category_accesses A, roles B, categories C WHERE A.id_category=C.id_category and A.id_role=B.id_role and A.id_category=$idcategory"));            
-            $claim = DB::select(DB::raw("SELECT A.id_claim, B.nama_program,C.id_user, C.created_at FROM claims A, programs B, log_claims C where C.id_activity=2 and A.id_claim=C.id_claim and A.nama_program=B.nama_program"));            
+            $role = DB::select(DB::raw("SELECT A.id_role,A.id_user,A.id_category,B.nama_role FROM category_accesses A, roles B, categories C WHERE A.id_category=C.id_category and B.nama_role!='Distributor' and A.id_role=B.id_role and A.id_category=$idcategory"));            
+            $claim = DB::select(DB::raw("SELECT A.id_claim, B.nama_program,C.id_user, C.created_at FROM claims A, programs B, log_claims C, categories D where C.id_activity=2 and A.id_claim=C.id_claim and A.nama_program=B.nama_program and D.id_category=$idcategory and A.nama_category=D.nama_category"));            
             $length = sizeof($claim);
             $tes=array();
             $array=array();
@@ -53,7 +53,7 @@ class ReportController extends Controller
                 $from= $claim[$i]->created_at;
                 $start = DateTime::createFromFormat("Y-m-d H:i:s","$from");
                 $interval = new DateInterval("P1D");
-                $period = new DatePeriod($start,$interval,$datediff+1);
+                $period = new DatePeriod($start,$interval,$datediff);
                 $difference=iterator_count($period);
 
                 foreach($period as $dt)
@@ -61,7 +61,10 @@ class ReportController extends Controller
                     $array[] = $dt->format("Y-m-d");
                     
                 }
+                $date[$i]= $array;
+                $array=array();
             }
+            // dd($date);
             return view('user/resolutionreport')->with('role',$role);
         }
     }
