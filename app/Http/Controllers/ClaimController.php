@@ -64,7 +64,7 @@ class ClaimController extends Controller
             $comment=DB::select(DB::raw("SELECT A.id_claim, A.comment, B.nama_user as id_user, A.created_at FROM comments A, users B WHERE A.id_user=B.id_user"));
             $status=DB::select(DB::raw("SELECT B.nama_user as id_user, A.id_claim, A.id_activity, C.nama_activity as id_activity, A.created_at FROM log_claims A, users B, activities C WHERE A.id_user=B.id_user AND A.id_activity=C.id_activity"));
             $attachment=DB::select(DB::raw("SELECT * FROM Claim_attachments"));
-            // dd($monitoring);
+            
             return view('user/listclaim')->with('monitoring',$monitoring)->with('comment',$comment)->with('status',$status)->with('attachment',$attachment);            
         }
     }
