@@ -40,34 +40,71 @@ class ReportController extends Controller
         }
         else
         {
+            $claim= array();
             $categorynow = Session::get('categories');
-            $idcategorynow = $role = DB::select(DB::raw("SELECT id_category FROM categories WHERE nama_category='$categorynow' "));            
+            $idcategorynow = DB::select(DB::raw("SELECT id_category FROM categories WHERE nama_category='$categorynow' "));            
+            $holiday = DB::select(DB::raw("SELECT tanggal_libur from holidays"));     
+            $holiday_length = sizeof($holiday);      
+           
             $idcategory = $idcategorynow[0]->id_category;
+            
             $role = DB::select(DB::raw("SELECT A.id_role,A.id_user,A.id_category,B.nama_role FROM category_accesses A, roles B, categories C WHERE A.id_category=C.id_category and B.nama_role!='Distributor' and A.id_role=B.id_role and A.id_category=$idcategory"));            
-            $claim = DB::select(DB::raw("SELECT A.id_claim, B.nama_program,C.id_user, C.created_at FROM claims A, programs B, log_claims C, categories D where C.id_activity=2 and A.id_claim=C.id_claim and A.nama_program=B.nama_program and D.id_category=$idcategory and A.nama_category=D.nama_category"));            
+            
+            $role_length = sizeof($role);
+            $claim = DB::select(DB::raw("SELECT A.id_claim, B.nama_program,C.id_user, C.created_at FROM claims A, programs B, log_claims C, categories D where C.id_activity=2 and A.id_claim=C.id_claim and A.nama_program=B.nama_program  and A.nama_category=D.nama_category"));            
+            // dd($claim);
             $length = sizeof($claim);
+            $pisah = array();
+                        
+            foreach($claim as $key=>$value){
+                $id = $value->id_claim;
+                
+                if(!isset($pisah[$id])) 
+                {
+                    $pisah[$id] = array();
+                    $i=0;
+
+                }
+                $i++;
+                $pisah[$id][$i] = $value;
+
+            }
+
+            // dd($pisah);
             $tes=array();
             $array=array();
+            $arr_keys = array_keys($pisah);
+            $arr_keys_length = sizeof($arr_keys);
            
-            for($i=0;$i<$length-1;$i++)
+            // dd($arr_keys);
+            for($m=0;$m<$arr_keys_length;$m++)
             {
-                $tes=(strtotime($claim[$i+1]->created_at)-strtotime($claim[$i]->created_at));                
-                $datediff= floor($tes / (60 * 60 * 24));
-                $from= $claim[$i]->created_at;
-                $start = DateTime::createFromFormat("Y-m-d H:i:s","$from");
-                $interval = new DateInterval("P1D");
-                $period = new DatePeriod($start,$interval,$datediff);
-                $difference=iterator_count($period);
+                $id=$arr_keys[$m];
+                $jumlah = sizeof($pisah[$id]);
+                // dd($pisah);
+                for($i=1;$i<$jumlah;$i++)
+                    {
+                    $tes=(strtotime($pisah[$id][$i+1]->created_at)-strtotime($pisah[$id][$i]->created_at));                
+                    $datediff= floor($tes / (60 * 60 * 24));
+                    $from= $claim[$i]->created_at;
+                    $start = DateTime::createFromFormat("Y-m-d H:i:s","$from");
+                    $interval = new DateInterval("P1D");
+                    $period = new DatePeriod($start,$interval,$datediff);
+                    $difference=iterator_count($period);
 
-                foreach($period as $dt)
-                {
-                    $array[] = $dt->format("Y-m-d");
-                    
-                }
-                $date[$i]= $array;
-                $array=array();
+                    foreach($period as $dt)
+                    {
+                        $array[] = $dt->format("Y-m-d");
+                    }
+                    $date[$id][$i]= $array;
+                    $array=array();
+                    }
+
+                // $cumates = sizeof($date[$id][$m+1]);
+                // dd($cumates);  
             }
-            // dd($date);
+            
+            dd($date);
             return view('user/resolutionreport')->with('role',$role);
         }
     }

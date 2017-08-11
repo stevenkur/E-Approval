@@ -48,7 +48,7 @@
                         <td>5</td>
                         <td>5</td>
                         <td>5</td>
-                        <td>5</td>\
+                        <td>5</td>
                     </tr>
                     
                     </tbody>
