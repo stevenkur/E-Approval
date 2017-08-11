@@ -100,8 +100,8 @@
                         <div class="col-md-8">
                             <select class="form-control" id="programyear" name="programyear" >
                                 <option value="#">-- Please Choose One --</option>
-                                <option value="<?php echo date("Y")-1; ?>"><?php echo date("Y")-1; ?></option>
                                 <option value="<?php echo date("Y"); ?>"><?php echo date("Y"); ?></option>
+                                <option value="<?php echo date("Y")-1; ?>"><?php echo date("Y")-1; ?></option>
                             </select>
                         </div>
                     </div>
@@ -176,9 +176,6 @@
                             <label><input type="hidden" value="0" name="checkbox2"><input type="checkbox" value="1" name="checkbox2" required>Original Tax & Supplier Invoices. Tax must be addressed to PT Philips Indonesia (Please attached the scanned document on this claim)</label>
                         </div>
                         <div class="checkbox">
-                            <label><input type="hidden" value="0" name="checkbox3"><input type="checkbox" value="1" name="checkbox3" >AirwayBill Number (Please attached the scanned document on this claim)</label>
-                        </div>
-                        <div class="checkbox">
                             <label><input type="hidden" value="0" name="checkbox4"><input type="checkbox" value="1" name="checkbox4" required>Marketing Program Letter/BDF proposal Approval/Natura template</label>
                         </div>
                         <div class="checkbox">
@@ -192,6 +189,9 @@
                         </div>
                         <div class="checkbox">
                             <label><input type="hidden" value="0" name="checkbox8"><input type="checkbox" value="1" name="checkbox8" required>Other supporting document</label>
+                        </div>
+                        <div class="checkbox">
+                            <label><input type="hidden" value="0" name="checkbox3"><input type="checkbox" value="1" name="checkbox3" >AirwayBill Number (Please attached the scanned document on this claim)</label>
                         </div>
                     </div>
                 </div>

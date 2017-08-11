@@ -2,10 +2,10 @@
 
 @section('content')
 
-<center>
-<h3>WELCOME TO E-APPROVAL PHILIPS INDONESIA</h3>
-<div style="padding: 1%"><img src="{{ URL::asset('public/img/philips.png') }}" alt="Philips" width="40%" height="40%"></div>
-</center>
+<div class="col-md-12" align="center">
+    <h3>WELCOME TO E-APPROVAL PHILIPS INDONESIA</h3>
+    <img src="{{ URL::asset('public/img/philips.png') }}" class="img-responsive" alt="Philips" width="40%" height="40%" style="padding: 1%">
+</div>
 
 <div class="container">
     <div class="row">

@@ -2,6 +2,13 @@
 
 @section('content')
 
+<?php  
+    $category_length = sizeof(Session::get('nama_category'));
+    $category = Session::get('nama_category');
+    $category_now = Session::get('categories');
+    $role = Session::get('role');
+?>
+
 <script type="text/javascript">
     function clicked() {
        if (confirm('Do you want to cancel this?')) {
@@ -125,24 +132,24 @@
                                                     <label class="control-label">Comments Registration Number {{ $monitorings->id_claim }}</label><br><br>
                                                     <form action="{{ route('addcomment', ['idclaim' => $monitorings->id_claim]) }}" method="post" role="form" class="form-horizontal" name="formaddcomment" id="formaddcomment" enctype="multipart/form-data">
                                                     {{csrf_field()}}
-                                                    <div class="box-header with-border">
-                                                        <label class="box-title">Add Comment</label>
-                                                    </div>
-                                                    <div class="box-body">
-                                                    <!-- <label class="col-md-2 control-label">Add Comment</label> -->
-                                                    <textarea rows="3" id="comment" name="comment" form="formaddcomment" class="col-md-12"></textarea>
-                                                    </div>
-                                                    <div class="box-footer" align="right">
-                                                        <button type="reset" class="btn btn-ok">Reset</button>
-                                                        <button type="submit" class="btn btn-primary">Add</button>
-                                                    </div>
+                                                        <div class="box-header with-border">
+                                                            <label class="box-title">Add Comment</label>
+                                                        </div>
+                                                        <div class="box-body">
+                                                        <!-- <label class="col-md-2 control-label">Add Comment</label> -->
+                                                        <textarea rows="3" id="comment" name="comment" form="formaddcomment" class="col-md-12"></textarea>
+                                                        </div>
+                                                        <div class="box-footer" align="right">
+                                                            <button type="reset" class="btn btn-ok">Reset</button>
+                                                            <button type="submit" class="btn btn-primary">Add</button>
+                                                        </div>
                                                     </form>
                                                     <table id="comment" class="table table-bordered table-striped">
                                                     <thead>
                                                         <tr>
                                                             <th class="col-md-3">User</th>
                                                             <th class="col-md-6">Comment</th>
-                                                            <th class="col-md-3">Created</th>
+                                                            <th class="col-md-3">Date</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -163,17 +170,17 @@
                                                     <table id="status" class="table table-bordered table-striped">
                                                     <thead>
                                                         <tr>
-                                                            <th class="col-md-4">User</th>
                                                             <th class="col-md-4">Activity</th>
-                                                            <th class="col-md-4">Created</th>
+                                                            <th class="col-md-4">User</th>
+                                                            <th class="col-md-4">Date</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                     @foreach($status as $stats)
                                                         @if($monitorings->id_claim==$stats->id_claim)
                                                         <tr>
-                                                            <td>{{ $stats->id_user }}</td>
                                                             <td>{{ $stats->id_activity }}</td>
+                                                            <td>{{ $stats->id_user }}</td>
                                                             <td>{{ $stats->created_at }}</td>
                                                         </tr>
                                                         @endif
@@ -215,7 +222,7 @@
                                                     <thead>
                                                         <tr>
                                                             <th class="col-md-6">Another Attachment</th>
-                                                            <th class="col-md-6">Created</th>
+                                                            <th class="col-md-6">Date</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -232,11 +239,18 @@
                                                 </div>
                                             </div>                                            
                                         </div>
-                                        @if($monitorings->status!='Canceled')
-                                        <div class="modal-footer">                                            
-                                            <a class="btn btn-danger" type="submit" href="{{ route('cancelclaim', ['idclaim' => $monitorings->id_claim]) }}" onclick="clicked();">Cancel</a>
-                                            <a class="btn btn-primary" type="submit" href="{{ route('editclaim', ['idclaim' => $monitorings->id_claim]) }}">Edit</a>
-                                        </div>
+                                        @if($role[0]=='Distributor')
+                                            @if($monitorings->status!='Canceled')
+                                            <div class="modal-footer">                                            
+                                                <a class="btn btn-danger" type="submit" href="{{ route('cancelclaim', ['idclaim' => $monitorings->id_claim]) }}" onclick="clicked();">Cancel</a>
+                                                <a class="btn btn-primary" type="submit" href="{{ route('editclaim', ['idclaim' => $monitorings->id_claim]) }}">Edit</a>
+                                            </div>
+                                            @endif
+                                        @else
+                                            <div class="modal-footer">                                            
+                                                <a class="btn btn-danger" type="submit" href="#" onclick="clicked();">Cancel</a>
+                                                <a class="btn btn-primary" type="submit" href="#">Accept</a>
+                                            </div>
                                         @endif
                                     </div>
                                 </div>

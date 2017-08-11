@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 07, 2017 at 06:55 AM
+-- Generation Time: Aug 11, 2017 at 04:43 AM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 5.6.24
 
@@ -225,8 +225,8 @@ CREATE TABLE `claims` (
 --
 
 INSERT INTO `claims` (`id_claim`, `nama_category`, `category_type`, `nama_program`, `value`, `entitlement`, `programforyear`, `pr_number`, `invoice_number`, `airwaybill`, `payment_form`, `original_tax`, `nama_distributor`, `kode_flow`, `level_flow`, `status`, `courier`, `doc_check1`, `doc_check2`, `doc_check3`, `doc_check4`, `doc_check5`, `doc_check6`, `doc_check7`, `doc_check8`, `doc_check9`, `created_at`, `updated_at`) VALUES
-('201708-00001', 'Test 1', 'Test 1', 'Test 1', 100000, 100000, 2017, 'Test 1', 'Test 1', 'Test 1', 'Test 1', 'Test 1', 'Test 1', 'Test 1', 1, 'SUBMITTED', 'JNE', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-('201708-00002', 'Marcom', 'HM3 - ProShop', '1', 12345, 1000000, 2016, NULL, NULL, NULL, 'Lambang ITS.png', 'Logo ITS.png', 'Distributor A', '0', 0, 'Submitted', NULL, 1, 1, 1, 1, 1, 1, 1, 1, NULL, '2017-08-06 21:53:18', '2017-08-06 21:53:18');
+('201708-00001', 'Marcom', 'HM1 - Build the Base', 'program b', 1000000000, 500000, 2016, NULL, NULL, NULL, 'e-approval (steven).sql', 'e-approval.sql', 'distributor@philips.com', '0', 0, 'Canceled', NULL, 1, 1, 1, 1, 1, 1, 1, 1, NULL, '2017-08-08 02:54:22', '2017-08-08 21:17:47'),
+('201708-00002', 'Marcom', 'HM3 - ProShop', 'program b', 500000, 500000, 2016, NULL, NULL, NULL, 'Logo ITS.png', 'Lambang ITS.png', 'distributor@philips.com', '0', 0, 'Submitted', NULL, 1, 1, 1, 1, 1, 1, 1, 1, NULL, '2017-08-09 19:38:37', '2017-08-09 19:38:37');
 
 -- --------------------------------------------------------
 
@@ -236,12 +236,23 @@ INSERT INTO `claims` (`id_claim`, `nama_category`, `category_type`, `nama_progra
 
 CREATE TABLE `claim_attachments` (
   `id_attachment` int(10) UNSIGNED NOT NULL,
-  `id_claim` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `path_attachment` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nama_attachment` varchar(25) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_claim` varchar(12) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nama_attachment` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `claim_attachments`
+--
+
+INSERT INTO `claim_attachments` (`id_attachment`, `id_claim`, `nama_attachment`, `created_at`, `updated_at`) VALUES
+(1, '201708-00001', 'Data_Philip.xlsx', '2017-08-08 02:54:22', '2017-08-08 02:54:22'),
+(2, '201708-00001', 'insert_data.txt', '2017-08-08 02:54:22', '2017-08-08 02:54:22'),
+(3, '201708-00001', 'Philip.oom', '2017-08-08 02:54:22', '2017-08-08 02:54:22'),
+(4, '201708-00001', 'to do list.txt', '2017-08-08 02:54:22', '2017-08-08 02:54:22'),
+(5, '201708-00002', 'Logo BEM FTIf.png', '2017-08-09 19:38:37', '2017-08-09 19:38:37'),
+(6, '201708-00002', 'Logo Informatics ITS.jpg', '2017-08-09 19:38:37', '2017-08-09 19:38:37');
 
 -- --------------------------------------------------------
 
@@ -252,7 +263,7 @@ CREATE TABLE `claim_attachments` (
 CREATE TABLE `comments` (
   `id_comment` int(10) UNSIGNED NOT NULL,
   `id_claim` varchar(12) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `comment` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `comment` text COLLATE utf8mb4_unicode_ci,
   `id_user` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -263,8 +274,10 @@ CREATE TABLE `comments` (
 --
 
 INSERT INTO `comments` (`id_comment`, `id_claim`, `comment`, `id_user`, `created_at`, `updated_at`) VALUES
-(1, '201708-00001', 'Test', 19, NULL, NULL),
-(2, '201708-00002', 'Test', 1, '2017-08-06 21:53:18', '2017-08-06 21:53:18');
+(1, '201708-00001', 'halloo', 1, '2017-08-08 02:54:23', '2017-08-08 02:54:23'),
+(2, '201708-00001', 'test comment', 1, '2017-08-09 19:35:31', '2017-08-09 19:35:31'),
+(3, '201708-00001', 'coba lagi', 1, '2017-08-09 19:35:53', '2017-08-09 19:35:53'),
+(4, '201708-00002', NULL, 1, '2017-08-09 19:38:37', '2017-08-09 19:38:37');
 
 -- --------------------------------------------------------
 
@@ -358,11 +371,26 @@ INSERT INTO `holidays` (`id_holiday`, `tanggal_libur`, `date_name`, `created_at`
 CREATE TABLE `log_claims` (
   `id_log` int(10) UNSIGNED NOT NULL,
   `id_user` int(11) NOT NULL,
-  `id_claim` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_claim` varchar(12) COLLATE utf8mb4_unicode_ci NOT NULL,
   `id_activity` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `log_claims`
+--
+
+INSERT INTO `log_claims` (`id_log`, `id_user`, `id_claim`, `id_activity`, `created_at`, `updated_at`) VALUES
+(1, 1, '201708-00001', 6, '2017-08-08 02:54:23', '2017-08-08 02:54:23'),
+(2, 1, '201708-00001', 5, '2017-08-08 02:54:23', '2017-08-08 02:54:23'),
+(3, 1, '201708-00001', 4, '2017-08-08 02:54:23', '2017-08-08 02:54:23'),
+(4, 1, '201708-00001', 9, '2017-08-08 21:17:47', '2017-08-08 21:17:47'),
+(5, 1, '201708-00001', 4, '2017-08-09 19:35:32', '2017-08-09 19:35:32'),
+(6, 1, '201708-00001', 4, '2017-08-09 19:35:53', '2017-08-09 19:35:53'),
+(7, 1, '201708-00002', 6, '2017-08-09 19:38:37', '2017-08-09 19:38:37'),
+(8, 1, '201708-00002', 2, '2017-08-09 19:38:37', '2017-08-09 19:38:37'),
+(9, 1, '201708-00002', 2, '2017-08-16 17:00:00', '2017-08-16 17:00:00');
 
 -- --------------------------------------------------------
 
@@ -374,6 +402,7 @@ CREATE TABLE `marketings` (
   `id_marketing` int(10) UNSIGNED NOT NULL,
   `id_dist` int(11) NOT NULL,
   `id_program` int(11) NOT NULL,
+  `id_category` int(11) DEFAULT NULL,
   `entitlement` int(11) NOT NULL,
   `maxclaim_date` date NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -384,9 +413,9 @@ CREATE TABLE `marketings` (
 -- Dumping data for table `marketings`
 --
 
-INSERT INTO `marketings` (`id_marketing`, `id_dist`, `id_program`, `entitlement`, `maxclaim_date`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 1000000, '2017-08-11', NULL, NULL),
-(2, 1, 2, 500000, '2017-08-25', NULL, NULL);
+INSERT INTO `marketings` (`id_marketing`, `id_dist`, `id_program`, `id_category`, `entitlement`, `maxclaim_date`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 1, 1000000, '2017-08-11', NULL, NULL),
+(2, 1, 2, 1, 500000, '2017-08-25', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -686,6 +715,12 @@ ALTER TABLE `category_details`
   ADD UNIQUE KEY `category_details_id_categorydetail_unique` (`id_categorydetail`);
 
 --
+-- Indexes for table `claims`
+--
+ALTER TABLE `claims`
+  ADD PRIMARY KEY (`id_claim`);
+
+--
 -- Indexes for table `claim_attachments`
 --
 ALTER TABLE `claim_attachments`
@@ -815,12 +850,12 @@ ALTER TABLE `category_details`
 -- AUTO_INCREMENT for table `claim_attachments`
 --
 ALTER TABLE `claim_attachments`
-  MODIFY `id_attachment` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id_attachment` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id_comment` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_comment` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `distributors`
 --
@@ -840,7 +875,7 @@ ALTER TABLE `holidays`
 -- AUTO_INCREMENT for table `log_claims`
 --
 ALTER TABLE `log_claims`
-  MODIFY `id_log` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id_log` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `marketings`
 --

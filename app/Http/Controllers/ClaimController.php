@@ -33,7 +33,7 @@ class ClaimController extends Controller
             $program=DB::select(DB::raw("SELECT B.nama_program FROM  marketings A, programs B, categories C WHERE C.nama_category='$category' and A.id_category=C.id_category and A.id_program=B.id_program"));
             $iduser=Session::get('id_user');
             $email=Session::get('email');
-            $queryvalue=DB::select(DB::raw("SELECT SUM(A.value) FROM  claims A,categories B, distributors C, programs D, user_distributors E, marketings F WHERE  A.nama_distributor='$email' AND E.id_user='$iduser' AND E.id_dist=C.id_dist AND F.id_dist=C.id_dist AND F.id_program=D.id_program AND B.id_category=F.id_category and A.status='Closed' GROUP BY E.id_user, d.nama_program, f.entitlement, f.maxclaim_date"));
+            $queryvalue=DB::select(DB::raw("SELECT D.nama_program, SUM(A.value) FROM claims A, categories B, distributors C, programs D, user_distributors E, marketings F WHERE A.nama_distributor='$email' AND E.id_user='$iduser' AND E.id_dist=C.id_dist AND F.id_dist=C.id_dist AND F.id_program=D.id_program AND B.id_category=F.id_category AND A.nama_program=D.nama_program AND A.status!='Canceled' GROUP BY E.id_user, d.nama_program, f.entitlement, f.maxclaim_date"));
             
             if(isset($queryvalue))
             {
@@ -60,10 +60,10 @@ class ClaimController extends Controller
         }
         else
         {            
-            $monitoring=DB::select(DB::raw("SELECT A.id_claim, A.created_at, A.nama_distributor ,A.nama_category, A.category_type, A.nama_program, A.value,  A.status, GROUP_CONCAT(DISTINCT B.comment SEPARATOR ' ') as comment, A.pr_number,A.invoice_number,A.entitlement, A.payment_form, A.original_tax, A.airwaybill, A.courier FROM claims A, comments B WHERE A.id_claim=B.id_claim and A.status NOT LIKE '%approved%' GROUP BY A.id_claim, A.created_at, A.nama_distributor, A.category_type, A.nama_program, A.value,  A.status, A.pr_number, A.invoice_number, A.nama_category, A.entitlement, A.payment_form, A.original_tax, A.airwaybill, A.courier"));
+            $monitoring=DB::select(DB::raw("SELECT A.id_claim, A.created_at, A.nama_distributor ,A.nama_category, A.category_type, A.nama_program, A.value,  A.status, A.pr_number,A.invoice_number,A.entitlement, A.payment_form, A.original_tax, A.airwaybill, A.courier FROM claims A WHERE A.status NOT LIKE '%approved%' GROUP BY A.id_claim, A.created_at, A.nama_distributor, A.category_type, A.nama_program, A.value,  A.status, A.pr_number, A.invoice_number, A.nama_category, A.entitlement, A.payment_form, A.original_tax, A.airwaybill, A.courier"));
             $comment=DB::select(DB::raw("SELECT A.id_claim, A.comment, B.nama_user as id_user, A.created_at FROM comments A, users B WHERE A.id_user=B.id_user"));
             $status=DB::select(DB::raw("SELECT B.nama_user as id_user, A.id_claim, A.id_activity, C.nama_activity as id_activity, A.created_at FROM log_claims A, users B, activities C WHERE A.id_user=B.id_user AND A.id_activity=C.id_activity"));
-            $attachment=DB::select(DB::raw("SELECT * FROM Claim_attachments"));
+            $attachment=DB::select(DB::raw("SELECT * FROM claim_attachments"));
             
             return view('user/listclaim')->with('monitoring',$monitoring)->with('comment',$comment)->with('status',$status)->with('attachment',$attachment);            
         }
@@ -106,13 +106,6 @@ class ClaimController extends Controller
             $another = $input['another'];
             $numberattachment = sizeof($input['another']);
 
-            for($i=0;$i<$numberattachment;$i++)
-            {
-                $extensions[$i] = $another[$i]->getClientOriginalExtension();
-                $attachs[$i]=$another[$i]->getClientOriginalName();
-                $another[$i]->move($destinationPath, $attachs[$i]);
-            }
-
             $extension1 = $file1->getClientOriginalExtension();
             $fileName1 = $file1->getClientOriginalName();
             $file1->move($destinationPath, $fileName1);
@@ -124,6 +117,13 @@ class ClaimController extends Controller
             // $extension3 = $file3->getClientOriginalExtension();
             // $fileName3 = $file3->getClientOriginalName();
             // $file3->move($destinationPath, $fileName3);
+
+            for($i=0;$i<$numberattachment;$i++)
+            {
+                $extensions[$i] = $another[$i]->getClientOriginalExtension();
+                $attachs[$i]=$another[$i]->getClientOriginalName();
+                $another[$i]->move($destinationPath, $attachs[$i]);
+            }
 
             $claim = new Claim();
             $claim->id_claim = $id_claim;
@@ -138,8 +138,8 @@ class ClaimController extends Controller
             // $claim->airwaybill = $fileName3;
             $claim->payment_form = $fileName1;
             $claim->original_tax = $fileName2;
-            $claim->nama_distributor = Session::get('email');
-            $claim->kode_flow = 
+            $claim->nama_distributor = Session::get('email');            
+            $claim->kode_flow = $input['categoryclaimtype'].'-'.$entitlement;
             $claim->level_flow = '0';
             $claim->status = 'Submitted';
             // $claim->courier = $input['kurir'];
@@ -159,30 +159,6 @@ class ClaimController extends Controller
                 $attachment->id_claim = $id_claim;
                 $attachment->nama_attachment = $attachs[$i];
                 $attachment->save();
-            }       
-
-            if($input['comment']!=NULL)
-            {
-                $comment = new Comment();
-                $comment->id_claim = $id_claim;
-                $comment->comment = $input['comment'];
-                $comment->id_user = Session::get('id_user');
-                $comment->save();
-            }
-
-            $log = new Log_claim();
-            $log->id_user=Session::get('id_user');
-            $log->id_claim=$id_claim;
-            $log->id_activity='6';
-            $log->save();
-
-            if($input['comment']!=NULL)
-            {
-                $log = new Log_claim();
-                $log->id_user=Session::get('id_user');
-                $log->id_claim=$id_claim;
-                $log->id_activity='4';
-                $log->save();
             }
 
             if($file1!=NULL&&$file2!=NULL)
@@ -194,6 +170,27 @@ class ClaimController extends Controller
                 $log->save();
             }
 
+            if($input['comment']!=NULL)
+            {
+                $comment = new Comment();
+                $comment->id_claim = $id_claim;
+                $comment->comment = $input['comment'];
+                $comment->id_user = Session::get('id_user');
+                $comment->save();
+
+                $log = new Log_claim();
+                $log->id_user=Session::get('id_user');
+                $log->id_claim=$id_claim;
+                $log->id_activity='4';
+                $log->save();
+            }
+
+            $log = new Log_claim();
+            $log->id_user=Session::get('id_user');
+            $log->id_claim=$id_claim;
+            $log->id_activity='6';
+            $log->save();
+
             return redirect('listclaim');
         }
     }
@@ -201,39 +198,97 @@ class ClaimController extends Controller
     public function editclaim(Request $request)
     {
         //
-        $result=DB::select(DB::raw("SELECT * FROM claims WHERE id_claim='$request->id_claim'"));            
+        $result=DB::select(DB::raw("SELECT * FROM claims WHERE id_claim='$request->id_claim'"));
+        $attachment=DB::select(DB::raw("SELECT * FROM claim_attachments"));            
         // dd($result);
-        return view('user/editclaim')->with('result',$result); 
+        return view('user/editclaim')->with('result',$result)->with('attachment',$attachment); 
     }
 
     public function updateclaim(Request $request)
     {
         //
-        if($file1!=NULL&&$file2!=NULL)
-        {
+        $input = Input::all();
+        // dd($input);
+
+        // if($input['value']>$input['entitlement'])
+        // {
+        //     return redirect('editclaim', $request->id_claim);
+        // }
+        // else
+        // { 
+            $destinationPath = public_path() . '/attachment/' . $input['id_claim'];
+
+            $file1 = $input['file1'];
+            $file2 = $input['file2'];
+            $file3 = $input['file3'];
+            $another = $input['another'];
+            $numberattachment = sizeof($input['another']);
+
+            if($file1!=$input['comparefile1'])
+            {
+                $extension1 = $file1->getClientOriginalExtension();
+                $fileName1 = $file1->getClientOriginalName();
+                $file1->move($destinationPath, $fileName1);
+            }
+            else $fileName1 = $file1;
+
+            if($file2!=$input['comparefile2'])
+            {
+                $extension2 = $file2->getClientOriginalExtension();
+                $fileName2 = $file2->getClientOriginalName();
+                $file2->move($destinationPath, $fileName2);
+            }
+            else $fileName2 = $file2;
+
+            if($file3!=$input['comparefile3'])
+            {
+                $extension3 = $file3->getClientOriginalExtension();
+                $fileName3 = $file3->getClientOriginalName();
+                $file3->move($destinationPath, $fileName3);
+            }
+            else $fileName3 = $file3;
+
+            if($another!=0)
+            {
+                for($i=0;$i<$numberattachment;$i++)
+                {
+                    $extensions[$i] = $another[$i]->getClientOriginalExtension();
+                    $attachs[$i]=$another[$i]->getClientOriginalName();
+                    $another[$i]->move($destinationPath, $attachs[$i]);
+                }
+
+                $delete = Claim_attachment::where('id_claim', $input['id_claim'])->delete();
+
+                for($i=0;$i<$numberattachment;$i++)
+                {
+                    $attachment = new Claim_attachment();
+                    $attachment->id_claim = $input['id_claim'];
+                    $attachment->nama_attachment = $attachs[$i];
+                    $attachment->save();
+                }
+            }
+
+            $value = intval(preg_replace('/[^0-9]+/', '', $input['value']), 10);
+            $claim = Claim::where('id_claim', $input['id_claim'])->update(['value'=>$value, 'payment_form'=>$fileName1, 'original_tax'=>$fileName2, 'airwaybill'=>$fileName3, 'courier'=>$input['courier'], 'doc_check1'=>$input['checkbox1'], 'doc_check2'=>$input['checkbox2'], 'doc_check3'=>$input['checkbox3'], 'doc_check4'=>$input['checkbox4'], 'doc_check5'=>$input['checkbox5'], 'doc_check6'=>$input['checkbox6'], 'doc_check7'=>$input['checkbox7'], 'doc_check8'=>$input['checkbox8'], 'status'=>'Updated' ]);
+
+
+            if($file1!=NULL||$file2!=NULL||$file3!=NULL||$another!=NULL)
+            {
+                $log = new Log_claim();
+                $log->id_user=Session::get('id_user');
+                $log->id_claim=$input['id_claim'];
+                $log->id_activity='5';
+                $log->save();
+            }
+
             $log = new Log_claim();
             $log->id_user=Session::get('id_user');
-            $log->id_claim=$id_claim;
-            $log->id_activity='5';
+            $log->id_claim=$input['id_claim'];
+            $log->id_activity='11';
             $log->save();
-        }
 
-        if($input['comment']!=NULL)
-        {
-            $log = new Log_claim();
-            $log->id_user=Session::get('id_user');
-            $log->id_claim=$id_claim;
-            $log->id_activity='4';
-            $log->save();
-        }
-
-        $log = new Log_claim();
-        $log->id_user=Session::get('id_user');
-        $log->id_claim=$request->id_claim;
-        $log->id_activity='11';
-        $log->save();
-
-        return redirect('listclaim'); 
+            return redirect('listclaim');
+        // }
     }
 
     public function cancelclaim(Request $request)
@@ -253,6 +308,7 @@ class ClaimController extends Controller
     {
         //
         $input = Input::all();
+        dd($input);
 
         $comment = new Comment();
         $comment->id_claim = $request->id_claim;

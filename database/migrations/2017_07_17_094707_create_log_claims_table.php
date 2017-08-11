@@ -18,7 +18,6 @@ class CreateLogClaimsTable extends Migration
             $table->integer('id_user');
             $table->string('id_claim', 12);
             $table->integer('id_activity');
-            $table->timestamps('date_log');
             $table->integer('reserve1')->nullable();
             $table->integer('reserve2')->nullable();
             $table->integer('reserve3')->nullable();
