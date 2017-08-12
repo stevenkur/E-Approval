@@ -17,9 +17,7 @@
                     <tr>
                         <th>ID Claim</th>
                         <th>Program</th>
-                        @foreach($role as $roles)
-                        <th> {{$roles->nama_role}} </th>
-                        @endforeach
+                        
                     </tr>
                     </thead>
                     <tbody>
