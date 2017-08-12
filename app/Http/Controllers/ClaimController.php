@@ -30,24 +30,30 @@ class ClaimController extends Controller
         else
         {            
             $category = Session::get('categories');
-            $program=DB::select(DB::raw("SELECT B.nama_program FROM  marketings A, programs B, categories C WHERE C.nama_category='$category' and A.id_category=C.id_category and A.id_program=B.id_program"));
-            $iduser=Session::get('id_user');
-            $email=Session::get('email');
-            $queryvalue=DB::select(DB::raw("SELECT D.nama_program, SUM(A.value) FROM claims A, categories B, distributors C, programs D, user_distributors E, marketings F WHERE A.nama_distributor='$email' AND E.id_user='$iduser' AND E.id_dist=C.id_dist AND F.id_dist=C.id_dist AND F.id_program=D.id_program AND B.id_category=F.id_category AND A.nama_program=D.nama_program AND A.status!='Canceled' GROUP BY E.id_user, d.nama_program, f.entitlement, f.maxclaim_date"));
-            
-            if(isset($queryvalue))
+            $program = DB::select(DB::raw("SELECT B.nama_program FROM  marketings A, programs B, categories C WHERE C.nama_category='$category' and A.id_category=C.id_category and A.id_program=B.id_program"));
+            $iduser = Session::get('id_user');
+            $namadistributor = DB::select(DB::raw("SELECT B.nama_distributor FROM user_distributors A, distributors B WHERE '$iduser'=A.id_user AND A.id_dist=B.id_dist limit 1"));
+            $nama_distributor = $namadistributor[0]->nama_distributor;
+            $queryvalue=DB::select(DB::raw("SELECT D.nama_program, SUM(A.value) as value FROM claims A, categories B, distributors C, programs D, user_distributors E, marketings F WHERE A.nama_distributor='$nama_distributor' AND E.id_user='$iduser' AND E.id_dist=C.id_dist AND F.id_dist=C.id_dist AND F.id_program=D.id_program AND B.id_category=F.id_category AND A.nama_program=D.nama_program AND A.status!='Canceled' GROUP BY E.id_user, d.nama_program, f.entitlement, f.maxclaim_date"));
+            if($queryvalue==NULL)
             {
                 $value=0;
+                $query=DB::select(DB::raw("SELECT d.nama_program, (f.entitlement-'$value') as entitlement, f.maxclaim_date FROM  categories B, distributors C, programs D, user_distributors E, marketings F WHERE E.id_user='$iduser' AND E.id_dist=C.id_dist AND F.id_dist=C.id_dist AND F.id_program=D.id_program AND B.id_category=F.id_category  GROUP BY E.id_user, d.nama_program, f.entitlement, f.maxclaim_date"));
             }
             else
             {
-                $value=json_encode($queryvalue);
+            	$size = sizeof($queryvalue);
+            	for($i=0;$i<$size;$i++)
+            	{
+            		$programs[]=$queryvalue[$i]->nama_program;
+            		$value[]=$queryvalue[$i]->value;
+            		$query[$i]=DB::select(DB::raw("SELECT d.nama_program, (f.entitlement-'$value[$i]') as entitlement, f.maxclaim_date FROM  categories B, distributors C, programs D, user_distributors E, marketings F WHERE E.id_user='$iduser' AND E.id_dist=C.id_dist AND F.id_dist=C.id_dist AND F.id_program=D.id_program AND B.id_category=F.id_category AND D.nama_program='$programs[$i]' GROUP BY E.id_user, d.nama_program, f.entitlement, f.maxclaim_date"));
+            		$result[]=$query[$i][0];  		
+            	}
             }
-            $query=DB::select(DB::raw("SELECT d.nama_program, (f.entitlement-$value) as entitlement, f.maxclaim_date FROM  categories B, distributors C, programs D, user_distributors E, marketings F WHERE  E.id_user='$iduser' AND E.id_dist=C.id_dist AND F.id_dist=C.id_dist AND F.id_program=D.id_program AND B.id_category=F.id_category  GROUP BY E.id_user, d.nama_program, f.entitlement, f.maxclaim_date"));
-            $categorytype=DB::select(DB::raw("SELECT nama_category, category_type FROM category_details where nama_category LIKE '%$category%'"));
-            
-           
-            return view('user/newclaim')->with('program',$program)->with('query',$query)->with('categorytype',$categorytype);
+            // $categorytype=DB::select(DB::raw("SELECT nama_category, category_type FROM category_details where nama_category LIKE '%$category%'"));
+    		
+            return view('user/newclaim')->with('program',$program)->with('result',$result);
         }
     }
 
@@ -60,7 +66,7 @@ class ClaimController extends Controller
         }
         else
         {            
-            $monitoring=DB::select(DB::raw("SELECT A.id_claim, A.created_at, A.nama_distributor ,A.nama_category, A.category_type, A.nama_program, A.value,  A.status, A.pr_number,A.invoice_number,A.entitlement, A.payment_form, A.original_tax, A.airwaybill, A.courier FROM claims A WHERE A.status NOT LIKE '%approved%' GROUP BY A.id_claim, A.created_at, A.nama_distributor, A.category_type, A.nama_program, A.value,  A.status, A.pr_number, A.invoice_number, A.nama_category, A.entitlement, A.payment_form, A.original_tax, A.airwaybill, A.courier"));
+            $monitoring=DB::select(DB::raw("SELECT A.id_claim, A.created_at, A.nama_distributor ,A.nama_category, A.category_type, A.nama_program, A.value,  A.status, A.pr_number,A.invoice_number,A.entitlement, A.payment_form, A.original_tax, A.airwaybill, A.courier, A.level_flow FROM claims A WHERE A.status NOT LIKE '%approved%' GROUP BY A.id_claim, A.created_at, A.nama_distributor, A.category_type, A.nama_program, A.value,  A.status, A.pr_number, A.invoice_number, A.nama_category, A.entitlement, A.payment_form, A.original_tax, A.airwaybill, A.courier, A.level_flow"));
             $comment=DB::select(DB::raw("SELECT A.id_claim, A.comment, B.nama_user as id_user, A.created_at FROM comments A, users B WHERE A.id_user=B.id_user"));
             $status=DB::select(DB::raw("SELECT B.nama_user as id_user, A.id_claim, A.id_activity, C.nama_activity as id_activity, A.created_at FROM log_claims A, users B, activities C WHERE A.id_user=B.id_user AND A.id_activity=C.id_activity"));
             $attachment=DB::select(DB::raw("SELECT * FROM claim_attachments"));
@@ -74,11 +80,13 @@ class ClaimController extends Controller
         //
         $input = Input::all();
         // dd($input);
-        if($input['programyear']=='#'||$input['programname']=='#'||$input['categorytype']=='#')
+        $value = intval(preg_replace('/[^0-9]+/', '', $input['value']), 10);
+        $entitlement = intval(preg_replace('/[^0-9]+/', '', $input['entitlement']), 10);
+        if($input['programyear']=='#'||$input['programname']=='#')
         {
             return redirect('newclaim');
         }
-        elseif($input['value']>$input['entitlement'])
+        elseif($value>$entitlement)
         {
             return redirect('newclaim');
         }
@@ -128,17 +136,17 @@ class ClaimController extends Controller
             $claim = new Claim();
             $claim->id_claim = $id_claim;
             $claim->nama_category = $input['categoryclaimtype'];
-            $claim->category_type = $input['categorytype'];
+            // $claim->category_type = $input['categorytype'];
             $claim->nama_program = $input['programname'];
-            $value = intval(preg_replace('/[^0-9]+/', '', $input['value']), 10);
             $claim->value = $value;
-            $entitlement = intval(preg_replace('/[^0-9]+/', '', $input['entitlement']), 10);
             $claim->entitlement = $entitlement;
             $claim->programforyear = $input['programyear'];
             // $claim->airwaybill = $fileName3;
             $claim->payment_form = $fileName1;
             $claim->original_tax = $fileName2;
-            $claim->nama_distributor = Session::get('email');            
+            $id_user = Session::get('id_user');
+            $query = DB::select(DB::raw("SELECT B.nama_distributor FROM user_distributors A, distributors B WHERE '$id_user'=A.id_user AND A.id_dist=B.id_dist"));
+            $claim->nama_distributor = $query[0]->nama_distributor;            
             $claim->kode_flow = $input['categoryclaimtype'].'-'.$entitlement;
             $claim->level_flow = '0';
             $claim->status = 'Submitted';
@@ -210,12 +218,14 @@ class ClaimController extends Controller
         $input = Input::all();
         // dd($input);
 
-        // if($input['value']>$input['entitlement'])
-        // {
-        //     return redirect('editclaim', $request->id_claim);
-        // }
-        // else
-        // { 
+        $value = intval(preg_replace('/[^0-9]+/', '', $input['value']), 10);
+        $entitlement = intval(preg_replace('/[^0-9]+/', '', $input['entitlement']), 10);
+        if($value>$entitlement)
+        {
+            return redirect('editclaim', $request->id_claim);
+        }
+        else
+        { 
             $destinationPath = public_path() . '/attachment/' . $input['id_claim'];
 
             $file1 = $input['file1'];
@@ -268,7 +278,6 @@ class ClaimController extends Controller
                 }
             }
 
-            $value = intval(preg_replace('/[^0-9]+/', '', $input['value']), 10);
             $claim = Claim::where('id_claim', $input['id_claim'])->update(['value'=>$value, 'payment_form'=>$fileName1, 'original_tax'=>$fileName2, 'airwaybill'=>$fileName3, 'courier'=>$input['courier'], 'doc_check1'=>$input['checkbox1'], 'doc_check2'=>$input['checkbox2'], 'doc_check3'=>$input['checkbox3'], 'doc_check4'=>$input['checkbox4'], 'doc_check5'=>$input['checkbox5'], 'doc_check6'=>$input['checkbox6'], 'doc_check7'=>$input['checkbox7'], 'doc_check8'=>$input['checkbox8'], 'status'=>'Updated' ]);
 
 
@@ -287,8 +296,19 @@ class ClaimController extends Controller
             $log->id_activity='11';
             $log->save();
 
+            if($file3!=NULL&&$input['courier']!=NULL)
+            {
+                $log = new Log_claim();
+                $log->id_user=Session::get('id_user');
+                $log->id_claim=$input['id_claim'];
+                $log->id_activity='2';
+                $log->save();
+
+                $claim = Claim::where('id_claim', $input['id_claim'])->update(['status'=>'Waiting from level1', 'level_flow'=> '1']);
+            }
+
             return redirect('listclaim');
-        // }
+        }
     }
 
     public function cancelclaim(Request $request)
@@ -308,7 +328,7 @@ class ClaimController extends Controller
     {
         //
         $input = Input::all();
-        dd($input);
+        // dd($input);
 
         $comment = new Comment();
         $comment->id_claim = $request->id_claim;
@@ -322,6 +342,6 @@ class ClaimController extends Controller
         $log->id_activity='4';
         $log->save();
 
-        return redirect('listclaim');
+        return redirect('listclaim')->with('alert', 'Comment to ' . $request->id_claim . ' added successfully!');
     }
 }

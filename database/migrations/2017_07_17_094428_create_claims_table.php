@@ -16,7 +16,7 @@ class CreateClaimsTable extends Migration
         Schema::create('claims', function (Blueprint $table) {
             $table->string('id_claim',12)->unique();
             $table->string('nama_category', 30);
-            $table->string('category_type', 30);
+            $table->string('category_type', 100)->nullable();
             $table->string('nama_program', 75);
             $table->integer('value');
             $table->integer('entitlement');
@@ -30,7 +30,7 @@ class CreateClaimsTable extends Migration
             $table->string('nama_distributor', 100);
             $table->string('kode_flow', 30);
             $table->integer('level_flow');
-            $table->string('status', 50);
+            $table->string('status', 100);
             $table->timestamps('tanggal_claim');
             $table->string('courier',100)->nullable();
             $table->integer('doc_check1')->nullable();
@@ -51,8 +51,6 @@ class CreateClaimsTable extends Migration
             $table->timestamps('reserve7')->nullable();
             $table->timestamps('reserve8')->nullable();
             $table->timestamps('reserve9')->nullable();
-            
-            
         });
     }
 

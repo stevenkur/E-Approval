@@ -18,7 +18,7 @@
     <script type="text/javascript">        
         function ChooseProgram(data)
         {
-            var jsArray = <?php echo json_encode($query); ?>;
+            var jsArray = <?php echo json_encode($result); ?>;
             
             var length = jsArray.length;
             for(var i=0;i<length;i++)
@@ -76,17 +76,18 @@
                 <div align="left">
                     <label style="color: red;"><small>* Indicates a required field</small></label>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="form-group">
-                        <label class="col-md-4 control-label">Category Claim Type</label>
-                        <div class="col-md-8">
+                        <label class="col-md-2 control-label">Category Claim Type</label>
+                        <div class="col-md-4">
                             <input type="text" class="form-control" id="categoryclaimtype" name="categoryclaimtype" value="{{$category_now}}" readonly/>
                         </div>
-                    </div>              
+                    </div>
+                </div>
+                <div class="col-md-6">
                     <div class="form-group required">
                         <label class="col-md-4 control-label">Program Name</label>
                         <div class="col-md-8">
-
                             <select class="form-control" id="programname" name="programname" onchange="ChooseProgram(this);">
                                 <option value="#">-- Please Choose One --</option>
                                 @foreach($program as $programs)
@@ -107,17 +108,6 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="form-group required">
-                        <label class="col-md-4 control-label">Claim Type</label>
-                        <div class="col-md-8">
-                            <select class="form-control" id="categorytype" name="categorytype">
-                                <option value="#">-- Please Choose One --</option>
-                                @foreach($categorytype as $categorytypes)
-                                <option value="{{ $categorytypes->category_type }}">{{ $categorytypes->category_type }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
                     <div class="form-group">
                         <label class="col-md-4 control-label">Entitlement</label>
                         <div class="col-md-8">
@@ -138,7 +128,7 @@
 
                 <div class="form-group required">
                     <label class="col-md-3 control-label">Attachment</label>
-                    <div class="col-md-6">
+                    <div class="col-md-9">
                         <label class="custom-file">Payment Requisition Form
                             <input type="file" id="file1" name="file1" class="custom-file-input" required>
                             <span class="custom-file-control"></span>
@@ -154,8 +144,8 @@
                         <label class="custom-file">Another Attachment
                             <input type="file" multiple id="another" name="another[]" class="custom-file-input" onchange="updateList()">
                             <span class="custom-file-control"></span>
+                            <table id="fileList"></table>
                         </label>
-                        <div class="form-group"><table id="fileList"></table></div>
                     </div>
                 </div>
 

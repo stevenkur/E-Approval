@@ -75,14 +75,16 @@
             <div class="box-body">
                 <div align="left">
                     <label style="color: red;"><small>* Indicates a required field</small></label>
-                </div>
-                <div class="col-md-6">
+                </div>                
+                <div class="col-md-12">
                     <div class="form-group">
-                        <label class="col-md-4 control-label">Category Claim Type</label>
-                        <div class="col-md-8">
+                        <label class="col-md-2 control-label">Category Claim Type</label>
+                        <div class="col-md-4">
                             <input type="text" class="form-control" id="categoryclaimtype" name="categoryclaimtype" value="{{$category_now}}" readonly/>
                         </div>
-                    </div> 
+                    </div>
+                </div>
+                <div class="col-md-6">
                     <div class="form-group required">
                         <label class="col-md-4 control-label">Program Name</label>
                         <div class="col-md-8">
@@ -97,12 +99,12 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="form-group required">
+                    <!-- <div class="form-group required">
                         <label class="col-md-4 control-label">Category Type</label>
                         <div class="col-md-8">
                             <input type="text" class="form-control" id="categorytype" name="categorytype" value="{{ $result[0]->category_type }}" readonly/>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="form-group">
                         <label class="col-md-4 control-label">Entitlement</label>
                         <div class="col-md-8">
@@ -145,17 +147,17 @@
                             <input type="hidden" name="another" value="0">
                             <input type="file" id="another" name="another" class="custom-file-input" multiple onchange="updateList()">
                             <span class="custom-file-control"></span>
+                            <table id="fileList">
+                                <tr>
+                                    <td><b>Selected Files:</b></td>
+                                @foreach($attachment as $attachments)
+                                    @if($result[0]->id_claim==$attachments->id_claim)
+                                        <td>- {{ $attachments->nama_attachment }}</td>
+                                    @endif
+                                </tr>
+                                @endforeach
+                            </table>
                         </label>
-                        <div class="form-group"><table id="fileList">
-                            <tr>
-                                <td><b>Selected Files:</b></td>
-                            @foreach($attachment as $attachments)
-                                @if($result[0]->id_claim==$attachments->id_claim)
-                                    <td>- {{ $attachments->nama_attachment }}</td>
-                                @endif
-                            </tr>
-                            @endforeach
-                        </table></div>
                     </div>
                 </div>
 

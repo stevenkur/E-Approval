@@ -27,6 +27,12 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
+            @if (session('alert'))
+                <div class="alert alert-success" id="success-alert">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    {{ session('alert') }}
+                </div>
+            @endif
                 <div class="table-responsive" style="overflow: auto">
                 <table id="claim" class="table table-bordered table-striped">
                     <thead>
@@ -81,7 +87,13 @@
                                                         </tr>
                                                         <tr>
                                                             <td>Category Type</td>
-                                                            <td>{{$monitorings->category_type}}</td>
+                                                            <td>
+                                                                @if($monitorings->category_type!=NULL)                                                        
+                                                                {{$monitorings->category_type}}
+                                                                @else
+                                                                -
+                                                                @endif
+                                                            </td>
                                                         </tr>
                                                         <tr>
                                                             <td>Program</td>
@@ -130,14 +142,14 @@
                                                 </div>                                                    
                                                 <div class="tab-pane" id="comment{{ $monitorings->id_claim }}"><br>
                                                     <label class="control-label">Comments Registration Number {{ $monitorings->id_claim }}</label><br><br>
-                                                    <form action="{{ route('addcomment', ['idclaim' => $monitorings->id_claim]) }}" method="post" role="form" class="form-horizontal" name="formaddcomment" id="formaddcomment" enctype="multipart/form-data">
+                                                    <form role="form" action="{{ route('addcomment', ['idclaim' => $monitorings->id_claim]) }}" method="post" name="formcomment{{ $monitorings->id_claim }}" id="formcomment{{ $monitorings->id_claim }}">
                                                     {{csrf_field()}}
                                                         <div class="box-header with-border">
                                                             <label class="box-title">Add Comment</label>
                                                         </div>
-                                                        <div class="box-body">
-                                                        <!-- <label class="col-md-2 control-label">Add Comment</label> -->
-                                                        <textarea rows="3" id="comment" name="comment" form="formaddcomment" class="col-md-12"></textarea>
+                                                        <div class="box-body col-md-12">
+                                                            <!-- <label class="col-md-2 control-label">Add Comment</label> -->
+                                                            <textarea name="comment" id="comment" form="formcomment{{ $monitorings->id_claim }}" rows="3" class="col-md-12"></textarea>
                                                         </div>
                                                         <div class="box-footer" align="right">
                                                             <button type="reset" class="btn btn-ok">Reset</button>
@@ -243,7 +255,9 @@
                                             @if($monitorings->status!='Canceled')
                                             <div class="modal-footer">                                            
                                                 <a class="btn btn-danger" type="submit" href="{{ route('cancelclaim', ['idclaim' => $monitorings->id_claim]) }}" onclick="clicked();">Cancel</a>
-                                                <a class="btn btn-primary" type="submit" href="{{ route('editclaim', ['idclaim' => $monitorings->id_claim]) }}">Edit</a>
+                                                @if($monitorings->level_flow==0||$monitorings->status=='Rejected')
+                                                    <a class="btn btn-primary" type="submit" href="{{ route('editclaim', ['idclaim' => $monitorings->id_claim]) }}">Edit</a>
+                                                @endif
                                             </div>
                                             @endif
                                         @else
@@ -301,4 +315,6 @@ $(function() {
       'autoWidth'   : true
     })
   });
+    $("#success-alert").alert();
+    window.setTimeout(function() { $("#success-alert").alert('close'); }, 5000);
 </script>

@@ -30,7 +30,6 @@ class CreatePeriodsTable extends Migration
             $table->timestamps('reserve7')->nullable();
             $table->timestamps('reserve8')->nullable();
             $table->timestamps('reserve9')->nullable();
-           
             $table->timestamps();
         });
     }
