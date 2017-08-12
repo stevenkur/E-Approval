@@ -44,9 +44,11 @@ class HomeController extends Controller
             $query[]=DB::select(DB::raw("SELECT Distinct C.id_role,C.nama_role FROM category_accesses A, categories B, roles C, user_distributors D, claims E  WHERE  A.id_category=B.id_category and A.id_role=C.id_role and A.id_category=$id_category and E.status!='Closed'"));
             }
 
-            $role=array_unique(array_merge($query[0],$query[1],$query[2],$query[3]), SORT_REGULAR);
+            // $role=array_unique(array_merge($query[0],$query[1],$query[2],$query[3]), SORT_REGULAR);
             // dd($role);
-            return view('user/index')->with('category', $category)->with('role',$role);
+            
+            // return view('user/index')->with('category', $category)->with('role',$role);
+            return view('user/index')->with('category', $category);
         }
     }
 

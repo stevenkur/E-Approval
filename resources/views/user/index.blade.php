@@ -27,14 +27,15 @@
                     </tr>
                     </thead>
                     <tbody>
-                      @foreach($role as $roles)
-                            <td>{{ $roles->nama_role }}</td>  
-                            <td> 10.000 </td>
-                            <td> 10.000 </td>
-                            <td> 10.000 </td>
-                            <td> 10.000 </td>   
-                            <tr></tr>             
-                      @endforeach
+                    {{--@foreach($role as $roles)
+                    <tr>
+                        <td>{{ $roles->nama_role }}</td>  
+                        <td> 10.000 </td>
+                        <td> 10.000 </td>
+                        <td> 10.000 </td>
+                        <td> 10.000 </td>   
+                    </tr>             
+                    @endforeach--}}
                     </tbody>
                 </table>
             </div>

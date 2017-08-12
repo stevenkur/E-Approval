@@ -17,7 +17,10 @@ class LoginController extends Controller
         if(!$request->session()->has('email'))
             return view('auth/login');
         else
-            return redirect()->route('home.index');
+            if(Session::get('nama_user')=='Administrator')
+                return redirect()->route('dashboard');
+            else
+                return redirect()->route('home.index');
     }
     
     public function login(Request $request)

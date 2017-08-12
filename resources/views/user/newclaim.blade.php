@@ -73,6 +73,12 @@
                 <h3 class="box-title">New Claim Registration</h3>
             </div>
             <div class="box-body">
+            @if (session('alert'))
+                <div class="alert alert-danger" id="success-alert">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    {{ session('alert') }}
+                </div>
+            @endif
                 <div align="left">
                     <label style="color: red;"><small>* Indicates a required field</small></label>
                 </div>
@@ -91,7 +97,7 @@
                             <select class="form-control" id="programname" name="programname" onchange="ChooseProgram(this);">
                                 <option value="#">-- Please Choose One --</option>
                                 @foreach($program as $programs)
-                                <option value="{{ $programs->nama_program }}">{{ $programs->nama_program }}</option>
+                                <option value="{{ $programs->nama_program }}" <?php if($programs->nama_program==old('programname')) echo'selected'; ?>>{{ $programs->nama_program }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -101,8 +107,8 @@
                         <div class="col-md-8">
                             <select class="form-control" id="programyear" name="programyear" >
                                 <option value="#">-- Please Choose One --</option>
-                                <option value="<?php echo date("Y"); ?>"><?php echo date("Y"); ?></option>
-                                <option value="<?php echo date("Y")-1; ?>"><?php echo date("Y")-1; ?></option>
+                                <option value="<?php echo date("Y"); ?>" <?php if(date("Y")==old('programyear')) echo'selected'; ?>><?php echo date("Y"); ?></option>
+                                <option value="<?php echo date("Y")-1; ?>" <?php if(date("Y")-1==old('programyear')) echo'selected'; ?>><?php echo date("Y")-1; ?></option>
                             </select>
                         </div>
                     </div>
@@ -112,7 +118,7 @@
                         <label class="col-md-4 control-label">Entitlement</label>
                         <div class="col-md-8">
                             @if(!isset($select))
-                            <input type="text" class="form-control" id="entitlement" name="entitlement" value="" required="required"  readonly />
+                            <input type="text" class="form-control" id="entitlement" name="entitlement" value="{{ old('entitlement') }}" required="required"  readonly />
                             @else
                             <input type="text" class="form-control" id="entitlement" name="entitlement" value="{{entitlement[0]}}" required="required"  readonly />
                             @endif
@@ -121,7 +127,7 @@
                     <div class="form-group required">
                         <label class="col-md-4 control-label">Value</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="value" name="value" onkeyup="convertToRupiah(this);" />
+                            <input type="text" class="form-control" id="value" name="value" value="{{ old('value') }}" onkeyup="convertToRupiah(this);" />
                         </div>
                     </div>
                 </div>
@@ -160,28 +166,28 @@
                     <label class="col-md-3 control-label">Document Completion</label>
                     <div class="col-md-9">
                         <div class="checkbox">
-                            <label><input type="hidden" value="0" name="checkbox1"><input type="checkbox" value="1" name="checkbox1" required>Payment Requisition Form (Please attached the scanned document on this claim)</label>
+                            <label><input type="hidden" value="0" name="checkbox1"><input type="checkbox" value="1" name="checkbox1" required <?php if(old('checkbox1')==1) echo 'checked'; ?>>Payment Requisition Form (Please attached the scanned document on this claim)</label>
                         </div>
                         <div class="checkbox">
-                            <label><input type="hidden" value="0" name="checkbox2"><input type="checkbox" value="1" name="checkbox2" required>Original Tax & Supplier Invoices. Tax must be addressed to PT Philips Indonesia (Please attached the scanned document on this claim)</label>
+                            <label><input type="hidden" value="0" name="checkbox2"><input type="checkbox" value="1" name="checkbox2" required <?php if(old('checkbox2')==1) echo 'checked'; ?>>Original Tax & Supplier Invoices. Tax must be addressed to PT Philips Indonesia (Please attached the scanned document on this claim)</label>
                         </div>
                         <div class="checkbox">
-                            <label><input type="hidden" value="0" name="checkbox4"><input type="checkbox" value="1" name="checkbox4" required>Marketing Program Letter/BDF proposal Approval/Natura template</label>
+                            <label><input type="hidden" value="0" name="checkbox4"><input type="checkbox" value="1" name="checkbox4" required <?php if(old('checkbox4')==1) echo 'checked'; ?>>Marketing Program Letter/BDF proposal Approval/Natura template</label>
                         </div>
                         <div class="checkbox">
-                            <label><input type="hidden" value="0" name="checkbox5"><input type="checkbox" value="1" name="checkbox5" required>Marketing activity report with achievement</label>
+                            <label><input type="hidden" value="0" name="checkbox5"><input type="checkbox" value="1" name="checkbox5" required <?php if(old('checkbox5')==1) echo 'checked'; ?>>Marketing activity report with achievement</label>
                         </div>
                         <div class="checkbox">
-                            <label><input type="hidden" value="0" name="checkbox6"><input type="checkbox" value="1" name="checkbox6" required>BP Invoice to Philips with BP signed & stamp</label>
+                            <label><input type="hidden" value="0" name="checkbox6"><input type="checkbox" value="1" name="checkbox6" required <?php if(old('checkbox6')==1) echo 'checked'; ?>>BP Invoice to Philips with BP signed & stamp</label>
                         </div>
                         <div class="checkbox">
-                            <label><input type="hidden" value="0" name="checkbox7"><input type="checkbox" value="1" name="checkbox7" required>Marketing Activity Picture</label>
+                            <label><input type="hidden" value="0" name="checkbox7"><input type="checkbox" value="1" name="checkbox7" required <?php if(old('checkbox7')==1) echo 'checked'; ?>>Marketing Activity Picture</label>
                         </div>
                         <div class="checkbox">
-                            <label><input type="hidden" value="0" name="checkbox8"><input type="checkbox" value="1" name="checkbox8" required>Other supporting document</label>
+                            <label><input type="hidden" value="0" name="checkbox8"><input type="checkbox" value="1" name="checkbox8" required <?php if(old('checkbox8')==1) echo 'checked'; ?>>Other supporting document</label>
                         </div>
                         <div class="checkbox">
-                            <label><input type="hidden" value="0" name="checkbox3"><input type="checkbox" value="1" name="checkbox3" >AirwayBill Number (Please attached the scanned document on this claim)</label>
+                            <label><input type="hidden" value="0" name="checkbox3"><input type="checkbox" value="1" name="checkbox3" <?php if(old('checkbox3')==1) echo 'checked'; ?>>AirwayBill Number (Please attached the scanned document on this claim)</label>
                         </div>
                     </div>
                 </div>
@@ -189,7 +195,7 @@
                 <div class="form-group">
                     <label class="col-md-3 control-label">Comment</label>
                     <div class="col-md-9">
-                        <textarea class="form-control" rows="3" id="comment" name="comment" form="formnewclaim"></textarea>
+                        <textarea class="form-control" rows="3" id="comment" name="comment" form="formnewclaim">{{ old('comment') }}</textarea>
                     </div>
                 </div>
 
@@ -220,3 +226,11 @@
 <script src="{{ URL::asset('public/adminlte/dist/js/adminlte.min.js') }}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ URL::asset('public/adminlte/dist/js/demo.js') }}"></script>
+<!-- page script -->
+<script>
+window.setTimeout(function() {
+    $("#success-alert").fadeTo(500, 0).slideUp(500, function(){
+        $(this).remove(); 
+    });
+}, 3000);
+</script>

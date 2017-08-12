@@ -4,24 +4,6 @@
 
     <!-- Main content -->
     <section class="content">
-		    	@if(isset($Message))
-					<div class="alert alert-success">
-			        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-			        {{ $Message }}
-			        </div>
-		        @endif
-		        @if(isset($FailOldMessage))
-					<div class="alert alert-danger">
-			        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-			        {{ $FailOldMessage }}
-			        </div>
-		        @endif
-		        @if(isset($FailConfirmMessage))
-					<div class="alert alert-danger">
-			        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-			        {{ $FailConfirmMessage }}
-			        </div>
-		        @endif
         <div class="box box-primary">
       		<form class="form-horizontal" role="form" action="{{ route('profilechange') }}" method="post">
       		{{csrf_field()}}
@@ -29,6 +11,24 @@
       	    	<h3 class="box-title">Change Password</h3>
 	        </div>
 		    <div class="box-body">
+		    	@if(isset($Message))
+					<div class="alert alert-success" id="success-alert">
+			        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+			        {{ $Message }}
+			        </div>
+		        @endif
+		        @if(isset($FailOldMessage))
+					<div class="alert alert-danger" id="success-alert">
+			        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+			        {{ $FailOldMessage }}
+			        </div>
+		        @endif
+		        @if(isset($FailConfirmMessage))
+					<div class="alert alert-danger" id="success-alert">
+			        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+			        {{ $FailConfirmMessage }}
+			        </div>
+		        @endif
 				<div class="form-group">
 				    <label class="control-label col-sm-2">Email</label>
 				    <div class="col-sm-4">
@@ -88,3 +88,11 @@
 <script src="{{ URL::asset('public/adminlte/dist/js/adminlte.min.js') }}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ URL::asset('public/adminlte/dist/js/demo.js') }}"></script>
+<!-- page script -->
+<script>
+window.setTimeout(function() {
+    $("#success-alert").fadeTo(500, 0).slideUp(500, function(){
+        $(this).remove(); 
+    });
+}, 3000);
+</script>

@@ -33,6 +33,12 @@
                     {{ session('alert') }}
                 </div>
             @endif
+            @if (session('alerts'))
+                <div class="alert alert-danger" id="danger-alert">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    {{ session('alerts') }}
+                </div>
+            @endif
                 <div class="table-responsive" style="overflow: auto">
                 <table id="claim" class="table table-bordered table-striped">
                     <thead>
@@ -315,6 +321,14 @@ $(function() {
       'autoWidth'   : true
     })
   });
-    $("#success-alert").alert();
-    window.setTimeout(function() { $("#success-alert").alert('close'); }, 5000);
+window.setTimeout(function() {
+    $("#success-alert").fadeTo(500, 0).slideUp(500, function(){
+        $(this).remove(); 
+    });
+}, 3000);
+window.setTimeout(function() {
+    $("#danger-alert").fadeTo(500, 0).slideUp(500, function(){
+        $(this).remove(); 
+    });
+}, 3000);
 </script>
