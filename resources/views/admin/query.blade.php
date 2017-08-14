@@ -21,7 +21,7 @@
         </form>
         </div>
         @if(isset($Message))
-          <div class="alert alert-success">
+          <div class="alert alert-success" id="success-alert">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             {{ $Message }}
           </div>
@@ -80,3 +80,11 @@
 <script src="{{ URL::asset('public/adminlte/dist/js/adminlte.min.js') }}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ URL::asset('public/adminlte/dist/js/demo.js') }}"></script>
+<!-- page script -->
+<script>
+window.setTimeout(function() {
+    $("#success-alert").fadeTo(500, 0).slideUp(500, function(){
+        $(this).remove(); 
+    });
+}, 3000);
+</script>

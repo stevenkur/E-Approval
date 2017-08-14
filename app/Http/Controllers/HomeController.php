@@ -62,7 +62,7 @@ class HomeController extends Controller
         {
             // var_dump($category);
             session()->put('categories', $category);
-            return redirect()->route('home.index');
+            return redirect()->back();
             
         }
     }
