@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 11, 2017 at 04:43 AM
+-- Generation Time: Aug 14, 2017 at 11:21 AM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 5.6.24
 
@@ -40,7 +40,7 @@ CREATE TABLE `activities` (
 INSERT INTO `activities` (`id_activity`, `nama_activity`, `created_at`, `updated_at`) VALUES
 (1, 'View', NULL, NULL),
 (2, 'Approved', NULL, NULL),
-(3, 'Reject', NULL, NULL),
+(3, 'Rejected', NULL, NULL),
 (4, 'Add Comment', NULL, NULL),
 (5, 'Attach File', NULL, NULL),
 (6, 'Register Ticket', NULL, NULL),
@@ -68,8 +68,8 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id_category`, `nama_category`, `created_at`, `updated_at`) VALUES
-(1, 'Marcom', NULL, NULL),
-(2, 'BDF', NULL, NULL),
+(1, 'BDF', NULL, NULL),
+(2, 'Marcom', NULL, NULL),
 (3, 'RDP', NULL, NULL),
 (4, 'Natura', NULL, NULL),
 (5, 'BDFConsLum', NULL, NULL),
@@ -191,8 +191,9 @@ INSERT INTO `category_details` (`id_categorydetail`, `nama_category`, `category_
 
 CREATE TABLE `claims` (
   `id_claim` varchar(12) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_user` int(11) NOT NULL,
   `nama_category` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `category_type` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `category_type` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `nama_program` varchar(75) COLLATE utf8mb4_unicode_ci NOT NULL,
   `value` int(11) NOT NULL,
   `entitlement` int(11) NOT NULL,
@@ -205,6 +206,7 @@ CREATE TABLE `claims` (
   `nama_distributor` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `kode_flow` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
   `level_flow` int(11) NOT NULL,
+  `id_staff` int(11) DEFAULT NULL,
   `status` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `courier` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `doc_check1` int(11) DEFAULT NULL,
@@ -224,9 +226,10 @@ CREATE TABLE `claims` (
 -- Dumping data for table `claims`
 --
 
-INSERT INTO `claims` (`id_claim`, `nama_category`, `category_type`, `nama_program`, `value`, `entitlement`, `programforyear`, `pr_number`, `invoice_number`, `airwaybill`, `payment_form`, `original_tax`, `nama_distributor`, `kode_flow`, `level_flow`, `status`, `courier`, `doc_check1`, `doc_check2`, `doc_check3`, `doc_check4`, `doc_check5`, `doc_check6`, `doc_check7`, `doc_check8`, `doc_check9`, `created_at`, `updated_at`) VALUES
-('201708-00001', 'Marcom', 'HM1 - Build the Base', 'program b', 1000000000, 500000, 2016, NULL, NULL, NULL, 'e-approval (steven).sql', 'e-approval.sql', 'distributor@philips.com', '0', 0, 'Canceled', NULL, 1, 1, 1, 1, 1, 1, 1, 1, NULL, '2017-08-08 02:54:22', '2017-08-08 21:17:47'),
-('201708-00002', 'Marcom', 'HM3 - ProShop', 'program b', 500000, 500000, 2016, NULL, NULL, NULL, 'Logo ITS.png', 'Lambang ITS.png', 'distributor@philips.com', '0', 0, 'Submitted', NULL, 1, 1, 1, 1, 1, 1, 1, 1, NULL, '2017-08-09 19:38:37', '2017-08-09 19:38:37');
+INSERT INTO `claims` (`id_claim`, `id_user`, `nama_category`, `category_type`, `nama_program`, `value`, `entitlement`, `programforyear`, `pr_number`, `invoice_number`, `airwaybill`, `payment_form`, `original_tax`, `nama_distributor`, `kode_flow`, `level_flow`, `id_staff`, `status`, `courier`, `doc_check1`, `doc_check2`, `doc_check3`, `doc_check4`, `doc_check5`, `doc_check6`, `doc_check7`, `doc_check8`, `doc_check9`, `created_at`, `updated_at`) VALUES
+('201708-00001', 1, 'BDF', NULL, 'program b', 100000, 500000, 2017, NULL, NULL, 'Logo ITS CAK.png', 'Lambang ITS.png', 'Logo ITS.png', 'PT. Sahabat Abadi Sejahtera 31', 'BDF-500000', 1, 2, 'Waiting from level1', 'JNE', 1, 1, 1, 1, 1, 1, 1, 1, NULL, '2017-08-14 08:23:03', '2017-08-14 08:49:47'),
+('201708-00002', 1, 'BDF', NULL, 'program b', 100000, 500000, 2017, NULL, NULL, 'Logo ITS.png', 'Lambang ITS.png', 'Logo ITS CAK.png', 'PT. Sahabat Abadi Sejahtera 31', 'BDF-500000', 1, 2, 'Waiting from Distributor Manager', 'J&T', 1, 1, 1, 1, 1, 1, 1, 1, NULL, '2017-08-14 08:53:56', '2017-08-14 08:54:45'),
+('201708-00003', 1, 'BDF', NULL, 'program b', 100000, 500000, 2017, NULL, NULL, 'Logo ITS.png', 'Lambang ITS.png', 'Logo BEM FTIf.png', 'PT. Sahabat Abadi Sejahtera 31', 'BDF-500000', 1, 2, 'Waiting from Distributor Manager', 'JNE', 1, 1, 1, 1, 1, 1, 1, 1, NULL, '2017-08-14 09:13:27', '2017-08-14 09:13:47');
 
 -- --------------------------------------------------------
 
@@ -247,12 +250,12 @@ CREATE TABLE `claim_attachments` (
 --
 
 INSERT INTO `claim_attachments` (`id_attachment`, `id_claim`, `nama_attachment`, `created_at`, `updated_at`) VALUES
-(1, '201708-00001', 'Data_Philip.xlsx', '2017-08-08 02:54:22', '2017-08-08 02:54:22'),
-(2, '201708-00001', 'insert_data.txt', '2017-08-08 02:54:22', '2017-08-08 02:54:22'),
-(3, '201708-00001', 'Philip.oom', '2017-08-08 02:54:22', '2017-08-08 02:54:22'),
-(4, '201708-00001', 'to do list.txt', '2017-08-08 02:54:22', '2017-08-08 02:54:22'),
-(5, '201708-00002', 'Logo BEM FTIf.png', '2017-08-09 19:38:37', '2017-08-09 19:38:37'),
-(6, '201708-00002', 'Logo Informatics ITS.jpg', '2017-08-09 19:38:37', '2017-08-09 19:38:37');
+(1, '201708-00001', 'Logo BEM FTIf.png', '2017-08-14 08:23:03', '2017-08-14 08:23:03'),
+(2, '201708-00001', 'Logo Informatics ITS.jpg', '2017-08-14 08:23:03', '2017-08-14 08:23:03'),
+(3, '201708-00002', 'Logo BEM FTIf.png', '2017-08-14 08:53:56', '2017-08-14 08:53:56'),
+(4, '201708-00002', 'Logo Informatics ITS.jpg', '2017-08-14 08:53:56', '2017-08-14 08:53:56'),
+(5, '201708-00003', 'Logo Informatics ITS.jpg', '2017-08-14 09:13:27', '2017-08-14 09:13:27'),
+(6, '201708-00003', 'Logo ITS CAK.png', '2017-08-14 09:13:28', '2017-08-14 09:13:28');
 
 -- --------------------------------------------------------
 
@@ -274,10 +277,9 @@ CREATE TABLE `comments` (
 --
 
 INSERT INTO `comments` (`id_comment`, `id_claim`, `comment`, `id_user`, `created_at`, `updated_at`) VALUES
-(1, '201708-00001', 'halloo', 1, '2017-08-08 02:54:23', '2017-08-08 02:54:23'),
-(2, '201708-00001', 'test comment', 1, '2017-08-09 19:35:31', '2017-08-09 19:35:31'),
-(3, '201708-00001', 'coba lagi', 1, '2017-08-09 19:35:53', '2017-08-09 19:35:53'),
-(4, '201708-00002', NULL, 1, '2017-08-09 19:38:37', '2017-08-09 19:38:37');
+(1, '201708-00001', '123', 1, '2017-08-14 08:23:04', '2017-08-14 08:23:04'),
+(2, '201708-00002', '321', 1, '2017-08-14 08:53:57', '2017-08-14 08:53:57'),
+(3, '201708-00003', '123', 1, '2017-08-14 09:13:28', '2017-08-14 09:13:28');
 
 -- --------------------------------------------------------
 
@@ -325,15 +327,14 @@ CREATE TABLE `flows` (
 --
 
 INSERT INTO `flows` (`id_flow`, `kode_flow`, `nama_flow`, `id_role`, `level_flow`, `created_at`, `updated_at`) VALUES
-(1, 'MARCOM-U5M', 'Marcom di bawah 5 juta', 2, 1, NULL, NULL),
-(2, 'MARCOM-U5M', 'Marcom di bawah 5 juta', 3, 2, NULL, NULL),
-(3, 'MARCOM-U5M', 'Marcom di bawah 5 juta', 5, 3, NULL, NULL),
-(4, 'MARCOM-U5M', 'Marcom di bawah 5 juta', 8, 4, NULL, NULL),
-(5, 'MARCOM-U5M', 'Marcom di bawah 5 juta', 10, 5, NULL, NULL),
-(6, 'MARCOM-U5M', 'Marcom di bawah 5 juta', 9, 6, NULL, NULL),
-(7, 'MARCOM-U5M', 'Marcom di bawah 5 juta', 13, 7, NULL, NULL),
-(8, 'MARCOM-U5M', 'Marcom di bawah 5 juta', 15, 8, NULL, NULL),
-(9, 'MARCOM-U5M', 'Marcom di bawah 5 juta', 16, 9, NULL, NULL),
+(2, 'BDF-500000', 'Marcom di bawah 5 juta', 3, 1, NULL, '2017-08-14 07:57:47'),
+(3, 'BDF-500000', 'Marcom di bawah 5 juta', 5, 2, NULL, '2017-08-14 07:57:47'),
+(4, 'BDF-500000', 'Marcom di bawah 5 juta', 8, 3, NULL, '2017-08-14 07:57:47'),
+(5, 'BDF-500000', 'Marcom di bawah 5 juta', 10, 4, NULL, '2017-08-14 07:57:47'),
+(6, 'BDF-500000', 'Marcom di bawah 5 juta', 9, 5, NULL, '2017-08-14 07:57:47'),
+(7, 'BDF-500000', 'Marcom di bawah 5 juta', 13, 6, NULL, '2017-08-14 07:57:47'),
+(8, 'BDF-500000', 'Marcom di bawah 5 juta', 15, 7, NULL, '2017-08-14 07:57:47'),
+(9, 'BDF-500000', 'Marcom di bawah 5 juta', 16, 8, NULL, '2017-08-14 07:57:47'),
 (10, 'Natura-1', 'Natura Flow 1', 2, 1, NULL, NULL),
 (11, 'Natura-1', 'Natura Flow 1', 3, 2, NULL, NULL),
 (13, 'Natura-1', 'Natura Flow 1', 9, 3, NULL, '2017-08-04 01:22:38'),
@@ -382,15 +383,30 @@ CREATE TABLE `log_claims` (
 --
 
 INSERT INTO `log_claims` (`id_log`, `id_user`, `id_claim`, `id_activity`, `created_at`, `updated_at`) VALUES
-(1, 1, '201708-00001', 6, '2017-08-08 02:54:23', '2017-08-08 02:54:23'),
-(2, 1, '201708-00001', 5, '2017-08-08 02:54:23', '2017-08-08 02:54:23'),
-(3, 1, '201708-00001', 4, '2017-08-08 02:54:23', '2017-08-08 02:54:23'),
-(4, 1, '201708-00001', 9, '2017-08-08 21:17:47', '2017-08-08 21:17:47'),
-(5, 1, '201708-00001', 4, '2017-08-09 19:35:32', '2017-08-09 19:35:32'),
-(6, 1, '201708-00001', 4, '2017-08-09 19:35:53', '2017-08-09 19:35:53'),
-(7, 1, '201708-00002', 6, '2017-08-09 19:38:37', '2017-08-09 19:38:37'),
-(8, 1, '201708-00002', 2, '2017-08-09 19:38:37', '2017-08-09 19:38:37'),
-(9, 1, '201708-00002', 2, '2017-08-16 17:00:00', '2017-08-16 17:00:00');
+(1, 1, '201708-00001', 5, '2017-08-14 08:23:04', '2017-08-14 08:23:04'),
+(2, 1, '201708-00001', 4, '2017-08-14 08:23:04', '2017-08-14 08:23:04'),
+(3, 1, '201708-00001', 6, '2017-08-14 08:23:04', '2017-08-14 08:23:04'),
+(4, 1, '201708-00001', 5, '2017-08-14 08:49:47', '2017-08-14 08:49:47'),
+(5, 1, '201708-00001', 11, '2017-08-14 08:49:47', '2017-08-14 08:49:47'),
+(6, 1, '201708-00001', 2, '2017-08-14 08:49:47', '2017-08-14 08:49:47'),
+(7, 1, '201708-00002', 5, '2017-08-14 08:53:56', '2017-08-14 08:53:56'),
+(8, 1, '201708-00002', 4, '2017-08-14 08:53:57', '2017-08-14 08:53:57'),
+(9, 1, '201708-00002', 6, '2017-08-14 08:53:57', '2017-08-14 08:53:57'),
+(10, 1, '201708-00002', 5, '2017-08-14 08:54:16', '2017-08-14 08:54:16'),
+(11, 1, '201708-00002', 11, '2017-08-14 08:54:16', '2017-08-14 08:54:16'),
+(12, 1, '201708-00002', 2, '2017-08-14 08:54:16', '2017-08-14 08:54:16'),
+(13, 1, '201708-00002', 5, '2017-08-14 08:54:32', '2017-08-14 08:54:32'),
+(14, 1, '201708-00002', 11, '2017-08-14 08:54:32', '2017-08-14 08:54:32'),
+(15, 1, '201708-00002', 2, '2017-08-14 08:54:32', '2017-08-14 08:54:32'),
+(16, 1, '201708-00002', 5, '2017-08-14 08:54:45', '2017-08-14 08:54:45'),
+(17, 1, '201708-00002', 11, '2017-08-14 08:54:45', '2017-08-14 08:54:45'),
+(18, 1, '201708-00002', 2, '2017-08-14 08:54:45', '2017-08-14 08:54:45'),
+(19, 1, '201708-00003', 5, '2017-08-14 09:13:28', '2017-08-14 09:13:28'),
+(20, 1, '201708-00003', 4, '2017-08-14 09:13:28', '2017-08-14 09:13:28'),
+(21, 1, '201708-00003', 6, '2017-08-14 09:13:28', '2017-08-14 09:13:28'),
+(22, 1, '201708-00003', 5, '2017-08-14 09:13:47', '2017-08-14 09:13:47'),
+(23, 1, '201708-00003', 11, '2017-08-14 09:13:47', '2017-08-14 09:13:47'),
+(24, 1, '201708-00003', 2, '2017-08-14 09:13:47', '2017-08-14 09:13:47');
 
 -- --------------------------------------------------------
 
@@ -544,7 +560,7 @@ INSERT INTO `roles` (`id_role`, `nama_role`, `created_at`, `updated_at`) VALUES
 (16, 'Controller', NULL, NULL),
 (17, 'CFO', NULL, NULL),
 (18, 'CEO', NULL, NULL),
-(20, 'Trade Consumer, B2C', NULL, NULL);
+(19, 'Trade Consumer, B2C', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -598,7 +614,7 @@ INSERT INTO `users` (`id_user`, `nama_user`, `email`, `password`, `email1`, `ema
 (2, 'mariootto poluan', 'mariootto.poluan@philips.com', 'ea6974be86d52240e12db44819b5344c', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
 (3, 'Heri Dono', 'heri.dono1@philips.com', 'c8184539461c19f227b099dcfa0e3145', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
 (4, 'Admin Marketing', 'admin.marketing@philips.com', '6c8f14f76cb7777b1f171a9139fb8d92', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
-(5, 'Ahmad Saiful', 'ahmad.saiful@philips.com', '24fed7d4d6684307a98ff9dcdfb877b9', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
+(5, 'Ahmad Saiful', 'ahmad.saiful@philips.com', '24fed7d4d6684307a98ff9dcdfb877b9', '', '', '', '', '', '', '', '', '', NULL, NULL, '2017-08-12 13:07:34'),
 (6, 'Dedy B.Pramono', 'dedy.b.pramono@philips.com', 'c08c0d79f45aac6e85e7b6f843dd2090', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
 (7, 'Setia Adi Nugraha', 'setia.adi.nugraha@philips.com', 'dc3f0b9aea6354d9cbbcba41328e90dc', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
 (8, 'Puja Kusuma', 'Puja.Kusuma@philips.com', '8fe2ce657ccde28e1c1a989bc4861cb7', '', '', '', '', '', '', '', '', '', NULL, NULL, NULL),
@@ -680,7 +696,24 @@ CREATE TABLE `user_roles` (
 
 INSERT INTO `user_roles` (`id_user_roles`, `id_user`, `id_role`, `created_at`, `updated_at`) VALUES
 (1, 1, 2, '2017-07-23 23:51:22', '2017-07-23 23:51:22'),
-(2, 2, 3, '2017-07-23 23:51:29', '2017-07-23 23:51:29');
+(2, 2, 3, '2017-07-23 23:51:29', '2017-07-23 23:51:29'),
+(3, 3, 4, NULL, NULL),
+(4, 4, 5, NULL, NULL),
+(5, 5, 6, NULL, NULL),
+(6, 6, 7, NULL, NULL),
+(7, 7, 8, NULL, NULL),
+(8, 8, 9, NULL, NULL),
+(9, 9, 11, NULL, NULL),
+(10, 10, 10, NULL, NULL),
+(11, 11, 19, NULL, NULL),
+(12, 12, 12, NULL, NULL),
+(13, 13, 13, NULL, NULL),
+(14, 14, 14, NULL, NULL),
+(15, 15, 15, NULL, NULL),
+(16, 16, 16, NULL, NULL),
+(17, 17, 17, NULL, NULL),
+(18, 18, 18, NULL, NULL),
+(19, 19, 1, NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -724,15 +757,13 @@ ALTER TABLE `claims`
 -- Indexes for table `claim_attachments`
 --
 ALTER TABLE `claim_attachments`
-  ADD PRIMARY KEY (`id_attachment`),
-  ADD UNIQUE KEY `claim_attachments_id_attachment_unique` (`id_attachment`);
+  ADD PRIMARY KEY (`id_attachment`);
 
 --
 -- Indexes for table `comments`
 --
 ALTER TABLE `comments`
-  ADD PRIMARY KEY (`id_comment`),
-  ADD UNIQUE KEY `comments_id_comment_unique` (`id_comment`);
+  ADD PRIMARY KEY (`id_comment`);
 
 --
 -- Indexes for table `distributors`
@@ -759,8 +790,7 @@ ALTER TABLE `holidays`
 -- Indexes for table `log_claims`
 --
 ALTER TABLE `log_claims`
-  ADD PRIMARY KEY (`id_log`),
-  ADD UNIQUE KEY `log_claims_id_log_unique` (`id_log`);
+  ADD PRIMARY KEY (`id_log`);
 
 --
 -- Indexes for table `marketings`
@@ -855,7 +885,7 @@ ALTER TABLE `claim_attachments`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id_comment` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_comment` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `distributors`
 --
@@ -875,7 +905,7 @@ ALTER TABLE `holidays`
 -- AUTO_INCREMENT for table `log_claims`
 --
 ALTER TABLE `log_claims`
-  MODIFY `id_log` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_log` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 --
 -- AUTO_INCREMENT for table `marketings`
 --
@@ -915,7 +945,7 @@ ALTER TABLE `user_distributors`
 -- AUTO_INCREMENT for table `user_roles`
 --
 ALTER TABLE `user_roles`
-  MODIFY `id_user_roles` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_user_roles` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

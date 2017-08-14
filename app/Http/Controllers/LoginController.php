@@ -30,7 +30,7 @@ class LoginController extends Controller
 
 
         $result=DB::select(DB::raw("SELECT A.id_user, C.nama_user, C.email, B.nama_role, D.nama_category FROM category_accesses A, roles B, users C, categories D WHERE C.email='$email' and C.password='$pwd' and A.id_user=C.id_user and A.id_role=B.id_role and A.id_category=D.id_category"));
-        
+        // dd($result);
         if(isset($result[0])){
             
             $id_user = $result[0]->id_user;

@@ -268,8 +268,8 @@
                                             @endif
                                         @else
                                             <div class="modal-footer">                                            
-                                                <a class="btn btn-danger" type="submit" href="#" onclick="clicked();">Cancel</a>
-                                                <a class="btn btn-primary" type="submit" href="#">Accept</a>
+                                                <a class="btn btn-danger" type="submit" href="#">Reject</a>
+                                                <a class="btn btn-success" type="submit" href="#">Accept</a>
                                             </div>
                                         @endif
                                     </div>
