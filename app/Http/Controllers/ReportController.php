@@ -157,7 +157,7 @@ class ReportController extends Controller
                     LEFT JOIN 
                     (SELECT C.nama_distributor, D.nama_program, SUM(IF(A.status!='Closed',A.value,NULL)) as Pending,SUM(IF(A.status='Closed',A.value,NULL)) as Closed 
                     FROM  claims A, users B, distributors C, programs D, user_distributors E
-                    WHERE  (E.id_user=B.id_user and A.nama_distributor=B.email and E.id_dist=C.id_dist and A.nama_program=D.nama_program) 
+                    WHERE  (E.id_user=B.id_user and A.nama_distributor=C.nama_distributor and E.id_dist=C.id_dist and A.nama_program=D.nama_program and A.id_user=B.id_user) 
                     GROUP BY C.nama_distributor, D.nama_program) as B 
                     on (A.nama_distributor=B.nama_distributor AND A.nama_program=B.nama_program))"));
 
@@ -169,10 +169,9 @@ class ReportController extends Controller
                     LEFT JOIN 
                     (SELECT C.nama_distributor, D.nama_category, SUM(IF(A.status!='Closed',A.value,NULL)) as Pending,SUM(IF(A.status='Closed',A.value,NULL)) as Closed 
                     FROM  claims A, users B, distributors C, categories D, user_distributors E
-                    WHERE  (E.id_user=B.id_user and A.nama_distributor=B.email and E.id_dist=C.id_dist and A.nama_category=D.nama_category) 
+                    WHERE  (E.id_user=B.id_user and A.nama_distributor=C.nama_distributor and E.id_dist=C.id_dist and A.nama_category=D.nama_category and A.id_user=B.id_user) 
                     GROUP BY C.nama_distributor, D.nama_category) as B 
-                    on (A.nama_distributor=B.nama_distributor AND A.nama_category=B.nama_category))"));                   
-            
+                    on (A.nama_distributor=B.nama_distributor AND A.nama_category=B.nama_category))"));                               
             return view('user/summaryclaimreport')->with('marketing',$marketing)->with('market',$market);
         }
     }
