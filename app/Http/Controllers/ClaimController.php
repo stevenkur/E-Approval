@@ -277,6 +277,15 @@ class ClaimController extends Controller
             $another = $input['another'];
             $numberattachment = sizeof($input['another']);
 
+            if($file1!=NULL||$file2!=NULL||$file3!=NULL||$another!=NULL)
+            {
+                $log = new Log_claim();
+                $log->id_user=Session::get('id_user');
+                $log->id_claim=$input['id_claim'];
+                $log->id_activity='5';
+                $log->save();
+            }
+
             if($file1!=$input['comparefile1'])
             {
                 $extension1 = $file1->getClientOriginalExtension();
@@ -321,17 +330,7 @@ class ClaimController extends Controller
                 }
             }
 
-            $claim = Claim::where('id_claim', $input['id_claim'])->update(['value'=>$value, 'payment_form'=>$fileName1, 'original_tax'=>$fileName2, 'airwaybill'=>$fileName3, 'courier'=>$input['courier'], 'doc_check1'=>$input['checkbox1'], 'doc_check2'=>$input['checkbox2'], 'doc_check3'=>$input['checkbox3'], 'doc_check4'=>$input['checkbox4'], 'doc_check5'=>$input['checkbox5'], 'doc_check6'=>$input['checkbox6'], 'doc_check7'=>$input['checkbox7'], 'doc_check8'=>$input['checkbox8'], 'status'=>'Updated' ]);
-
-
-            if($file1!=NULL||$file2!=NULL||$file3!=NULL||$another!=NULL)
-            {
-                $log = new Log_claim();
-                $log->id_user=Session::get('id_user');
-                $log->id_claim=$input['id_claim'];
-                $log->id_activity='5';
-                $log->save();
-            }
+            $claim = Claim::where('id_claim', $input['id_claim'])->update(['value'=>$value, 'payment_form'=>$fileName1, 'original_tax'=>$fileName2, 'airwaybill'=>$fileName3, 'courier'=>$input['courier'], 'doc_check1'=>$input['checkbox1'], 'doc_check2'=>$input['checkbox2'], 'doc_check3'=>$input['checkbox3'], 'doc_check4'=>$input['checkbox4'], 'doc_check5'=>$input['checkbox5'], 'doc_check6'=>$input['checkbox6'], 'doc_check7'=>$input['checkbox7'], 'doc_check8'=>$input['checkbox8']]);
 
             $log = new Log_claim();
             $log->id_user=Session::get('id_user');
@@ -346,12 +345,20 @@ class ClaimController extends Controller
                 $log->id_claim=$input['id_claim'];
                 $log->id_activity='2';
                 $log->save();
-
-                $next=DB::select(DB::raw("SELECT C.nama_role, D.id_user FROM claims A, flows B, roles C, users D, user_roles E WHERE A.kode_flow=B.kode_flow AND B.id_role=C.id_role AND C.id_role=E.id_role and E.id_user=D.id_user AND A.level_flow=B.level_flow"));                
-                // dd($next);
-                $claim = Claim::where('id_claim', $input['id_claim'])->update(['status'=>'Waiting from ' . $next[0]->nama_role, 'level_flow'=> '1', 'id_staff'=> $next[0]->id_user]);
             }
 
+            $id_claim=$input['id_claim'];
+            $query=DB::select(DB::raw("SELECT level_flow FROM claims WHERE id_claim='$id_claim'"));
+
+            if($query[0]->level_flow==0)
+            {
+                $claim = Claim::where('id_claim', $input['id_claim'])->update(['level_flow'=> '1']);                
+            }
+            
+            $next=DB::select(DB::raw("SELECT C.nama_role, D.id_user, D.email FROM claims A, flows B, roles C, users D, user_roles E WHERE A.kode_flow=B.kode_flow AND B.id_role=C.id_role AND C.id_role=E.id_role and E.id_user=D.id_user AND A.level_flow=B.level_flow AND A.id_claim='$id_claim'"));                
+            // dd($next);
+            $claim = Claim::where('id_claim', $input['id_claim'])->update(['status'=>'Waiting from ' . $next[0]->nama_role . ' (' . $next[0]->email . ')', 'id_staff'=> $next[0]->id_user]);
+            
             return redirect('listclaim')->with('alert', 'Claim number ' . $input['id_claim'] . ' has been updated');
         }
     }
@@ -390,15 +397,48 @@ class ClaimController extends Controller
         return redirect('listclaim')->with('alert', 'Comment to ' . $request->id_claim . ' added successfully!');
     }
 
-    public function acceptclaim(Request $request)
+    public function approveclaim(Request $request)
     {
         //
+        $current=DB::select(DB::raw("SELECT level_flow FROM claims WHERE id_claim='$request->id_claim'"));
+        $level=$current[0]->level_flow+1;
+        
+        $max=DB::select(DB::raw("SELECT A.level_flow FROM flows A, claims B WHERE A.kode_flow=B.kode_flow AND B.id_claim='$request->id_claim' ORDER BY A.level_flow DESC LIMIT 1"));
 
+        if($level>$max[0]->level_flow)
+        {
+            $approve = Claim::where('id_claim', $request->id_claim)->update(['status'=>'Closed']);
+        }
+        else
+        {
+            $next=DB::select(DB::raw("SELECT C.nama_role, D.id_user, D.email FROM claims A, flows B, roles C, users D, user_roles E WHERE A.kode_flow=B.kode_flow AND B.id_role=C.id_role AND C.id_role=E.id_role and E.id_user=D.id_user AND '$level'=B.level_flow AND A.id_claim='$request->id_claim'"));
+            
+            $approve = Claim::where('id_claim', $request->id_claim)->update(['level_flow'=>$level, 'id_staff'=>$next[0]->id_user, 'status'=>'Waiting from ' . $next[0]->nama_role . ' (' . $next[0]->email . ')']);
+        }
+
+        $log = new Log_claim();
+        $log->id_user=Session::get('id_user');
+        $log->id_claim=$request->id_claim;
+        $log->id_activity='2';
+        $log->save();
+
+        return redirect('listclaim')->with('alert', 'Claim Number ' . $request->id_claim . ' has been approved!');
     }
 
     public function rejectclaim(Request $request)
     {
         //
+        $role=Session::get('role');
+        $email=Session::get('email');
+        $approve = Claim::where('id_claim', $request->id_claim)->update(['status'=>'Rejected by ' . $role[0] . ' (' . $email . ')']);
+
+        $log = new Log_claim();
+        $log->id_user=Session::get('id_user');
+        $log->id_claim=$request->id_claim;
+        $log->id_activity='3';
+        $log->save();
+
+        return redirect('listclaim')->with('alerts', 'Claim Number ' . $request->id_claim . ' has been rejected!');
         
     }
 }

@@ -32,7 +32,7 @@ class CreateClaimsTable extends Migration
             $table->string('kode_flow', 30);
             $table->integer('level_flow');
             $table->integer('id_staff')->nullable();
-            $table->string('status', 100);
+            $table->string('status', 150);
             $table->timestamps('tanggal_claim');
             $table->string('courier',100)->nullable();
             $table->integer('doc_check1')->nullable();

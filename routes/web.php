@@ -33,6 +33,8 @@ Route::any('updateclaim', ['as'=>'updateclaim', 'uses'=>'ClaimController@updatec
 Route::any('/addcomment/{id_claim}', ['as'=>'addcomment', 'uses'=> 'ClaimController@addcomment']);
 Route::any('/editclaim/{id_claim}', ['as'=>'editclaim', 'uses'=> 'ClaimController@editclaim']);
 Route::any('/cancelclaim/{id_claim}', ['as'=>'cancelclaim', 'uses'=> 'ClaimController@cancelclaim']);
+Route::any('/approveclaim/{id_claim}', ['as'=>'approveclaim', 'uses'=> 'ClaimController@approveclaim']);
+Route::any('/rejectclaim/{id_claim}', ['as'=>'rejectclaim', 'uses'=> 'ClaimController@rejectclaim']);
 Route::any('monitoringreport', ['as'=>'monitoringreport', 'uses'=>'ReportController@monitoringreport']);
 Route::any('resolutionreport', ['as'=>'resolutionreport', 'uses'=>'ReportController@resolutionreport']);
 Route::any('summaryclaimreport', ['as'=>'summaryclaimreport', 'uses'=>'ReportController@summaryclaimreport']);

@@ -261,15 +261,15 @@
                                             @if($monitorings->status!='Canceled')
                                             <div class="modal-footer">                                            
                                                 <a class="btn btn-danger" type="submit" href="{{ route('cancelclaim', ['idclaim' => $monitorings->id_claim]) }}" onclick="clicked();">Cancel</a>
-                                                @if($monitorings->level_flow==0||$monitorings->status=='Rejected')
+                                                @if($monitorings->level_flow==0||substr($monitorings->status,0,8)=='Rejected')
                                                     <a class="btn btn-primary" type="submit" href="{{ route('editclaim', ['idclaim' => $monitorings->id_claim]) }}">Edit</a>
                                                 @endif
                                             </div>
                                             @endif
                                         @else
                                             <div class="modal-footer">                                            
-                                                <a class="btn btn-danger" type="submit" href="#">Reject</a>
-                                                <a class="btn btn-success" type="submit" href="#">Accept</a>
+                                                <a class="btn btn-danger" type="submit" href="{{ route('rejectclaim', ['idclaim' => $monitorings->id_claim]) }}">Reject</a>
+                                                <a class="btn btn-success" type="submit" href="{{ route('approveclaim', ['idclaim' => $monitorings->id_claim]) }}">Approve</a>
                                             </div>
                                         @endif
                                     </div>
