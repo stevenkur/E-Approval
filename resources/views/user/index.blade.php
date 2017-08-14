@@ -27,15 +27,11 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {{--@foreach($role as $roles)
-                    <tr>
-                        <td>{{ $roles->nama_role }}</td>  
-                        <td> 10.000 </td>
-                        <td> 10.000 </td>
-                        <td> 10.000 </td>
-                        <td> 10.000 </td>   
-                    </tr>             
-                    @endforeach--}}
+                    <?php $role_length=sizeof($role);?>
+                    @for($i=0;$i<$role_length;$i++)
+                    <td>{{$role[$i]}}</td> 
+                    <tr> </tr>     
+                    @endfor
                     </tbody>
                 </table>
             </div>

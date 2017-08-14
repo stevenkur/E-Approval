@@ -82,7 +82,6 @@ class ReportController extends Controller
                     $pisah[$id][$i] = $value;
                     // dd($pisah[$id]);
                 }
-            // dd($pisah['201708-00001']);
             // dd($claim[0]);
             
             $tes=array();
