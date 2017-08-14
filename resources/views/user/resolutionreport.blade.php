@@ -1,53 +1,61 @@
 @extends('layouts.backend')
 
 @section('content')
-  
+
+<?php
+    $category = Session::get('nama_category');
+    $category_length = sizeof(Session::get('nama_category'));
+
+    // dd($category);
+?>  
     <section class="content">
     
-
+    @for($i=0;$i<$category_length;$i++)
     <div class="col-md-12">
         <div class="box box-primary">
             <div class="box-header with-border">
-                <h3 class="box-title">Resolution Report</h3>
+                <h3 class="box-title">Resolution Report {{$category[$i]}}</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                <table id="table" class="table table-bordered table-striped">
+                <table id="{{'table'.$category[$i]}}" class="table table-bordered table-striped" >
                     <thead>
+                    <?php $role_length = sizeof($role[$i]);
+                    ?>
                     <tr>
                         <th>ID Claim</th>
                         <th>Program</th>
-                        
+                        @for($j=0;$j<$role_length;$j++)
+                            <th> {{ $role[$i][$j]->nama_role }} </th>
+                        @endfor
                     </tr>
                     </thead>
                     <tbody>
+                    <?php $claim_length = sizeof($claim[$i]);
+                          if($claim_length!=0) $id_length = sizeof($date[$i]);
+                          else $id_length=0;
+                          $count=1;
+
+                    ?>
+                    <tr>
+                        @for($k=0;$k<$claim_length;$k=$k+$count)
+                        <td> {{$claim[$i][$k]->id_claim}} </td>
+                        <td> {{$claim[$i][$k]->nama_program}} </td>
+                        <td> {{ date('d F Y', strtotime($claim[$i][$k]->created_at)) }}</td>
+                        <?php $id=$claim[$i][$k]->id_claim; ?>
+                        @for($l=0;$l<$role_length-1;$l++)
+                            @if (isset($date[$i][$id][$l+1]))
+                            <td> {{ date('d-m-Y', strtotime($claim[$i][$k+$l+1]->created_at)) }} ( {{$date[$i][$id][$l+1]}} days )</td>
+                            <?php $count++; ?>
+                            @else <td>-</td>
+                            @endif
+                        @endfor
+                        
+                        <tr> </tr>
+                        @endfor
+                    </tr>
+
                    
-                    <tr>
-                        <td>Tes 1</td>
-                        <td>Tes 1</td>
-                        <td>3</td>
-                        <td>3</td>
-                        <td>3</td>
-                        <td>3</td>
-                    </tr>
-
-                    <tr>
-                        <td>Tes 2</td>
-                        <td>Tes 2</td>
-                        <td>4</td>
-                        <td>4</td>
-                        <td>4</td>
-                        <td>4</td>
-                    </tr>
-
-                    <tr>
-                        <td>Tes 3</td>
-                        <td>Tes 3</td>
-                        <td>5</td>
-                        <td>5</td>
-                        <td>5</td>
-                        <td>5</td>
-                    </tr>
                     
                     </tbody>
                 </table>
@@ -55,6 +63,7 @@
             <!-- /.box-body -->
         </div>
     </div>
+    @endfor
     </section>
 
 @stop
@@ -74,3 +83,46 @@
 <script src="{{ URL::asset('public/adminlte/dist/js/adminlte.min.js') }}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ URL::asset('public/adminlte/dist/js/demo.js') }}"></script>
+
+<script>
+$(function() {
+    $('#tableBDF').DataTable({
+      'paging'      : true,
+      'lengthChange': true,
+      'searching'   : true,
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : true
+    })
+  });
+$(function() {
+    $('#tableMarcom').DataTable({
+      'paging'      : true,
+      'lengthChange': true,
+      'searching'   : true,
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : true
+    })
+  });
+$(function() {
+    $('#tableRDP').DataTable({
+      'paging'      : true,
+      'lengthChange': true,
+      'searching'   : true,
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : true
+    })
+  });
+$(function() {
+    $('#tableNatura').DataTable({
+      'paging'      : true,
+      'lengthChange': true,
+      'searching'   : true,
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : true
+    })
+  });
+</script>

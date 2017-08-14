@@ -54,7 +54,7 @@ class ReportController extends Controller
             // echo $nama_category;
             $id_category = DB::select(DB::raw("SELECT id_category from categories where nama_category='$nama_category'"));
             $now= $id_category[0]->id_category;
-            $role[$z] = DB::select(DB::raw("SELECT A.id_role,A.id_user,A.id_category,B.nama_role FROM category_accesses A, roles B, categories C WHERE A.id_category=C.id_category and B.nama_role!='Distributor' and A.id_role=B.id_role and A.id_category=$now"));            
+            $role[$z] = DB::select(DB::raw("SELECT A.id_role,A.id_user,A.id_category,B.nama_role FROM category_accesses A, roles B, categories C WHERE A.id_category=C.id_category and B.nama_role!='Administrator' and A.id_role=B.id_role and A.id_category=$now"));            
             
             $role_length[$z] = sizeof($role[$z]);
             
@@ -100,9 +100,10 @@ class ReportController extends Controller
                 // dd($jumlah);
                 for($i=1;$i<$jumlah;$i++)
                     {
+                    
                     $tes=(strtotime($pisah[$id][$i+1]->created_at)-strtotime($pisah[$id][$i]->created_at));                
                     $datediff= floor($tes / (60 * 60 * 24));
-                    $from= $claim[$z][$i]->created_at;
+                    $from= $pisah[$id][$i]->created_at;
                     $start = DateTime::createFromFormat("Y-m-d H:i:s","$from");
                     $interval = new DateInterval("P1D");
                     $period = new DatePeriod($start,$interval,$datediff);
@@ -115,7 +116,9 @@ class ReportController extends Controller
                         for($n=0;$n<$holiday_length;$n++)
                         {
                             if($dt->format("Y-m-d")==$holiday[$n]->tanggal_libur){
+                               
                                 $count++;
+                                
                             }     
                         }
                         
@@ -133,7 +136,7 @@ class ReportController extends Controller
             }
         }
 
-            return view('user/resolutionreport')->with('role',$role);
+            return view('user/resolutionreport')->with('role',$role)->with('claim',$claim)->with('date',$date);
         }
     }
 

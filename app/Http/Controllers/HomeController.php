@@ -38,12 +38,26 @@ class HomeController extends Controller
             $user = Session::get('id_user');
             $category=DB::select(DB::raw("SELECT A.id_access, A.id_category, A.id_role, B.nama_category FROM category_accesses A, categories B WHERE A.id_category=B.id_category and A.id_user=$user "));
             $length=sizeof($category);
+            
             for($i=0;$i<$length;$i++)
             {
-            $id_category= $category[$i]->id_category;    
-            $query[]=DB::select(DB::raw("SELECT Distinct C.id_role,C.nama_role FROM category_accesses A, categories B, roles C, user_distributors D, claims E  WHERE  A.id_category=B.id_category and A.id_role=C.id_role and A.id_category=$id_category and E.status!='Closed'"));
+                $nama_category = $category[$i]->nama_category;
+                $query[$i]= DB::select(DB::raw("SELECT A.nama_category,sum(A.value) as value,B.id_role,B.nama_role FROM claims A, roles B, flows C where A.kode_flow = C.kode_flow and A.level_flow=C.level_flow and A.id_user=$user and B.id_role=C.id_role and A.nama_category ='$nama_category' GROUP BY A.nama_category, B.nama_role, B.id_role "));
             }
 
+            for($i=0;$i<$length;$i++)
+            {
+
+                $query_length= sizeof($query[$i]);
+                for($j=0;$j<$query_length;$j++)
+                {
+                    $nama_role[] = $query[$i][$j]->nama_role; 
+                }
+
+            }
+            $role = array_unique($nama_role);
+            dd($role);
+            // dd($query);
             // $role=array_unique(array_merge($query[0],$query[1],$query[2],$query[3]), SORT_REGULAR);
             // dd($role);
             
