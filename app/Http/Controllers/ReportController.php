@@ -108,12 +108,8 @@ class ReportController extends Controller
                         }
                     }
                 }
-                else {
-                $date[$z]=0;
-                }
             }
-
-            // dd($pisah);
+            // dd($date);
             return view('user/resolutionreport')->with('role',$role)->with('claim',$claim)->with('date',$date);
         }
     }
