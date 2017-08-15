@@ -39,6 +39,12 @@
                     {{ session('alerts') }}
                 </div>
             @endif
+            @if (session('warning'))
+                <div class="alert alert-warning" id="warning-alert">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    {{ session('warning') }}
+                </div>
+            @endif
                 <div class="table-responsive" style="overflow: auto">
                 <table id="claim" class="table table-bordered table-striped">
                     <thead>
@@ -265,21 +271,40 @@
                                                 </div>
                                             </div>                                            
                                         </div>
+                                        <div class="modal-footer"> 
                                         @if($role[0]=='Distributor')
-                                            @if($monitorings->status!='Canceled')
-                                            <div class="modal-footer">                                            
+                                            @if($monitorings->status!='Canceled')                                                
                                                 <a class="btn btn-danger" type="submit" href="{{ route('cancelclaim', ['idclaim' => $monitorings->id_claim]) }}" onclick="clicked();">Cancel</a>
                                                 @if($monitorings->level_flow==0||substr($monitorings->status,0,8)=='Rejected')
                                                     <a class="btn btn-primary" type="submit" href="{{ route('editclaim', ['idclaim' => $monitorings->id_claim]) }}">Edit</a>
                                                 @endif
-                                            </div>
                                             @endif
                                         @elseif($monitorings->status!='Closed'||substr($monitorings->status,0,8)=='Rejected')
-                                            <div class="modal-footer">                                 
-                                                <a class="btn btn-danger" type="submit" href="{{ route('rejectclaim', ['idclaim' => $monitorings->id_claim]) }}">Reject</a>
-                                                <a class="btn btn-success" type="submit" href="{{ route('approveclaim', ['idclaim' => $monitorings->id_claim]) }}">Approve</a>
+                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#reject">Reject</button>
+                                            <div class="modal fade" id="reject" tabindex="-1" align="left">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <button type="button" class="close" data-dismiss="modal"><i class="icon-xs-o-md"></i></button>
+                                                        <form role="form" action="{{ route('rejectclaim', ['idclaim' => $monitorings->id_claim]) }}" method="post" name="formreject{{ $monitorings->id_claim }}" id="formreject{{ $monitorings->id_claim }}">
+                                                        {{csrf_field()}}
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                            <h4 class="modal-title caps"><strong>Add Comment for Rejecting Claim Number {{ $monitorings->id_claim }}</strong></h4>
+                                                        </div>
+                                                        <div class="modal-body col-md-12">
+                                                            <textarea name="comment" id="comment" form="formreject{{ $monitorings->id_claim }}" rows="3" class="col-md-12"></textarea>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="reset" class="btn btn-ok">Reset</button>
+                                                            <button type="submit" class="btn btn-danger">Reject</button>
+                                                        </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
                                             </div>
+                                            <a class="btn btn-success" type="submit" href="{{ route('approveclaim', ['idclaim' => $monitorings->id_claim]) }}">Approve</a>                                            
                                         @endif
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -336,6 +361,11 @@ window.setTimeout(function() {
 }, 3000);
 window.setTimeout(function() {
     $("#danger-alert").fadeTo(500, 0).slideUp(500, function(){
+        $(this).remove(); 
+    });
+}, 3000);
+window.setTimeout(function() {
+    $("#warning-alert").fadeTo(500, 0).slideUp(500, function(){
         $(this).remove(); 
     });
 }, 3000);

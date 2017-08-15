@@ -422,17 +422,37 @@ class ClaimController extends Controller
     public function rejectclaim(Request $request)
     {
         //
-        $role=Session::get('role');
-        $email=Session::get('email');
-        $approve = Claim::where('id_claim', $request->id_claim)->update(['status'=>'Rejected by ' . $role[0] . ' (' . $email . ')']);
+        $input=Input::all();
+        if($input!=NULL)
+        {
+            $role=Session::get('role');
+            $email=Session::get('email');
+            $approve = Claim::where('id_claim', $request->id_claim)->update(['status'=>'Rejected by ' . $role[0] . ' (' . $email . ')']);
 
-        $log = new Log_claim();
-        $log->id_user=Session::get('id_user');
-        $log->id_claim=$request->id_claim;
-        $log->id_activity='3';
-        $log->save();
+            $comment = new Comment();
+            $comment->id_claim = $request->id_claim;
+            $comment->comment = $input['comment'];
+            $comment->id_user = Session::get('id_user');
+            $comment->save();
 
-        return redirect('listclaim')->with('alerts', 'Claim Number ' . $request->id_claim . ' has been rejected!');
+            $log = new Log_claim();
+            $log->id_user=Session::get('id_user');
+            $log->id_claim=$request->id_claim;
+            $log->id_activity='4';
+            $log->save();
+
+            $log = new Log_claim();
+            $log->id_user=Session::get('id_user');
+            $log->id_claim=$request->id_claim;
+            $log->id_activity='3';
+            $log->save();
+
+            return redirect('listclaim')->with('alerts', 'Claim Number ' . $request->id_claim . ' has been rejected!');
+        }
+        else
+        {
+            return redirect('listclaim')->with('warning', 'Please input detail comment for ' . $request->id_claim . ' before rejecting!');
+        }
         
     }
 }
