@@ -10,7 +10,7 @@
                 <div class="box-header with-border">
                     <h3 class="box-title">Summary Claim Graphic Per Program</h3>
                 </div>
-                <div id="charts" style="width: 500px; height: 500px; position: relative; margin: 0 auto; font-size: 8px;">
+                <div id="chartProgram" style="width: 500px; height: 500px; position: relative; margin: 0 auto; font-size: 8px;">
                   <div id="chartProgram1" class="chartdiv" style="width: 500px; height: 500px; position: absolute; top: 0; left: 0;"></div>  
                   <div id="chartProgram2" class="chartdiv" style="width: 500px; height: 500px; position: absolute; top: 0; left: 0;"></div>  
                   <div id="chartProgram3" class="chartdiv" style="width: 500px; height: 500px; position: absolute; top: 0; left: 0;"></div> 
@@ -22,7 +22,7 @@
                 <div class="box-header with-border">
                     <h3 class="box-title">Summary Claim Graphic Per Category</h3>
                 </div>
-                <div id="charts" style="width: 500px; height: 500px; position: relative; margin: 0 auto; font-size: 8px;">
+                <div id="chartCategory" style="width: 500px; height: 500px; position: relative; margin: 0 auto; font-size: 8px;">
                   <div id="chartCategory1" class="chartdiv" style="width: 500px; height: 500px; position: absolute; top: 0; left: 0;"></div>  
                   <div id="chartCategory2" class="chartdiv" style="width: 500px; height: 500px; position: absolute; top: 0; left: 0;"></div>  
                   <div id="chartCategory3" class="chartdiv" style="width: 500px; height: 500px; position: absolute; top: 0; left: 0;"></div> 
@@ -121,7 +121,7 @@
 <!-- AdminLTE for demo purposes -->
 <script src="{{ URL::asset('public/adminlte/dist/js/demo.js') }}"></script>
 <script type="text/javascript">
-AmCharts.addInitHandler(function(chart) {
+AmCharts.addInitHandler(function func1(chart) {
   
   // init holder for nested charts
   if (AmCharts.nestedChartHolder === undefined)
@@ -170,11 +170,8 @@ AmCharts.addInitHandler(function(chart) {
   }
 
 }, ["pie"]);
-
-/**
- * Create the charts
- */
-AmCharts.makeChart("chartProgram1", {
+    
+var chart1 = AmCharts.makeChart("chartCategory1", {
   "type": "pie",
   "bringToFront": true,
   "dataProvider": [{
@@ -196,8 +193,8 @@ AmCharts.makeChart("chartProgram1", {
   "labelText": "[[title]]",
   "balloonText": "[[title]]: [[value]]"
 });
-
-AmCharts.makeChart("chartProgram2", {
+    
+var chart2 = AmCharts.makeChart("chartCategory2", {
   "type": "pie",
   "bringToFront": true,
   "dataProvider": [{
@@ -229,8 +226,8 @@ AmCharts.makeChart("chartProgram2", {
   "labelText": "[[title]]",
   "balloonText": "[[title]]: [[value]]"
 });
-
-AmCharts.makeChart("chartProgram3", {
+    
+var chart3 = AmCharts.makeChart("chartCategory3", {
   "type": "pie",
   "bringToFront": true,
   "dataProvider": [{
@@ -278,8 +275,8 @@ AmCharts.makeChart("chartProgram3", {
   "labelText": "[[title]]",
   "balloonText": "[[title]]: [[value]]"
 });
-    
-AmCharts.makeChart("chartCategory1", {
+
+var chart4 = AmCharts.makeChart("chartProgram1", {
   "type": "pie",
   "bringToFront": true,
   "dataProvider": [{
@@ -302,7 +299,7 @@ AmCharts.makeChart("chartCategory1", {
   "balloonText": "[[title]]: [[value]]"
 });
 
-AmCharts.makeChart("chartCategory2", {
+var chart5 = AmCharts.makeChart("chartProgram2", {
   "type": "pie",
   "bringToFront": true,
   "dataProvider": [{
@@ -335,7 +332,7 @@ AmCharts.makeChart("chartCategory2", {
   "balloonText": "[[title]]: [[value]]"
 });
 
-AmCharts.makeChart("chartCategory3", {
+var chart6 = AmCharts.makeChart("chartProgram3", {
   "type": "pie",
   "bringToFront": true,
   "dataProvider": [{
