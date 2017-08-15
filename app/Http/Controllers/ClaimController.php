@@ -26,13 +26,7 @@ use Mail;
         // });
 
 class ClaimController extends Controller
-{
-    // public function __construct(Request $request)
-    // {
-    //     if(!$request->session()->has('email'))
-    //         return view('auth/login');
-    // }
-    
+{    
     public function newclaim()
     {
         //
@@ -407,7 +401,7 @@ class ClaimController extends Controller
 
         if($level>$max[0]->level_flow)
         {
-            $approve = Claim::where('id_claim', $request->id_claim)->update(['status'=>'Closed']);
+            $approve = Claim::where('id_claim', $request->id_claim)->update(['id_staff'=>NULL, 'status'=>'Closed']);
         }
         else
         {

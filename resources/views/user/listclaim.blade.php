@@ -77,37 +77,44 @@
                                             <div class="tab-content">
                                                 <div class="tab-pane active" id="details{{ $monitorings->id_claim }}"><br>
                                                     <label class="control-label">Details Registration Number {{ $monitorings->id_claim }}</label><br><br>
+                                                    <div class="col-md-6">
+                                                        <table id="comment" class="table table-bordered table-striped">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td class="col-md-5">Distributor</td>
+                                                                <td class="col-md-7">{{$monitorings->nama_distributor}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Registered On</td>
+                                                                <td>{{$monitorings->created_at}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Category</td>
+                                                                <td>{{$monitorings->nama_category}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Category Type</td>
+                                                                <td>
+                                                                    @if($monitorings->category_type!=NULL)                                                        
+                                                                    {{$monitorings->category_type}}
+                                                                    @else
+                                                                    -
+                                                                    @endif
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Program</td>
+                                                                <td>{{$monitorings->nama_program}}</td>
+                                                            </tr>                                                            
+                                                        </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="col-md-6">
                                                     <table id="comment" class="table table-bordered table-striped">
-                                                    <tbody>
+                                                    <tbody>                                                        
                                                         <tr>
-                                                            <td class="col-md-3">Email</td>
-                                                            <td class="col-md-9">{{$monitorings->nama_distributor}}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Registered On</td>
-                                                            <td>{{$monitorings->created_at}}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Category</td>
-                                                            <td>{{$monitorings->nama_category}}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Category Type</td>
-                                                            <td>
-                                                                @if($monitorings->category_type!=NULL)                                                        
-                                                                {{$monitorings->category_type}}
-                                                                @else
-                                                                -
-                                                                @endif
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Program</td>
-                                                            <td>{{$monitorings->nama_program}}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Value</td>
-                                                            <td>Rp <?php echo number_format("$monitorings->value",0,',','.'); ?></td>
+                                                            <td class="col-md-5">Value</td>
+                                                            <td class="col-md-7">Rp <?php echo number_format("$monitorings->value",0,',','.'); ?></td>
                                                         </tr>
                                                         <tr>
                                                             <td>Entitlement</td>
@@ -145,6 +152,7 @@
                                                         </tr>
                                                     </tbody>
                                                     </table>
+                                                    </div>
                                                 </div>                                                    
                                                 <div class="tab-pane" id="comment{{ $monitorings->id_claim }}"><br>
                                                     <label class="control-label">Comments Registration Number {{ $monitorings->id_claim }}</label><br><br>
@@ -266,8 +274,8 @@
                                                 @endif
                                             </div>
                                             @endif
-                                        @else
-                                            <div class="modal-footer">                                            
+                                        @elseif($monitorings->status!='Closed'||substr($monitorings->status,0,8)=='Rejected')
+                                            <div class="modal-footer">                                 
                                                 <a class="btn btn-danger" type="submit" href="{{ route('rejectclaim', ['idclaim' => $monitorings->id_claim]) }}">Reject</a>
                                                 <a class="btn btn-success" type="submit" href="{{ route('approveclaim', ['idclaim' => $monitorings->id_claim]) }}">Approve</a>
                                             </div>
