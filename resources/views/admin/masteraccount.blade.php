@@ -83,9 +83,10 @@
                         <tr>
                             <td align="center"><input type="checkbox" value="{{ $categories->id_category }}" name="{{ $categories->id_category }}"></td>
                             <td>{{ $categories->nama_category }}</td>
-                            <td align="center"><input class="form-control" type="text" name="autoapproved" style="width: 75px;"></td>
+                            <td align="center"><input class="form-control" type="text" name="autoapproved{{ $categories->nama_category }}" style="width: 75px;"></td>
                             <td>
-                                <select class="form-control" id="role" name="role">
+                                <select class="form-control" id="role{{ $categories->nama_category }}" name="role{{ $categories->nama_category }}">
+                                    <option value="#" >Please Choose one</option>
                                     @foreach($role as $roles)
                                     <option value="{{ $roles->id_role }}">{{ $roles->nama_role }}</option>
                                     @endforeach

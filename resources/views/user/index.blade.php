@@ -5,6 +5,7 @@
 <?php  
     $category_length = sizeof(Session::get('nama_category'));
     $category = Session::get('nama_category');
+    
     $category_now = Session::get('categories');
 ?>
 
@@ -29,8 +30,14 @@
                     <tbody>
                     <?php $role_length=sizeof($role);?>
                     @for($i=0;$i<$role_length;$i++)
-                    <td>{{$role[$i]}}</td> 
-                    <tr> </tr>     
+                    <td> {{$role[$i]}} </td> 
+                        @for($j=0;$j<$category_length;$j++)
+                            @if(isset($pisah[$j][$role[$i]][1])) 
+                            <td> {{$pisah[$j][$role[$i]][1]->value}} </td>
+                            @else <td> - </td>
+                            @endif
+                        @endfor   
+                    <tr></tr>  
                     @endfor
                     </tbody>
                 </table>

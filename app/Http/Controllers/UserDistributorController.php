@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User_distributor;
 use App\User;
+use Session;
 use App\Distributor;
 use DB;
 

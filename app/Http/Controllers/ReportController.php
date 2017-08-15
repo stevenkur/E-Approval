@@ -116,6 +116,7 @@ class ReportController extends Controller
     public function summaryclaimreport()
     {
         //
+        
         if (!(Session::has('email')))
         {
             return redirect('login');
