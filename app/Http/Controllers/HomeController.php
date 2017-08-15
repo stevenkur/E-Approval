@@ -85,7 +85,11 @@ class HomeController extends Controller
                 
             }
             
-            $role = array_unique($nama_role);
+            if(isset($nama_role))
+            {
+                $role = array_unique($nama_role);    
+            }
+            else $role=0; 
             
             // dd($query);
             // $role=array_unique(array_merge($query[0],$query[1],$query[2],$query[3]), SORT_REGULAR);

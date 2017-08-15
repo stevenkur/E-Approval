@@ -28,6 +28,7 @@
                     </tr>
                     </thead>
                     <tbody>
+                    @if($role!=0)
                     <?php $role_length=sizeof($role);?>
                     @for($i=0;$i<$role_length;$i++)
                     <td> {{$role[$i]}} </td> 
@@ -39,6 +40,14 @@
                         @endfor   
                     <tr></tr>  
                     @endfor
+                    @else
+                    <td>No Data Available</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+
+                    @endif
                     </tbody>
                 </table>
             </div>
