@@ -35,14 +35,17 @@
                           if($claim_length!=0) $id_length = sizeof($date[$i]);
                           else $id_length=0;
                           $count=1;
-
+                          // dd($claim);
                     ?>
                     <tr>
                         @for($k=0;$k<$claim_length;$k=$k+$count)
+                        
                         <td> {{$claim[$i][$k]->id_claim}} </td>
                         <td> {{$claim[$i][$k]->nama_program}} </td>
                         <td> {{ date('d-m-Y', strtotime($claim[$i][$k]->created_at)) }}</td>
-                        <?php $id=$claim[$i][$k]->id_claim; ?>
+                        <?php $id=$claim[$i][$k]->id_claim; 
+                              $count=1;
+                        ?>
                         @for($l=0;$l<$role_length-1;$l++)
                             @if (isset($date[$i][$id][$l+1]))
                             <td> {{ date('d-m-Y', strtotime($claim[$i][$k+$l+1]->created_at)) }} ( {{$date[$i][$id][$l+1]}} days )</td>
