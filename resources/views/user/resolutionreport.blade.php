@@ -41,7 +41,7 @@
                         @for($k=0;$k<$claim_length;$k=$k+$count)
                         <td> {{$claim[$i][$k]->id_claim}} </td>
                         <td> {{$claim[$i][$k]->nama_program}} </td>
-                        <td> {{ date('d F Y', strtotime($claim[$i][$k]->created_at)) }}</td>
+                        <td> {{ date('d-m-Y', strtotime($claim[$i][$k]->created_at)) }}</td>
                         <?php $id=$claim[$i][$k]->id_claim; ?>
                         @for($l=0;$l<$role_length-1;$l++)
                             @if (isset($date[$i][$id][$l+1]))
