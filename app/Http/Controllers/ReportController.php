@@ -47,6 +47,7 @@ class ReportController extends Controller
 
             for($z=0;$z<$category_length;$z++)
             {
+<<<<<<< HEAD
                 $claim[$z]= array();
                 $nama_category=$category[$z];
                 $id_category = DB::select(DB::raw("SELECT id_category from categories where nama_category='$nama_category'"));
@@ -61,6 +62,70 @@ class ReportController extends Controller
                 {
                     $pisah = array();
                     foreach($claim[$z] as $key=>$value)
+=======
+            $claim[$z]= array();
+            $nama_category=$category[$z];
+            // echo $nama_category;
+            $id_category = DB::select(DB::raw("SELECT id_category from categories where nama_category='$nama_category'"));
+            $now= $id_category[0]->id_category;
+            $role[$z] = DB::select(DB::raw("SELECT A.id_role,A.id_user,A.id_category,B.nama_role FROM category_accesses A, roles B, categories C WHERE A.id_category=C.id_category and B.nama_role!='Administrator' and A.id_role=B.id_role and A.id_category=$now"));            
+            
+            $role_length[$z] = sizeof($role[$z]);
+            
+            $claim[$z] = DB::select(DB::raw("SELECT Distinct A.id_claim, A.nama_category, B.nama_program,C.id_user, C.created_at FROM claims A, programs B, log_claims C, categories D where C.id_activity=2 and A.id_claim=C.id_claim and A.nama_program=B.nama_program  and A.nama_category='$nama_category'"));            
+            // dd($claim);
+            $length = sizeof($claim[$z]);
+            // dd($length);
+            // dd($claim[1]);
+            // dd(isset($claim[$z]));
+            if($length!=0)
+            {
+            // dd($claim);
+            $pisah = array();
+            foreach($claim[$z] as $key=>$value){
+                    $id = $value->id_claim;
+                    // dd($id);
+                    // dd($value);
+                    if(!isset($pisah[$id])) 
+                    {
+                        $pisah[$id] = array();
+                        $i=0;
+
+                    }
+                    $i++;
+                    $pisah[$id][$i] = $value;
+                    // dd($pisah[$id]);
+                }
+            // dd($claim[0]);
+            
+            $tes=array();
+            $array=array();
+            $arr_keys = array_keys($pisah);
+            $arr_keys_length = sizeof($arr_keys);
+           
+            // dd($arr_keys);
+            for($m=0;$m<$arr_keys_length;$m++)
+            {
+                $id=$arr_keys[$m];
+                // dd($pisah[$id]);
+                $jumlah = sizeof($pisah[$id]);
+                // dd($pisah);
+                // dd($jumlah);
+                for($i=1;$i<$jumlah;$i++)
+                    {
+                    
+                    $tes=(strtotime($pisah[$id][$i+1]->created_at)-strtotime($pisah[$id][$i]->created_at));                
+                    $datediff= floor($tes / (60 * 60 * 24));
+                    $from= $pisah[$id][$i]->created_at;
+                    $start = DateTime::createFromFormat("Y-m-d H:i:s","$from");
+                    $interval = new DateInterval("P1D");
+                    $period = new DatePeriod($start,$interval,$datediff);
+                    $difference[$id][$i]=iterator_count($period);
+                    
+                    $count=0;
+                    // dd($holiday);
+                    foreach($period as $dt)
+>>>>>>> origin/master
                     {
                         $id = $value->id_claim;
                         if(!isset($pisah[$id])) 
