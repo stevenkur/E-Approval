@@ -31,7 +31,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    
+                    @if($date[$i]!=0)
                     <?php $claim_length = sizeof($claim[$i]);
                           if($claim_length!=0) $id_length = sizeof($date[$i]);
                           else $id_length=0;
@@ -79,6 +79,13 @@
                         <tr> </tr>
                         @endfor
                     </tr>
+                    @else 
+                    <td> No Data Available</td>
+                    <td> - </td>
+                    @for($j=0;$j<$role_length;$j++)
+                            <td> - </td>
+                    @endfor
+                    @endif
 
                    
                     
@@ -108,46 +115,3 @@
 <script src="{{ URL::asset('public/adminlte/dist/js/adminlte.min.js') }}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ URL::asset('public/adminlte/dist/js/demo.js') }}"></script>
-
-<script>
-$(function() {
-    $('#tableBDF').DataTable({
-      'paging'      : true,
-      'lengthChange': true,
-      'searching'   : true,
-      'ordering'    : true,
-      'info'        : true,
-      'autoWidth'   : true
-    })
-  });
-$(function() {
-    $('#tableMarcom').DataTable({
-      'paging'      : true,
-      'lengthChange': true,
-      'searching'   : true,
-      'ordering'    : true,
-      'info'        : true,
-      'autoWidth'   : true
-    })
-  });
-$(function() {
-    $('#tableRDP').DataTable({
-      'paging'      : true,
-      'lengthChange': true,
-      'searching'   : true,
-      'ordering'    : true,
-      'info'        : true,
-      'autoWidth'   : true
-    })
-  });
-$(function() {
-    $('#tableNatura').DataTable({
-      'paging'      : true,
-      'lengthChange': true,
-      'searching'   : true,
-      'ordering'    : true,
-      'info'        : true,
-      'autoWidth'   : true
-    })
-  });
-</script>
