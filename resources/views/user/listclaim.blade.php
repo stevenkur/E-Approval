@@ -279,7 +279,7 @@
                                                     <a class="btn btn-primary" type="submit" href="{{ route('editclaim', ['idclaim' => $monitorings->id_claim]) }}">Edit</a>
                                                 @endif
                                             @endif
-                                        @elseif($monitorings->status!='Closed'||substr($monitorings->status,0,8)=='Rejected')
+                                        @elseif(!($monitorings->status=='Closed'||substr($monitorings->status,0,8)=='Rejected'))
                                             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#reject">Reject</button>
                                             <div class="modal fade" id="reject" tabindex="-1" align="left">
                                                 <div class="modal-dialog">
@@ -302,7 +302,75 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <a class="btn btn-success" type="submit" href="{{ route('approveclaim', ['idclaim' => $monitorings->id_claim]) }}">Approve</a>                                            
+                                            @if($role[0]=='Admin Marketing')
+                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#marketing">Approve</button>
+                                            <div class="modal fade" id="marketing" tabindex="-1" align="left">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <button type="button" class="close" data-dismiss="modal"><i class="icon-xs-o-md"></i></button>
+                                                        <form role="form" action="{{ route('marketingapproveclaim', ['idclaim' => $monitorings->id_claim]) }}" method="post" name="formmarketing{{ $monitorings->id_claim }}" id="formmarketing{{ $monitorings->id_claim }}">
+                                                        {{csrf_field()}}
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                            <h4 class="modal-title caps"><strong>Add Category Claim Type for Claim Number {{ $monitorings->id_claim }}</strong></h4>
+                                                        </div>
+                                                        <div class="modal-body col-md-12">                                                            
+                                                            <div class="form-group">
+                                                                <label class="col-md-6 control-label">Category Claim Type</label>
+                                                                <div class="col-md-6">
+                                                                    <select class="form-control" id="categorytype" name="categorytype">
+                                                                        <option value="#">-- Please Choose One --</option>
+                                                                        @foreach($categorytype as $categorytypes)
+                                                                        <option value="{{ $categorytypes->category_type }}">{{ $categorytypes->category_type }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="submit" class="btn btn-success">Approve</button>
+                                                        </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @elseif($role[0]=='Admin Finance')
+                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#finance">Approve</button>
+                                            <div class="modal fade" id="finance" tabindex="-1" align="left">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <button type="button" class="close" data-dismiss="modal"><i class="icon-xs-o-md"></i></button>
+                                                        <form role="form" action="{{ route('financeapproveclaim', ['idclaim' => $monitorings->id_claim]) }}" method="post" name="formfinance{{ $monitorings->id_claim }}" id="formfinance{{ $monitorings->id_claim }}">
+                                                        {{csrf_field()}}
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                            <h4 class="modal-title caps"><strong>Add PR & Invoice Number for Claim Number {{ $monitorings->id_claim }}</strong></h4>
+                                                        </div>
+                                                        <div class="modal-body col-md-12">
+                                                            <div class="form-group">
+                                                                <label class="col-md-4 control-label">PR Number</label>
+                                                                <div class="col-md-8">
+                                                                    <input type="text" class="form-control" id="prnumber" name="prnumber" />
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="col-md-4 control-label">Invoice Number</label>
+                                                                <div class="col-md-8">
+                                                                    <input type="text" class="form-control" id="invoicenumber" name="invoicenumber" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="reset" class="btn btn-ok">Reset</button>
+                                                            <button type="submit" class="btn btn-success">Approve</button>
+                                                        </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @else
+                                            <a class="btn btn-success" type="submit" href="{{ route('approveclaim', ['idclaim' => $monitorings->id_claim]) }}">Approve</a>    
+                                            @endif                                                                                    
                                         @endif
                                         </div>
                                     </div>

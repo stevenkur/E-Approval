@@ -49,7 +49,6 @@ class HomeController extends Controller
 
             }
             $pisah = array();
-            // dd($query);
             for($i=0;$i<$length;$i++)
             {
 
@@ -61,13 +60,10 @@ class HomeController extends Controller
                 }
                 
                 if($query_length!=0)
-                {
-                // dd($claim);
-                
-                foreach($query[$i] as $key=>$value){
+                {                
+                    foreach($query[$i] as $key=>$value)
+                    {
                         $id = $value->nama_role;
-                        // dd($id);
-                        // dd($value);
                         if(!isset($pisah[$id])) 
                         {
                             $pisah[$i][$id] = array();
@@ -76,12 +72,8 @@ class HomeController extends Controller
                         }
                         $j++;
                         $pisah[$i][$id][$j] = $value;
-                        // dd($pisah[$id]);
                     }
                 }
-            // dd($length);
-            // dd($claim[1]);
-            // dd(isset($claim[$z]));
                 
             }
             
@@ -90,12 +82,6 @@ class HomeController extends Controller
                 $role = array_unique($nama_role);    
             }
             else $role=0; 
-            
-            // dd($query);
-            // $role=array_unique(array_merge($query[0],$query[1],$query[2],$query[3]), SORT_REGULAR);
-            // dd($role);
-            
-            // return view('user/index')->with('category', $category)->with('role',$role);
             
             return view('user/index')->with('query',$query)->with('category', $category)->with('role', $role)->with('pisah',$pisah);
         }
@@ -109,10 +95,9 @@ class HomeController extends Controller
         }
         else
         {
-            // var_dump($category);
             session()->put('categories', $category);
-            return redirect()->back();
-            
+
+            return redirect()->back();            
         }
     }
 }

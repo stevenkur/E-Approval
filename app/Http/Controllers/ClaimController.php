@@ -93,12 +93,15 @@ class ClaimController extends Controller
         else
         {
             $user=Session::get('id_user');
+            $role=Session::get('role');
+            $category=Session::get('categories');
             $monitoring=DB::select(DB::raw("SELECT A.id_claim, A.created_at, A.nama_distributor, A.nama_category, A.category_type, A.nama_program, A.value,  A.status, A.pr_number, A.invoice_number,A.entitlement, A.payment_form, A.original_tax, A.airwaybill, A.courier, A.level_flow FROM claims A WHERE '$user'=A.id_user OR '$user'=A.id_staff AND A.status NOT LIKE '%approved%' GROUP BY A.id_claim, A.created_at, A.nama_distributor, A.nama_category, A.category_type, A.nama_program, A.value,  A.status, A.pr_number, A.invoice_number, A.entitlement, A.payment_form, A.original_tax, A.airwaybill, A.courier, A.level_flow"));
             $comment=DB::select(DB::raw("SELECT A.id_claim, A.comment, B.nama_user as id_user, A.created_at FROM comments A, users B WHERE A.id_user=B.id_user"));
             $status=DB::select(DB::raw("SELECT B.nama_user as id_user, A.id_claim, A.id_activity, C.nama_activity as id_activity, A.created_at FROM log_claims A, users B, activities C WHERE A.id_user=B.id_user AND A.id_activity=C.id_activity"));
-            $attachment=DB::select(DB::raw("SELECT * FROM claim_attachments"));
+            $attachment=DB::select(DB::raw("SELECT * FROM claim_attachments"));            
+            $categorytype=DB::select(DB::raw("SELECT category_type FROM category_details WHERE nama_category='$category'"));
             
-            return view('user/listclaim')->with('monitoring',$monitoring)->with('comment',$comment)->with('status',$status)->with('attachment',$attachment);            
+            return view('user/listclaim')->with('monitoring',$monitoring)->with('comment',$comment)->with('status',$status)->with('attachment',$attachment)->with('role',$role)->with('categorytype',$categorytype);            
         }
     }
 
@@ -409,6 +412,80 @@ class ClaimController extends Controller
             
             $approve = Claim::where('id_claim', $request->id_claim)->update(['level_flow'=>$level, 'id_staff'=>$next[0]->id_user, 'status'=>'Waiting from ' . $next[0]->nama_role . ' (' . $next[0]->email . ')']);
         }
+
+        $log = new Log_claim();
+        $log->id_user=Session::get('id_user');
+        $log->id_claim=$request->id_claim;
+        $log->id_activity='2';
+        $log->save();
+
+        return redirect('listclaim')->with('alert', 'Claim Number ' . $request->id_claim . ' has been approved!');
+    }
+
+    public function marketingapproveclaim(Request $request)
+    {
+        //
+        $input=Input::all();
+        $update = Claim::where('id_claim', $request->id_claim)->update(['category_type'=>$input['categorytype']]);
+
+        $current=DB::select(DB::raw("SELECT level_flow FROM claims WHERE id_claim='$request->id_claim'"));
+        $level=$current[0]->level_flow+1;
+        
+        $max=DB::select(DB::raw("SELECT A.level_flow FROM flows A, claims B WHERE A.kode_flow=B.kode_flow AND B.id_claim='$request->id_claim' ORDER BY A.level_flow DESC LIMIT 1"));
+
+        if($level>$max[0]->level_flow)
+        {
+            $approve = Claim::where('id_claim', $request->id_claim)->update(['id_staff'=>NULL, 'status'=>'Closed']);
+        }
+        else
+        {
+            $next=DB::select(DB::raw("SELECT C.nama_role, D.id_user, D.email FROM claims A, flows B, roles C, users D, user_roles E WHERE A.kode_flow=B.kode_flow AND B.id_role=C.id_role AND C.id_role=E.id_role and E.id_user=D.id_user AND '$level'=B.level_flow AND A.id_claim='$request->id_claim'"));
+            
+            $approve = Claim::where('id_claim', $request->id_claim)->update(['level_flow'=>$level, 'id_staff'=>$next[0]->id_user, 'status'=>'Waiting from ' . $next[0]->nama_role . ' (' . $next[0]->email . ')']);
+        }
+
+        $log = new Log_claim();
+        $log->id_user=Session::get('id_user');
+        $log->id_claim=$request->id_claim;
+        $log->id_activity='11';
+        $log->save();
+
+        $log = new Log_claim();
+        $log->id_user=Session::get('id_user');
+        $log->id_claim=$request->id_claim;
+        $log->id_activity='2';
+        $log->save();
+
+        return redirect('listclaim')->with('alert', 'Claim Number ' . $request->id_claim . ' has been approved!');
+    }
+
+    public function financeapproveclaim(Request $request)
+    {
+        //
+        $input=Input::all();
+        $update = Claim::where('id_claim', $request->id_claim)->update(['pr_number'=>$input['prnumber'], 'invoice_number'=>$input['invoicenumber']]);
+
+        $current=DB::select(DB::raw("SELECT level_flow FROM claims WHERE id_claim='$request->id_claim'"));
+        $level=$current[0]->level_flow+1;
+        
+        $max=DB::select(DB::raw("SELECT A.level_flow FROM flows A, claims B WHERE A.kode_flow=B.kode_flow AND B.id_claim='$request->id_claim' ORDER BY A.level_flow DESC LIMIT 1"));
+
+        if($level>$max[0]->level_flow)
+        {
+            $approve = Claim::where('id_claim', $request->id_claim)->update(['id_staff'=>NULL, 'status'=>'Closed']);
+        }
+        else
+        {
+            $next=DB::select(DB::raw("SELECT C.nama_role, D.id_user, D.email FROM claims A, flows B, roles C, users D, user_roles E WHERE A.kode_flow=B.kode_flow AND B.id_role=C.id_role AND C.id_role=E.id_role and E.id_user=D.id_user AND '$level'=B.level_flow AND A.id_claim='$request->id_claim'"));
+            
+            $approve = Claim::where('id_claim', $request->id_claim)->update(['level_flow'=>$level, 'id_staff'=>$next[0]->id_user, 'status'=>'Waiting from ' . $next[0]->nama_role . ' (' . $next[0]->email . ')']);
+        }
+
+        $log = new Log_claim();
+        $log->id_user=Session::get('id_user');
+        $log->id_claim=$request->id_claim;
+        $log->id_activity='11';
+        $log->save();
 
         $log = new Log_claim();
         $log->id_user=Session::get('id_user');
