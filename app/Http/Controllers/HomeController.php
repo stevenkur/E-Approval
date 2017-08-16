@@ -42,8 +42,11 @@ class HomeController extends Controller
             for($i=0;$i<$length;$i++)
             {
                 $nama_category = $category[$i]->nama_category;
-                $query[$i]= DB::select(DB::raw("SELECT A.nama_category,CONCAT('Rp ',FORMAT(sum(A.value),0,'de_DE'))  as value,B.id_role,B.nama_role FROM claims A, roles B, flows C, user_distributors D, distributors E where A.status!='Closed' and A.kode_flow = C.kode_flow and A.level_flow=C.level_flow and D.id_user=$user and D.id_dist=E.id_dist and E.nama_distributor=A.nama_distributor and B.id_role=C.id_role and A.nama_category ='$nama_category' GROUP BY A.nama_category, B.nama_role, B.id_role ORDER BY B.id_role"));
+                $query[$i]= DB::select(DB::raw("SELECT A.nama_category,CONCAT('Rp ',FORMAT(sum(A.value),0,'de_DE'))  as value,B.id_role,B.nama_role FROM claims A, roles B, flows C, user_distributors D, distributors E where A.kode_flow = C.kode_flow and A.level_flow=C.level_flow and D.id_user=$user and D.id_dist=E.id_dist and E.nama_distributor=A.nama_distributor and B.id_role=C.id_role and A.nama_category ='$nama_category' GROUP BY A.nama_category, B.nama_role, B.id_role ORDER BY B.id_role"));
                 $lengths=sizeof($query[$i]);
+                
+
+
             }
             $pisah = array();
             for($i=0;$i<$length;$i++)

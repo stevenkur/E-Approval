@@ -9,7 +9,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link href="public/img/philips-icon.png" rel="icon" type="image/png" />
-    <title>E-Approval - Philips Indonesia</title>
+    <title>E-Approval - Philips Lighting Indonesia</title>
 
     <!-- Styles -->
     <link href="{{ asset('public/css/app.css') }}" rel="stylesheet">
@@ -30,7 +30,7 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        E-Approval - Philips Indonesia
+                        E-Approval - Philips Lighting Indonesia
                     </a>
                 </div>
 
