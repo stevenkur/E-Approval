@@ -273,7 +273,7 @@
                                         </div>
                                         <div class="modal-footer"> 
                                         @if($role[0]=='Distributor')
-                                            @if($monitorings->status!='Canceled')                                                
+                                            @if(!($monitorings->status=='Canceled'||$monitorings->status=='Closed'))                                                
                                                 <a class="btn btn-danger" type="submit" href="{{ route('cancelclaim', ['idclaim' => $monitorings->id_claim]) }}" onclick="clicked();">Cancel</a>
                                                 @if($monitorings->level_flow==0||substr($monitorings->status,0,8)=='Rejected')
                                                     <a class="btn btn-primary" type="submit" href="{{ route('editclaim', ['idclaim' => $monitorings->id_claim]) }}">Edit</a>
@@ -348,14 +348,12 @@
                                                         </div>
                                                         <div class="modal-body col-md-12">
                                                             <div class="form-group">
-                                                                <label class="col-md-4 control-label">PR Number</label>
-                                                                <div class="col-md-8">
+                                                                <label class="col-md-5 control-label">PR Number</label>
+                                                                <div class="col-md-7">
                                                                     <input type="text" class="form-control" id="prnumber" name="prnumber" />
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label class="col-md-4 control-label">Invoice Number</label>
-                                                                <div class="col-md-8">
+                                                                </div><br><br>
+                                                                <label class="col-md-5 control-label">Invoice Number</label>
+                                                                <div class="col-md-7">
                                                                     <input type="text" class="form-control" id="invoicenumber" name="invoicenumber" />
                                                                 </div>
                                                             </div>
