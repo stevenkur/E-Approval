@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\DB;
 use Session;
 use Mail;
+use App\Mail\RegisterClaim;
 
         // Kirim lewat view
         // Mail::send(['text'=>'emails.registerticket'], $claim, function($message) use ($claim){
@@ -92,6 +93,7 @@ class ClaimController extends Controller
         }
         else
         {
+            Mail::to('stevenkurkur@gmail.com')->send(new RegisterClaim());
             $user=Session::get('id_user');
             $role=Session::get('role');
             $category=Session::get('categories');

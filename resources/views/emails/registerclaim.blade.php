@@ -1,4 +1,9 @@
-Subject: [E-Approval] New E-Approval Subject : 082017-00047
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Subject: [E-Approval] New E-Approval Subject : 082017-00047</title>
+</head>
+<body>
 Dear PT. Pelita Abadi Sejahtera BDG,
 
 We have one new E-Approval with following detail :
@@ -19,3 +24,5 @@ REGISTER
 *Please print and attach this email within document submitted to Philips 
 "Please fill in the AWB number then this ticker will be able to go further"
 Please login to http://www.philips-eApproval.com to approve the E-Approval
+</body>
+</html>
