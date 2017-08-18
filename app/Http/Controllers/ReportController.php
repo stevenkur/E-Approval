@@ -150,8 +150,56 @@ class ReportController extends Controller
                     FROM  claims A, users B, distributors C, categories D, user_distributors E
                     WHERE  (E.id_user=B.id_user and A.nama_distributor=C.nama_distributor and E.id_dist=C.id_dist and A.nama_category=D.nama_category and A.id_user=B.id_user) 
                     GROUP BY C.nama_distributor, D.nama_category) as B 
-                    on (A.nama_distributor=B.nama_distributor AND A.nama_category=B.nama_category))"));                               
-            return view('user/summaryclaimreport')->with('marketing',$marketing)->with('market',$market);
+                    on (A.nama_distributor=B.nama_distributor AND A.nama_category=B.nama_category))"));                              
+            $category = DB::select(DB::raw("SELECT D.nama_category AS Category, CONCAT('Rp ',FORMAT(IFNULL(SUM(A.value),0),0,'de_DE')) AS Total, CONCAT('Rp ',FORMAT(IFNULL(SUM(IF(A.status!='Closed',A.value,NULL)),0),0,'de_DE')) AS Pending, CONCAT('Rp ',FORMAT(IFNULL(SUM(IF(A.status='Closed',A.value,NULL)),0),0,'de_DE')) as Closed FROM claims A, distributors C, categories D WHERE (A.nama_distributor=C.nama_distributor and A.nama_category=D.nama_category) GROUP BY D.nama_category"));
+            
+            $catCount = count($category);
+            
+            $i=-1;
+            $j=-1;
+                        
+            foreach($category as $categoryy)
+            {
+                $color[++$i] = "hsl(".rand(0,359).",100%,50%)";
+                
+                $cat[$i]['title'] = $categoryy->Category.' :<br> '.$categoryy->Total;
+                $cat[$i]['value'] = 100/$catCount;
+                $cat[$i]['color'] = $color[$i];
+                
+                $subcat[++$j]['title'] = "Pending :<br> ".$categoryy->Pending;
+                $subcat[$j]['value'] = 100/$catCount/2;
+                $subcat[$j]['color'] = "#FF0000";
+                
+                $subcat[++$j]['title'] = "Closed :<br> ".$categoryy->Closed;
+                $subcat[$j]['value'] = 100/$catCount/2;
+                $subcat[$j]['color'] = "#00FF00";
+            }
+                        
+            $program = DB::select(DB::raw("SELECT D.nama_program AS Program, CONCAT('Rp ',FORMAT(IFNULL(SUM(A.value),0),0,'de_DE')) AS Total, CONCAT('Rp ',FORMAT(IFNULL(SUM(IF(A.status!='Closed',A.value,NULL)),0),0,'de_DE')) AS Pending, CONCAT('Rp ',FORMAT(IFNULL(SUM(IF(A.status='Closed',A.value,NULL)),0),0,'de_DE')) as Closed FROM claims A, distributors C, programs D WHERE (A.nama_distributor=C.nama_distributor and A.nama_program=D.nama_program) GROUP BY D.nama_program"));
+            
+            $progCount = count($program);
+            
+            $i=-1;
+            $j=-1;
+                        
+            foreach($program as $programs)
+            {                
+                $prog[++$i]['title'] = $programs->Program.' :<br> '.$programs->Total;
+                $prog[$i]['value'] = 100/$progCount;
+                $prog[$i]['color'] = $color[$i];
+                
+                $subprog[++$j]['title'] = "Pending :<br> ".$programs->Pending;
+                $subprog[$j]['value'] = 100/$progCount/2;
+                $subprog[$j]['color'] = "#FF0000";
+                
+                $subprog[++$j]['title'] = "Closed :<br> ".$programs->Closed;
+                $subprog[$j]['value'] = 100/$progCount/2;
+                $subprog[$j]['color'] = "#00FF00";
+            }
+            
+            $total = DB::select(DB::raw("SELECT CONCAT('Rp ',FORMAT(IFNULL(SUM(A.value),0),0,'de_DE')) AS Total FROM claims A"));
+                        
+            return view('user/summaryclaimreport')->with('marketing',$marketing)->with('market',$market)->with('total',$total)->with('program',$program)->with('cat',$cat)->with('subcat',$subcat)->with('prog',$prog)->with('subprog',$subprog);
         }
     }
 }

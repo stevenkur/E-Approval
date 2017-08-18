@@ -97,7 +97,6 @@
         </div>
     </div>
 
-    
     </section>
 
 @stop
@@ -174,42 +173,31 @@ AmCharts.addInitHandler(function func1(chart) {
 var chart1 = AmCharts.makeChart("chartCategory1", {
   "type": "pie",
   "bringToFront": true,
+  "showBalloon":true,
   "dataProvider": [{
-    "title": "Total",
+    "title": "<?php echo $total[0]->Total; ?>",
     "value": 100,
     "color": "#090E0F"
   }],
   "startDuration": 0,
   "pullOutRadius": 0,
   "color": "#fff",
-  "fontSize": 14,
+  "fontSize": 10,
   "titleField": "title",
   "valueField": "value",
   "colorField": "color",
-  "labelRadius": -25,
+  "labelRadius": -50,
   "labelColor": "#fff",
-  "radius": 25,
+  "radius": 50,
   "innerRadius": 0,
-  "labelText": "[[title]]",
-  "balloonText": "[[title]]: [[value]]"
+  "labelText": "[[title]]"
 });
     
 var chart2 = AmCharts.makeChart("chartCategory2", {
   "type": "pie",
+  "showBalloon":false,
   "bringToFront": true,
-  "dataProvider": [{
-    "title": "Marketing",
-    "value": 33,
-    "color": "#BA3233"
-  }, {
-    "title": "Production",
-    "value": 33,
-    "color": "#624B6A"
-  }, {
-    "title": "R&D",
-    "value": 33,
-    "color": "#6179C0"
-  }],
+  "dataProvider": <?php echo json_encode($cat); ?>,
   "startDuration": 1,
   "pullOutRadius": 0,
   "color": "#fff",
@@ -217,48 +205,20 @@ var chart2 = AmCharts.makeChart("chartCategory2", {
   "titleField": "title",
   "valueField": "value",
   "colorField": "color",
-  "labelRadius": -28,
+  "labelRadius": -39,
   "labelColor": "#fff",
-  "radius": 80,
-  "innerRadius": 27,
+  "radius": 140,
+  "innerRadius": 55,
   "outlineAlpha": 1,
   "outlineThickness": 4,
-  "labelText": "[[title]]",
-  "balloonText": "[[title]]: [[value]]"
+  "labelText": "[[title]]"
 });
     
 var chart3 = AmCharts.makeChart("chartCategory3", {
   "type": "pie",
   "bringToFront": true,
-  "dataProvider": [{
-    "title": "Online",
-    "value": 11,
-    "color": "#BA3233"
-  }, {
-    "title": "Print",
-    "value": 11,
-    "color": "#BA3233"
-  }, {
-    "title": "Other",
-    "value": 11,
-    "color": "#BA3233"
-  }, {
-    "title": "Equipment",
-    "value": 16.5,
-    "color": "#624B6A"
-  }, {
-    "title": "Materials",
-    "value": 16.5,
-    "color": "#624B6A"
-  }, {
-    "title": "Labs",
-    "value": 16.5,
-    "color": "#6179C0"
-  }, {
-    "title": "Patents",
-    "value": 16.5,
-    "color": "#6179C0"
-  }],
+  "showBalloon":false,
+  "dataProvider": <?php echo json_encode($subcat); ?>,
   "startDuration": 1,
   "pullOutRadius": 0,
   "color": "#fff",
@@ -266,55 +226,43 @@ var chart3 = AmCharts.makeChart("chartCategory3", {
   "titleField": "title",
   "valueField": "value",
   "colorField": "color",
-  "labelRadius": -27,
+  "labelRadius": -47,
   "labelColor": "#fff",
-  "radius": 135,
-  "innerRadius": 82,
+  "radius": 240,
+  "innerRadius": 145,
   "outlineAlpha": 1,
   "outlineThickness": 4,
-  "labelText": "[[title]]",
-  "balloonText": "[[title]]: [[value]]"
+  "labelText": "[[title]]"
 });
-
+    
 var chart4 = AmCharts.makeChart("chartProgram1", {
   "type": "pie",
   "bringToFront": true,
+  "showBalloon":true,
   "dataProvider": [{
-    "title": "Total",
+    "title": "<?php echo $total[0]->Total; ?>",
     "value": 100,
     "color": "#090E0F"
   }],
   "startDuration": 0,
   "pullOutRadius": 0,
   "color": "#fff",
-  "fontSize": 14,
+  "fontSize": 10,
   "titleField": "title",
   "valueField": "value",
   "colorField": "color",
-  "labelRadius": -25,
+  "labelRadius": -50,
   "labelColor": "#fff",
-  "radius": 25,
+  "radius": 50,
   "innerRadius": 0,
-  "labelText": "[[title]]",
-  "balloonText": "[[title]]: [[value]]"
+  "labelText": "[[title]]"
 });
-
+    
 var chart5 = AmCharts.makeChart("chartProgram2", {
   "type": "pie",
+  "showBalloon":false,
   "bringToFront": true,
-  "dataProvider": [{
-    "title": "Marketing",
-    "value": 33,
-    "color": "#BA3233"
-  }, {
-    "title": "Production",
-    "value": 33,
-    "color": "#624B6A"
-  }, {
-    "title": "R&D",
-    "value": 33,
-    "color": "#6179C0"
-  }],
+  "dataProvider": <?php echo json_encode($prog); ?>,
   "startDuration": 1,
   "pullOutRadius": 0,
   "color": "#fff",
@@ -322,48 +270,20 @@ var chart5 = AmCharts.makeChart("chartProgram2", {
   "titleField": "title",
   "valueField": "value",
   "colorField": "color",
-  "labelRadius": -28,
+  "labelRadius": -39,
   "labelColor": "#fff",
-  "radius": 80,
-  "innerRadius": 27,
+  "radius": 140,
+  "innerRadius": 55,
   "outlineAlpha": 1,
   "outlineThickness": 4,
-  "labelText": "[[title]]",
-  "balloonText": "[[title]]: [[value]]"
+  "labelText": "[[title]]"
 });
-
+    
 var chart6 = AmCharts.makeChart("chartProgram3", {
   "type": "pie",
   "bringToFront": true,
-  "dataProvider": [{
-    "title": "Online",
-    "value": 11,
-    "color": "#BA3233"
-  }, {
-    "title": "Print",
-    "value": 11,
-    "color": "#BA3233"
-  }, {
-    "title": "Other",
-    "value": 11,
-    "color": "#BA3233"
-  }, {
-    "title": "Equipment",
-    "value": 16.5,
-    "color": "#624B6A"
-  }, {
-    "title": "Materials",
-    "value": 16.5,
-    "color": "#624B6A"
-  }, {
-    "title": "Labs",
-    "value": 16.5,
-    "color": "#6179C0"
-  }, {
-    "title": "Patents",
-    "value": 16.5,
-    "color": "#6179C0"
-  }],
+  "showBalloon":false,
+  "dataProvider": <?php echo json_encode($subprog); ?>,
   "startDuration": 1,
   "pullOutRadius": 0,
   "color": "#fff",
@@ -371,13 +291,12 @@ var chart6 = AmCharts.makeChart("chartProgram3", {
   "titleField": "title",
   "valueField": "value",
   "colorField": "color",
-  "labelRadius": -27,
+  "labelRadius": -47,
   "labelColor": "#fff",
-  "radius": 135,
-  "innerRadius": 82,
+  "radius": 240,
+  "innerRadius": 145,
   "outlineAlpha": 1,
   "outlineThickness": 4,
-  "labelText": "[[title]]",
-  "balloonText": "[[title]]: [[value]]"
+  "labelText": "[[title]]"
 });
 </script>
