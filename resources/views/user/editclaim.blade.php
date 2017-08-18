@@ -126,21 +126,18 @@
                     <div class="col-md-9">
                         <label class="custom-file">Payment Requisition Form<br>( {{ $result[0]->payment_form }} )
                             <input type="hidden" name="comparefile1" value="{{ $result[0]->payment_form }}">
-                            <input type="hidden" name="file1" value="{{ $result[0]->payment_form }}">
                             <input type="file" id="file1" name="file1" class="custom-file-input">
                             <span class="custom-file-control"></span>
                         </label>
                         <label class="custom-file">Original Tax & Supplier Invoices<br>( {{ $result[0]->original_tax }} )
                             <input type="hidden" name="comparefile2" value="{{ $result[0]->original_tax }}">
-                            <input type="hidden" name="file2" value="{{ $result[0]->original_tax }}">
                             <input type="file" id="file2" name="file2" class="custom-file-input">
                             <span class="custom-file-control"></span>
                         </label>
                         <label class="custom-file">AirwayBill Number<br>
                         (@if($result[0]->airwaybill==NULL) No file attached @else {{$result[0]->airwaybill}} @endif)
                             <input type="hidden" name="comparefile3" value="{{ $result[0]->airwaybill }}">
-                            <input type="hidden" name="file3" value="{{ $result[0]->airwaybill }}">
-                            <input type="file" id="file3" name="file3" class="custom-file-input" <?php if($result[0]->airwaybill==NULL) echo 'required';?>>
+                            <input type="file" id="file3" name="file3" class="custom-file-input" <?php if($result[0]->airwaybill==NULL) echo 'required';?> accept="image/*, application/pdf">
                             <span class="custom-file-control"></span>
                         </label>
                         <label class="custom-file">Another Attachment

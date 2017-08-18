@@ -189,7 +189,7 @@ class ClaimController extends Controller
             $claim->nama_distributor = $query[0]->nama_distributor;            
             $claim->kode_flow = $input['categoryclaimtype'].'-'.$real_entitlement;
             $claim->level_flow = '0';
-            $claim->status = 'Submitted';
+            $claim->status = 'Waiting Airwaybill from ' . $query[0]->nama_distributor;
             // $claim->courier = $input['kurir'];
             $claim->doc_check1 = $input['checkbox1'];
             $claim->doc_check2 = $input['checkbox2'];
@@ -268,13 +268,10 @@ class ClaimController extends Controller
         { 
             $destinationPath = public_path() . '/attachment/' . $input['id_claim'];
 
-            $file1 = $input['file1'];
-            $file2 = $input['file2'];
-            $file3 = $input['file3'];
             $another = $input['another'];
             $numberattachment = sizeof($input['another']);
 
-            if($file1!=NULL||$file2!=NULL||$file3!=NULL||$another!=NULL)
+            if(Input::has('file1')||Input::has('file2')||Input::has('file3')||$another!=0)
             {
                 $log = new Log_claim();
                 $log->id_user=Session::get('id_user');
@@ -283,29 +280,44 @@ class ClaimController extends Controller
                 $log->save();
             }
 
-            if($file1!=$input['comparefile1'])
+            if (Input::has('file1'))
             {
+                $file1 = $input['file1'];
                 $extension1 = $file1->getClientOriginalExtension();
                 $fileName1 = $file1->getClientOriginalName();
                 $file1->move($destinationPath, $fileName1);
             }
-            else $fileName1 = $file1;
-
-            if($file2!=$input['comparefile2'])
+            else
             {
+                $file1 = $input['comparefile1'];
+                $fileName1 = $input['comparefile1'];
+            }
+
+            if (Input::has('file2'))
+            {
+                $file2 = $input['file2'];
                 $extension2 = $file2->getClientOriginalExtension();
                 $fileName2 = $file2->getClientOriginalName();
                 $file2->move($destinationPath, $fileName2);
             }
-            else $fileName2 = $file2;
-
-            if($file3!=$input['comparefile3'])
+            else
             {
+                $file2 = $input['comparefile2'];
+                $fileName2 = $input['comparefile2'];
+            }
+
+            if (Input::has('file3'))
+            {
+                $file3 = $input['file3'];
                 $extension3 = $file3->getClientOriginalExtension();
                 $fileName3 = $file3->getClientOriginalName();
                 $file3->move($destinationPath, $fileName3);
             }
-            else $fileName3 = $file3;
+            else
+            {
+                $file3 = $input['comparefile3'];
+                $fileName3 = $input['comparefile3'];
+            }
 
             if($another!=0)
             {
@@ -500,11 +512,14 @@ class ClaimController extends Controller
     {
         //
         $input=Input::all();
-        if($input!=NULL)
+        if($input['comment']!=NULL)
         {
             $role=Session::get('role');
             $email=Session::get('email');
-            $approve = Claim::where('id_claim', $request->id_claim)->update(['status'=>'Rejected by ' . $role[0] . ' (' . $email . ')']);
+
+            $next=DB::select(DB::raw("SELECT C.nama_role, D.id_user, D.email FROM claims A, flows B, roles C, users D, user_roles E WHERE A.kode_flow=B.kode_flow AND B.id_role=C.id_role AND C.id_role=E.id_role and E.id_user=D.id_user AND 1=B.level_flow AND A.id_claim='$request->id_claim'"));
+            
+            $approve = Claim::where('id_claim', $request->id_claim)->update(['level_flow'=>'1', 'id_staff'=>$next[0]->id_user, 'status'=>'Rejected by ' . $role[0] . ' (' . $email . ')']);
 
             $comment = new Comment();
             $comment->id_claim = $request->id_claim;
