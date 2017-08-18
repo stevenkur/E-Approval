@@ -113,20 +113,19 @@
                                                 </div>                                                    
                                                 <div class="tab-pane" id="comment{{ $monitorings->id_claim }}"><br>
                                                     <label class="control-label">Comments Registration Number {{ $monitorings->id_claim }}</label><br><br>
-                                                    <form action="{{ route('addcomment', ['idclaim' => $monitorings->id_claim]) }}" method="post" role="form" class="form-horizontal" name="formaddcomment" id="formaddcomment" enctype="multipart/form-data">
+                                                    <!-- <form action="{{ route('addcomment', ['idclaim' => $monitorings->id_claim]) }}" method="post" role="form" class="form-horizontal" name="formaddcomment" id="formaddcomment" enctype="multipart/form-data">
                                                     {{csrf_field()}}
                                                     <div class="box-header with-border">
                                                         <label class="box-title">Add Comment</label>
                                                     </div>
                                                     <div class="box-body">
-                                                    <!-- <label class="col-md-2 control-label">Add Comment</label> -->
                                                     <textarea rows="3" id="comment" name="comment" form="formaddcomment" class="col-md-12"></textarea>
                                                     </div>
                                                     <div class="box-footer" align="right">
                                                         <button type="reset" class="btn btn-ok">Reset</button>
                                                         <button type="submit" class="btn btn-primary">Add</button>
                                                     </div>
-                                                    </form>
+                                                    </form> -->
                                                     <table id="comment" class="table table-bordered table-striped">
                                                     <thead>
                                                         <tr>
