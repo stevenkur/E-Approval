@@ -93,7 +93,7 @@ class ClaimController extends Controller
         }
         else
         {
-            Mail::to('stevenkurkur@gmail.com')->send(new RegisterClaim());
+            // Mail::to('stevenkurkur@gmail.com')->send(new RegisterClaim());
             $user=Session::get('id_user');
             $role=Session::get('role');
             $category=Session::get('categories');
