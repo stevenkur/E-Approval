@@ -16,9 +16,10 @@ class RegisterClaim extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($mail)
     {
         //
+        $this->mail = $mail;
     }
 
     /**
@@ -28,6 +29,6 @@ class RegisterClaim extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.registerclaim');
+        return $this->markdown('emails.registerclaim')->subject('New Claim Registration');
     }
 }

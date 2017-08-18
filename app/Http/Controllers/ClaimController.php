@@ -93,7 +93,6 @@ class ClaimController extends Controller
         }
         else
         {
-            // Mail::to('stevenkurkur@gmail.com')->send(new RegisterClaim());
             $user=Session::get('id_user');
             $role=Session::get('role');
             $category=Session::get('categories');
@@ -241,6 +240,9 @@ class ClaimController extends Controller
             $log->id_activity='6';
             $log->save();
 
+            $query=DB::select(DB::raw("SELECT * FROM claims WHERE id_claim='$id_claim'"));
+            $mail=$query[0];
+            Mail::to('stevenkurkur@gmail.com')->send(new RegisterClaim($mail));
             return redirect('listclaim')->with('alert', 'Claim number ' . $id_claim . ' has been added');
         }
     }
