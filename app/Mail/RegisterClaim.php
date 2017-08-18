@@ -28,6 +28,6 @@ class RegisterClaim extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.registerclaim');
+        return $this->markdown('emails.registerclaim');
     }
 }
