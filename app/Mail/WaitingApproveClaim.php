@@ -13,7 +13,7 @@ use App\Comment;
 use App\Log_claim;
 use Session;
 
-class RejectClaim extends Mailable
+class WaitingApproveClaim extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -35,6 +35,6 @@ class RejectClaim extends Mailable
     public function build(Request $request)
     {
         $nama = Session::get('nama_user');
-        return $this->markdown('emails.rejectclaim', ['nama'=>$nama])->subject('New Claim Registration Number ' . $claim->id_claim)->to($email);
+        return $this->markdown('emails.waitingapproveclaim', ['nama'=>$nama])->subject('New Claim Registration Number ' . $claim->id_claim)->to($email);
     }
 }

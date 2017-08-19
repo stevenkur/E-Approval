@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\DB;
 use Session;
 use Mail;
 use App\Mail\RegisterClaim;
+use App\Mail\ApproveClaim;
+use App\Mail\RejectClaim;
+use App\Mail\RejectClaim;
+use App\Mail\WaitingApproveClaim;
 
         // Kirim lewat view
         // Mail::send(['text'=>'emails.registerticket'], $claim, function($message) use ($claim){
@@ -435,6 +439,9 @@ class ClaimController extends Controller
         $log->id_activity='2';
         $log->save();
 
+        $query=DB::select(DB::raw("SELECT * FROM claims WHERE id_claim='$request->id_claim'"));
+        $mail=$query[0];
+        Mail::send(new ApproveClaim($mail));
         return redirect('listclaim')->with('alert', 'Claim Number ' . $request->id_claim . ' has been approved!');
     }
 
@@ -543,6 +550,9 @@ class ClaimController extends Controller
             $log->id_activity='3';
             $log->save();
 
+            $query=DB::select(DB::raw("SELECT * FROM claims WHERE id_claim='$request->id_claim'"));
+            $mail=$query[0];
+            Mail::send(new RejectClaim($mail));
             return redirect('listclaim')->with('alerts', 'Claim Number ' . $request->id_claim . ' has been rejected!');
         }
         else
