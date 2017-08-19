@@ -1,22 +1,22 @@
 @component('mail::message')
-# Dear {{ $mail->nama_distributor }},
+# Dear {{ $claim->nama_distributor }},
 <p>We have one new E-Approval with following detail :</p>
 @component('mail::table')
 | | | |
-| --------------: | - | --------------- |
-| Claim Number    | : | Right-Aligned   |
-| Status          | : | Right-Aligned   |
-| Registered by   | : | Right-Aligned   |
-| Department      | : | Right-Aligned   |
-| Registration on | : | Right-Aligned   |
-| Description     | : | Right-Aligned   |
-| Claim Type      | : | Right-Aligned   |
-| Value           | : | Right-Aligned   |
-| PR Number       | : | Right-Aligned   |
-| Invoice Number  | : | Right-Aligned   |
-| Comment Detail  | : | Right-Aligned   |
+| ------------------: | - | ---------------------------------------------------------- |
+| **Claim Number**    | : | {{ $claim->id_claim }}                                     |
+| **Status**          | : | {{ $claim->status }}                                       |
+| **Registered by**   | : | {{ $claim->nama_distributor }}                             |
+| **Registration on** | : | {{ $claim->created_at }}                                   |
+| **Description**     | : | {{ $claim->nama_program }}                                 |
+| **Claim Type**      | : | {{ $claim->nama_category }}                                |
+| **Value**           | : | Rp <?php echo number_format("$claim->value",0,',','.'); ?> |
+| **PR Number**       | : | -                                                          |
+| **Invoice Number**  | : | -                                                          |
+| **Comment Detail**  | : |                                                            |
+|                     |   | *{{ $comment->created_at }}*   {{ $comment->comment }}     |
 @endcomponent
-<p>
+<p><br>
 	*Please print and attach this email within document submitted to Philips Lighting Indonesia<br>
 	*Please fill in the Airwaybill number then this ticket will be able to go further<br>
 	*Please login to http://www.philips-eApproval.com to approve the E-Approval<br><br>

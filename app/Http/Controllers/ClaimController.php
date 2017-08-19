@@ -242,7 +242,7 @@ class ClaimController extends Controller
 
             $query=DB::select(DB::raw("SELECT * FROM claims WHERE id_claim='$id_claim'"));
             $mail=$query[0];
-            Mail::to('stevenkurkur@gmail.com')->send(new RegisterClaim($mail));
+            Mail::send(new RegisterClaim($mail));
             return redirect('listclaim')->with('alert', 'Claim number ' . $id_claim . ' has been added');
         }
     }
