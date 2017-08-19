@@ -1,6 +1,6 @@
 @component('mail::message')
 # Dear {{ $claim->nama_distributor }},
-<p>We have one new E-Approval with following detail:</p>
+<p>Your claim with the following detail has been rejected:</p>
 @component('mail::table')
 | | | |
 | ------------------: | - | ---------------------------------------------------------- |
@@ -19,9 +19,7 @@
 *{{ $comments->created_at }}* | {{ $comments->comment }}<br>
 @endforeach
 <p>
-	*Please print and attach this email within document submitted to Philips Lighting Indonesia<br>
-	*Please fill in the Airwaybill number then this ticket will be able to go further<br>
-	*Please login to http://www.philips-eApproval.com to approve the E-Approval<br><br>
+	*Please login to http://www.philips-eApproval.com to edit your claim<br><br>
 
 	Thanks,<br>
 	Philips Lighting Indonesia
