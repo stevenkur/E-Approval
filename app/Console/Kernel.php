@@ -29,6 +29,8 @@ class Kernel extends ConsoleKernel
         //          ->hourly();
         $schedule->command('AutoApprove:autoapproveclaims')
                  ->everyMinute();
+        // $schedule->command('AutoApprove:autoapproveclaims')
+        //          ->dailyAt('12:00');
     }
 
     /**

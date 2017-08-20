@@ -10,6 +10,7 @@ use App\Log_claim;
 use App\Claim_attachment;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 use Session;
 use Mail;
 use App\Mail\RegisterClaim;
@@ -237,7 +238,7 @@ class ClaimController extends Controller
             $mail=$query[0];
             Mail::send(new RegisterClaim($mail));
 
-            return redirect('listclaim')->with('alert', 'Claim number ' . $id_claim . ' has been added');
+            return redirect('listclaim')->with('alert', 'Claim number ' . $id_claim . ' has been added. Please check your email!');
         }
     }
 
