@@ -280,8 +280,8 @@
                                                 @endif
                                             @endif
                                         @elseif(!($monitorings->status=='Closed'||substr($monitorings->status,0,8)=='Rejected'))
-                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#reject">Reject</button>
-                                            <div class="modal fade" id="reject" tabindex="-1" align="left">
+                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#reject{{ $monitorings->id_claim }}">Reject</button>
+                                            <div class="modal fade" id="reject{{ $monitorings->id_claim }}" tabindex="-1" align="left">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <button type="button" class="close" data-dismiss="modal"><i class="icon-xs-o-md"></i></button>
@@ -303,8 +303,8 @@
                                                 </div>
                                             </div>
                                             @if($role[0]=='Admin Marketing')
-                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#marketing">Approve</button>
-                                            <div class="modal fade" id="marketing" tabindex="-1" align="left">
+                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#marketing{{ $monitorings->id_claim }}">Approve</button>
+                                            <div class="modal fade" id="marketing{{ $monitorings->id_claim }}" tabindex="-1" align="left">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <button type="button" class="close" data-dismiss="modal"><i class="icon-xs-o-md"></i></button>
@@ -335,8 +335,8 @@
                                                 </div>
                                             </div>
                                             @elseif($role[0]=='Admin Finance')
-                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#finance">Approve</button>
-                                            <div class="modal fade" id="finance" tabindex="-1" align="left">
+                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#finance{{ $monitorings->id_claim }}">Approve</button>
+                                            <div class="modal fade" id="finance{{ $monitorings->id_claim }}" tabindex="-1" align="left">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <button type="button" class="close" data-dismiss="modal"><i class="icon-xs-o-md"></i></button>

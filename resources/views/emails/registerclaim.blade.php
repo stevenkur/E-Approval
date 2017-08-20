@@ -16,7 +16,7 @@
 @endcomponent
 **Comment Detail**:<br>
 @foreach($comment as $comments)
-*{{ $comments->created_at }}* | {{ $comments->comment }}<br>
+*{{ $comments->created_at }}* | **{{ $comments->nama_user }}** | {{ $comments->comment }}<br>
 @endforeach
 <p>
 	*Please print and attach this email within document submitted to Philips Lighting Indonesia<br>

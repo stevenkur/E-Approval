@@ -15,20 +15,9 @@ use Mail;
 use App\Mail\RegisterClaim;
 use App\Mail\ApproveClaim;
 use App\Mail\RejectClaim;
-use App\Mail\RejectClaim;
 use App\Mail\WaitingApproveClaim;
-
-        // Kirim lewat view
-        // Mail::send(['text'=>'emails.registerticket'], $claim, function($message) use ($claim){
-        //  $message->to('stevenkurkur@gmail.com','Steven Kurniawan')->subject('Send from laravel');
-        //  $message->from('ndywllm@gmail.com', 'Philips Lighting Indonesia');
-        //  $message->attach($pathToFile);
-        // });
-
-        // Kirim Raw text
-        // Mail::raw('Text to e-mail', function ($message) {
-        //    $message->to('stevenkurkur@gmail.com');
-        // });
+use App\Mail\CancelClaim;
+use App\Mail\SubmitClaim;
 
 class ClaimController extends Controller
 {    
@@ -247,6 +236,7 @@ class ClaimController extends Controller
             $query=DB::select(DB::raw("SELECT * FROM claims WHERE id_claim='$id_claim'"));
             $mail=$query[0];
             Mail::send(new RegisterClaim($mail));
+
             return redirect('listclaim')->with('alert', 'Claim number ' . $id_claim . ' has been added');
         }
     }
@@ -256,7 +246,7 @@ class ClaimController extends Controller
         //
         $result=DB::select(DB::raw("SELECT * FROM claims WHERE id_claim='$request->id_claim'"));
         $attachment=DB::select(DB::raw("SELECT * FROM claim_attachments"));
-        // dd($result);
+
         return view('user/editclaim')->with('result',$result)->with('attachment',$attachment); 
     }
 
@@ -273,13 +263,10 @@ class ClaimController extends Controller
             return redirect('editclaim', $request->id_claim);
         }
         else
-        { 
+        {
             $destinationPath = public_path() . '/attachment/' . $input['id_claim'];
 
-            $another = $input['another'];
-            $numberattachment = sizeof($input['another']);
-
-            if(Input::has('file1')||Input::has('file2')||Input::has('file3')||$another!=0)
+            if(Input::file('file1')||Input::file('file2')||Input::file('file3')||Input::file('another'))
             {
                 $log = new Log_claim();
                 $log->id_user=Session::get('id_user');
@@ -288,7 +275,7 @@ class ClaimController extends Controller
                 $log->save();
             }
 
-            if (Input::has('file1'))
+            if (Input::file('file1'))
             {
                 $file1 = $input['file1'];
                 $extension1 = $file1->getClientOriginalExtension();
@@ -301,7 +288,7 @@ class ClaimController extends Controller
                 $fileName1 = $input['comparefile1'];
             }
 
-            if (Input::has('file2'))
+            if (Input::file('file2'))
             {
                 $file2 = $input['file2'];
                 $extension2 = $file2->getClientOriginalExtension();
@@ -314,7 +301,7 @@ class ClaimController extends Controller
                 $fileName2 = $input['comparefile2'];
             }
 
-            if (Input::has('file3'))
+            if (Input::file('file3'))
             {
                 $file3 = $input['file3'];
                 $extension3 = $file3->getClientOriginalExtension();
@@ -322,21 +309,24 @@ class ClaimController extends Controller
                 $file3->move($destinationPath, $fileName3);
             }
             else
-            {
+            {                
                 $file3 = $input['comparefile3'];
                 $fileName3 = $input['comparefile3'];
             }
 
-            if($another!=0)
+            if(Input::file('another'))
             {
+                $another = $input['another'];
+                $numberattachment = sizeof($input['another']);
+
                 for($i=0;$i<$numberattachment;$i++)
                 {
                     $extensions[$i] = $another[$i]->getClientOriginalExtension();
-                    $attachs[$i]=$another[$i]->getClientOriginalName();
+                    $attachs[$i] = $another[$i]->getClientOriginalName();
                     $another[$i]->move($destinationPath, $attachs[$i]);
                 }
 
-                $delete = Claim_attachment::where('id_claim', $input['id_claim'])->delete();
+                // $delete = Claim_attachment::where('id_claim', $input['id_claim'])->delete();
 
                 for($i=0;$i<$numberattachment;$i++)
                 {
@@ -375,6 +365,14 @@ class ClaimController extends Controller
             $next=DB::select(DB::raw("SELECT C.nama_role, D.id_user, D.email FROM claims A, flows B, roles C, users D, user_roles E WHERE A.kode_flow=B.kode_flow AND B.id_role=C.id_role AND C.id_role=E.id_role and E.id_user=D.id_user AND A.level_flow=B.level_flow AND A.id_claim='$id_claim'"));                
             // dd($next);
             $claim = Claim::where('id_claim', $input['id_claim'])->update(['status'=>'Waiting from ' . $next[0]->nama_role . ' (' . $next[0]->email . ')', 'id_staff'=> $next[0]->id_user]);
+
+            $query=DB::select(DB::raw("SELECT * FROM claims WHERE id_claim='$request->id_claim'"));
+            $mail=$query[0];
+            Mail::send(new SubmitClaim($mail));
+
+            $query=DB::select(DB::raw("SELECT * FROM claims WHERE id_claim='$request->id_claim'"));
+            $mail=$query[0];
+            Mail::send(new WaitingApproveClaim($mail));
             
             return redirect('listclaim')->with('alert', 'Claim number ' . $input['id_claim'] . ' has been updated');
         }
@@ -383,12 +381,17 @@ class ClaimController extends Controller
     public function cancelclaim(Request $request)
     {
         //
-        $cancel = Claim::where('id_claim', $request->id_claim)->update(['status'=>'Canceled']);
+        $cancel = Claim::where('id_claim', $request->id_claim)->update(['status'=>'Canceled', 'id_staff'=>NULL]);
+        
         $log = new Log_claim();
         $log->id_user=Session::get('id_user');
         $log->id_claim=$request->id_claim;
         $log->id_activity='9';
         $log->save();
+
+        $query=DB::select(DB::raw("SELECT * FROM claims WHERE id_claim='$request->id_claim'"));
+        $mail=$query[0];
+        Mail::send(new CancelClaim($mail));
 
         return redirect('listclaim')->with('alerts', 'Claim Number ' . $request->id_claim . ' has been canceled!');
     }
@@ -424,13 +427,27 @@ class ClaimController extends Controller
 
         if($level>$max[0]->level_flow)
         {
-            $approve = Claim::where('id_claim', $request->id_claim)->update(['id_staff'=>NULL, 'status'=>'Closed']);
+            $closed = Claim::where('id_claim', $request->id_claim)->update(['status'=>'Closed']);
+
+            $query=DB::select(DB::raw("SELECT * FROM claims WHERE id_claim='$request->id_claim'"));
+            $mail=$query[0];
+            Mail::send(new ApproveClaim($mail));
+
+            $approve = Claim::where('id_claim', $request->id_claim)->update(['id_staff'=>NULL]);
         }
         else
         {
             $next=DB::select(DB::raw("SELECT C.nama_role, D.id_user, D.email FROM claims A, flows B, roles C, users D, user_roles E WHERE A.kode_flow=B.kode_flow AND B.id_role=C.id_role AND C.id_role=E.id_role and E.id_user=D.id_user AND '$level'=B.level_flow AND A.id_claim='$request->id_claim'"));
             
             $approve = Claim::where('id_claim', $request->id_claim)->update(['level_flow'=>$level, 'id_staff'=>$next[0]->id_user, 'status'=>'Waiting from ' . $next[0]->nama_role . ' (' . $next[0]->email . ')']);
+
+            $query=DB::select(DB::raw("SELECT * FROM claims WHERE id_claim='$request->id_claim'"));
+            $mail=$query[0];
+            Mail::send(new ApproveClaim($mail));
+
+            $query=DB::select(DB::raw("SELECT * FROM claims WHERE id_claim='$request->id_claim'"));
+            $mail=$query[0];
+            Mail::send(new WaitingApproveClaim($mail));
         }
 
         $log = new Log_claim();
@@ -439,9 +456,6 @@ class ClaimController extends Controller
         $log->id_activity='2';
         $log->save();
 
-        $query=DB::select(DB::raw("SELECT * FROM claims WHERE id_claim='$request->id_claim'"));
-        $mail=$query[0];
-        Mail::send(new ApproveClaim($mail));
         return redirect('listclaim')->with('alert', 'Claim Number ' . $request->id_claim . ' has been approved!');
     }
 
@@ -458,13 +472,27 @@ class ClaimController extends Controller
 
         if($level>$max[0]->level_flow)
         {
-            $approve = Claim::where('id_claim', $request->id_claim)->update(['id_staff'=>NULL, 'status'=>'Closed']);
+            $closed = Claim::where('id_claim', $request->id_claim)->update(['status'=>'Closed']);
+
+            $query=DB::select(DB::raw("SELECT * FROM claims WHERE id_claim='$request->id_claim'"));
+            $mail=$query[0];
+            Mail::send(new ApproveClaim($mail));
+
+            $approve = Claim::where('id_claim', $request->id_claim)->update(['id_staff'=>NULL]);
         }
         else
         {
             $next=DB::select(DB::raw("SELECT C.nama_role, D.id_user, D.email FROM claims A, flows B, roles C, users D, user_roles E WHERE A.kode_flow=B.kode_flow AND B.id_role=C.id_role AND C.id_role=E.id_role and E.id_user=D.id_user AND '$level'=B.level_flow AND A.id_claim='$request->id_claim'"));
             
             $approve = Claim::where('id_claim', $request->id_claim)->update(['level_flow'=>$level, 'id_staff'=>$next[0]->id_user, 'status'=>'Waiting from ' . $next[0]->nama_role . ' (' . $next[0]->email . ')']);
+
+            $query=DB::select(DB::raw("SELECT * FROM claims WHERE id_claim='$request->id_claim'"));
+            $mail=$query[0];
+            Mail::send(new ApproveClaim($mail));
+
+            $query=DB::select(DB::raw("SELECT * FROM claims WHERE id_claim='$request->id_claim'"));
+            $mail=$query[0];
+            Mail::send(new WaitingApproveClaim($mail));
         }
 
         $log = new Log_claim();
@@ -495,13 +523,27 @@ class ClaimController extends Controller
 
         if($level>$max[0]->level_flow)
         {
-            $approve = Claim::where('id_claim', $request->id_claim)->update(['id_staff'=>NULL, 'status'=>'Closed']);
+            $closed = Claim::where('id_claim', $request->id_claim)->update(['status'=>'Closed']);
+
+            $query=DB::select(DB::raw("SELECT * FROM claims WHERE id_claim='$request->id_claim'"));
+            $mail=$query[0];
+            Mail::send(new ApproveClaim($mail));
+
+            $approve = Claim::where('id_claim', $request->id_claim)->update(['id_staff'=>NULL]);
         }
         else
         {
             $next=DB::select(DB::raw("SELECT C.nama_role, D.id_user, D.email FROM claims A, flows B, roles C, users D, user_roles E WHERE A.kode_flow=B.kode_flow AND B.id_role=C.id_role AND C.id_role=E.id_role and E.id_user=D.id_user AND '$level'=B.level_flow AND A.id_claim='$request->id_claim'"));
             
             $approve = Claim::where('id_claim', $request->id_claim)->update(['level_flow'=>$level, 'id_staff'=>$next[0]->id_user, 'status'=>'Waiting from ' . $next[0]->nama_role . ' (' . $next[0]->email . ')']);
+
+            $query=DB::select(DB::raw("SELECT * FROM claims WHERE id_claim='$request->id_claim'"));
+            $mail=$query[0];
+            Mail::send(new ApproveClaim($mail));
+
+            $query=DB::select(DB::raw("SELECT * FROM claims WHERE id_claim='$request->id_claim'"));
+            $mail=$query[0];
+            Mail::send(new WaitingApproveClaim($mail));
         }
 
         $log = new Log_claim();
@@ -525,13 +567,6 @@ class ClaimController extends Controller
         $input=Input::all();
         if($input['comment']!=NULL)
         {
-            $role=Session::get('role');
-            $email=Session::get('email');
-
-            $next=DB::select(DB::raw("SELECT C.nama_role, D.id_user, D.email FROM claims A, flows B, roles C, users D, user_roles E WHERE A.kode_flow=B.kode_flow AND B.id_role=C.id_role AND C.id_role=E.id_role and E.id_user=D.id_user AND 1=B.level_flow AND A.id_claim='$request->id_claim'"));
-            
-            $approve = Claim::where('id_claim', $request->id_claim)->update(['level_flow'=>'1', 'id_staff'=>$next[0]->id_user, 'status'=>'Rejected by ' . $role[0] . ' (' . $email . ')']);
-
             $comment = new Comment();
             $comment->id_claim = $request->id_claim;
             $comment->comment = $input['comment'];
@@ -550,9 +585,19 @@ class ClaimController extends Controller
             $log->id_activity='3';
             $log->save();
 
+            $role=Session::get('role');
+            $email=Session::get('email');
+
+            $next=DB::select(DB::raw("SELECT C.nama_role, D.id_user, D.email FROM claims A, flows B, roles C, users D, user_roles E WHERE A.kode_flow=B.kode_flow AND B.id_role=C.id_role AND C.id_role=E.id_role and E.id_user=D.id_user AND 1=B.level_flow AND A.id_claim='$request->id_claim'"));
+            
+            $reject = Claim::where('id_claim', $request->id_claim)->update(['level_flow'=>'1', 'status'=>'Rejected by ' . $role[0] . ' (' . $email . ')']);
+
             $query=DB::select(DB::raw("SELECT * FROM claims WHERE id_claim='$request->id_claim'"));
             $mail=$query[0];
             Mail::send(new RejectClaim($mail));
+
+            $reject = Claim::where('id_claim', $request->id_claim)->update(['id_staff'=>$next[0]->id_user]);
+
             return redirect('listclaim')->with('alerts', 'Claim Number ' . $request->id_claim . ' has been rejected!');
         }
         else

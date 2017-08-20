@@ -1,6 +1,6 @@
 @component('mail::message')
 # Dear {{ $claim->nama_distributor }},
-<p>Your claim with the following detail has been approved by {{ $staff->nama_role }} ({{ $staff->email }}):</p>
+<p>You have cancel a claim with following detail:</p>
 @component('mail::table')
 | | | |
 | ------------------: | - | ---------------------------------------------------------- |
@@ -19,7 +19,7 @@
 *{{ $comments->created_at }}* | **{{ $comments->nama_user }}** | {{ $comments->comment }}<br>
 @endforeach
 <p>
-	*Please login to http://www.philips-eApproval.com to view your claim<br><br>
+	*Please login to http://www.philips-eApproval.com to view the detail<br><br>
 
 	Thanks,<br>
 	Philips Lighting Indonesia

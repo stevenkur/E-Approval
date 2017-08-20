@@ -141,8 +141,8 @@
                             <span class="custom-file-control"></span>
                         </label>
                         <label class="custom-file">Another Attachment
-                            <input type="hidden" name="another" value="0">
-                            <input type="file" id="another" name="another" class="custom-file-input" multiple onchange="updateList()">
+                            <input type="hidden" name="count" value="0">
+                            <input type="file" id="another" name="another[]" class="custom-file-input" multiple onchange="updateList()">
                             <span class="custom-file-control"></span>
                             <table id="fileList">
                                 <tr>

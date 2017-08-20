@@ -13,7 +13,7 @@ use App\Comment;
 use App\Log_claim;
 use Session;
 
-class RegisterClaim extends Mailable
+class CancelClaim extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -35,10 +35,9 @@ class RegisterClaim extends Mailable
     public function build(Request $request)
     {
         $email = Session::get('email');
-        $value = intval(preg_replace('/[^0-9]+/', '', $request->value), 10);
-        $claims = DB::select(DB::raw("SELECT * FROM claims WHERE value='$value' and nama_program='$request->programname' ORDER BY created_at DESC limit 1"));
+        $claims = DB::select(DB::raw("SELECT * FROM claims WHERE id_claim='$request->id_claim'"));
         $claim = $claims[0];
         $comment = DB::select(DB::raw("SELECT A.created_at, B.nama_user, A.comment FROM comments A, users B WHERE A.id_claim='$claim->id_claim' AND A.id_user=B.id_user"));
-        return $this->markdown('emails.registerclaim', ['claim'=>$claim, 'comment'=>$comment])->subject('New Claim Registration Number ' . $claim->id_claim . ' has been registered')->to($email);
+        return $this->markdown('emails.cancelclaim', ['claim'=>$claim, 'comment'=>$comment])->subject('Claim Registration Number ' . $claim->id_claim . ' has been canceled')->to($email);
     }
 }

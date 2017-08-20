@@ -1,5 +1,5 @@
 @component('mail::message')
-# Dear {{ $claim->nama_distributor }},
+# Dear {{ $staff->nama_user }},
 <p>You have one new claim to approve with following detail:</p>
 @component('mail::table')
 | | | |
@@ -16,7 +16,7 @@
 @endcomponent
 **Comment Detail**:<br>
 @foreach($comment as $comments)
-*{{ $comments->created_at }}* | {{ $comments->comment }}<br>
+*{{ $comments->created_at }}* | **{{ $comments->nama_user }}** | {{ $comments->comment }}<br>
 @endforeach
 <p>
 	*Please login to http://www.philips-eApproval.com to approve or reject the claim<br><br>

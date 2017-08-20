@@ -1,6 +1,6 @@
 @component('mail::message')
 # Dear {{ $claim->nama_distributor }},
-<p>Your claim with the following detail has been rejected:</p>
+<p>Your claim with the following detail has been rejected by {{ $staff->nama_role }} ({{ $staff->email }}):</p>
 @component('mail::table')
 | | | |
 | ------------------: | - | ---------------------------------------------------------- |
@@ -16,7 +16,7 @@
 @endcomponent
 **Comment Detail**:<br>
 @foreach($comment as $comments)
-*{{ $comments->created_at }}* | {{ $comments->comment }}<br>
+*{{ $comments->created_at }}* | **{{ $comments->nama_user }}** | {{ $comments->comment }}<br>
 @endforeach
 <p>
 	*Please login to http://www.philips-eApproval.com to edit your claim<br><br>
