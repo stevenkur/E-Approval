@@ -60,9 +60,23 @@ class AccountController extends Controller
     public function store(Request $request)
     {
         //
-        // dd($request);
-        $flows=Input::all();
-        dd($flows);
+        $input=Input::all();
+        dd($input);
+
+        $user = new User;
+        $user->email = $input['email'];
+        $user->name = $input['name'];
+        $user->password = hash('md5', $input['password']);
+
+        $category=count(Category::all());
+        for($i=1;$i<=$category;$i++)
+        {
+            if($input['checklist'.$i]!=0)
+            {                
+                $access = new Category_access;
+                
+            }
+        }
     }
 
     /**

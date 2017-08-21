@@ -2,8 +2,7 @@
 
 @section('content')
      
-    <?php 
-        
+    <?php        
         if(isset($_GET['kodeflow'])){
             $idflow = [];
             $idrole = [];
@@ -46,12 +45,11 @@
     <div class="col-md-12">
         <div class="box box-primary">
             @if($flag)
-
-            <form action="{{ route('masterflow.update', $idflow) }}" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewflow">
-            <input name="_method" type="hidden" value="PATCH">
+                <form action="{{ route('masterflow.update', $idflow) }}" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewflow">
+                <input name="_method" type="hidden" value="PATCH">
             @else 
-            <form action="{{ route('masterflow.store') }}" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewflow">
-            <input name="_method" type="hidden" value="POST">
+                <form action="{{ route('masterflow.store') }}" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewflow">
+                <input name="_method" type="hidden" value="POST">
             @endif
             {{csrf_field()}}
             <div class="box-header with-border">
@@ -104,10 +102,8 @@
                 </div> 
             </div>
             <div class="box-footer" align="right">
-                <button type="reset" class="btn btn-ok">Reset</button>
-                
-                <button type="submit" class="btn btn-primary">Submit</button>
-               
+                <button type="reset" class="btn btn-ok">Reset</button>                
+                <button type="submit" class="btn btn-primary">Submit</button>               
             </div>
             </form>
         </div>

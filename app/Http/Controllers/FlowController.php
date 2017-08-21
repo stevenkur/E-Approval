@@ -50,22 +50,18 @@ class FlowController extends Controller
     public function store(Request $request)
     {
         //
-         // dd(Input::all());
         $flows=Input::all();
-        // dd($flows);
         $count = sizeof(Input::all())-4;
-        // dd($flows);
-        // dd($count);
         for($i=1; $i<=$count; $i++)
         {        
-        $flow= new Flow();
-        $flow->id_role = $flows['flow'.$i];   
-        $flow->kode_flow = $flows['flowcode'];
-        $flow->nama_flow = $flows['flowname'];
-        $flow->level_flow = $i;
-        $flow->save();        
-        
+            $flow= new Flow();
+            $flow->id_role = $flows['flow'.$i];   
+            $flow->kode_flow = $flows['flowcode'];
+            $flow->nama_flow = $flows['flowname'];
+            $flow->level_flow = $i;
+            $flow->save();        
         }
+
         return redirect()->route('masterflow.index')
             ->with('alert-success', 'Data Berhasil Disimpan.');
      }
@@ -101,44 +97,31 @@ class FlowController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // //
-        // // dd($id);
+        //
         $flows=Input::all();
-        // dd($flows);
         $jumlah = (sizeof($flows)-4)/2;
-        // dd($jumlah);
-        $key = array_keys((array)$flows); 
-        // dd($key);
+        $key = array_keys((array)$flows);
         $idflow = [];
         for($i=(sizeof($flows)-$jumlah);$i<=sizeof($flows)-1;$i++)
         {
             $idflow[] = $key[$i];
         }
-        // dd($idflow);
-        // $count = sizeof(Input::all())-4;
-        // dd($request->flowcode);
-        // dd($jumlah);
-        // dd($flows);
-        // dd($count);
-        // dd($flows);
         for($i=0; $i<$jumlah; $i++)
         {        
-        $nama= 'flow'.$i;
-        // dd($flow);
-        $flow = Flow::where('id_flow',$idflow[$i] ); 
-        $flow->update([
-            'kode_flow' => $request->flowcode,
-            'nama_flow' => $request->flowname,
-            'id_role' => $request->$nama,
-            'level_flow' => $i+1
-        ]);
-          
-            
-        
+            $nama= 'flow'.$i;
+            $flow = Flow::where('id_flow',$idflow[$i] ); 
+            $flow->update([
+                'kode_flow' => $request->flowcode,
+                'nama_flow' => $request->flowname,
+                'id_role' => $request->$nama,
+                'level_flow' => $i+1
+            ]);
         }
+
         return redirect()->route('masterflow.index')
             ->with('alert-success', 'Data Berhasil Disimpan.');
     }
+    
     /**
      * Remove the specified resource from storage.
      *
@@ -147,8 +130,7 @@ class FlowController extends Controller
      */
     public function destroy($id)
     {
-        //
-         
+        //         
         $tes=DB::select(DB::raw("SELECT * FROM flows WHERE id_flow=$id"));
         $kodeflow=($tes[0]->kode_flow);
         $levelflow=($tes[0]->level_flow);
@@ -157,19 +139,14 @@ class FlowController extends Controller
         $count=sizeof($query);
         for ($i=0;$i<$count;$i++)
         {
-        $idflow = $query[$i]->id_flow;
-        // dd($idflow);
-        $flow = Flow::where('id_flow',$idflow ); 
-        $flow->update([
-            'level_flow' => ($query[$i]->level_flow)-1
-        ]);     
+            $idflow = $query[$i]->id_flow;
+            $flow = Flow::where('id_flow',$idflow ); 
+            $flow->update([
+                'level_flow' => ($query[$i]->level_flow)-1
+            ]);     
         }
         $flow = FLow::where('id_flow',$id)->delete();
-        // dd($query[0]);
-        return redirect()->route('masterflow.index')->with('alert-success', 'Data Berhasil Dihapus.');
-        
-   
+
+        return redirect()->route('masterflow.index')->with('alert-success', 'Data Berhasil Dihapus.');  
     }
-
-
 }

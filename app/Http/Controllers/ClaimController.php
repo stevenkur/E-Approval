@@ -363,7 +363,7 @@ class ClaimController extends Controller
                 $claim = Claim::where('id_claim', $input['id_claim'])->update(['level_flow'=> '1']);                
             }
             
-            $next=DB::select(DB::raw("SELECT C.nama_role, D.id_user, D.email FROM claims A, flows B, roles C, users D, user_roles E WHERE A.kode_flow=B.kode_flow AND B.id_role=C.id_role AND C.id_role=E.id_role and E.id_user=D.id_user AND A.level_flow=B.level_flow AND A.id_claim='$id_claim'"));                
+            $next=DB::select(DB::raw("SELECT C.nama_role, D.id_user, D.email FROM claims A, flows B, roles C, users D, category_accesses E WHERE A.kode_flow=B.kode_flow AND B.id_role=C.id_role AND C.id_role=E.id_role and E.id_user=D.id_user AND A.level_flow=B.level_flow AND A.id_claim='$id_claim'"));                
             // dd($next);
             $claim = Claim::where('id_claim', $input['id_claim'])->update(['status'=>'Waiting from ' . $next[0]->nama_role . ' (' . $next[0]->email . ')', 'id_staff'=> $next[0]->id_user]);
 
@@ -438,7 +438,7 @@ class ClaimController extends Controller
         }
         else
         {
-            $next=DB::select(DB::raw("SELECT C.nama_role, D.id_user, D.email FROM claims A, flows B, roles C, users D, user_roles E WHERE A.kode_flow=B.kode_flow AND B.id_role=C.id_role AND C.id_role=E.id_role and E.id_user=D.id_user AND '$level'=B.level_flow AND A.id_claim='$request->id_claim'"));
+            $next=DB::select(DB::raw("SELECT C.nama_role, D.id_user, D.email FROM claims A, flows B, roles C, users D, category_accesses E WHERE A.kode_flow=B.kode_flow AND B.id_role=C.id_role AND C.id_role=E.id_role and E.id_user=D.id_user AND '$level'=B.level_flow AND A.id_claim='$request->id_claim'"));
             
             $approve = Claim::where('id_claim', $request->id_claim)->update(['level_flow'=>$level, 'id_staff'=>$next[0]->id_user, 'status'=>'Waiting from ' . $next[0]->nama_role . ' (' . $next[0]->email . ')']);
 
@@ -483,7 +483,7 @@ class ClaimController extends Controller
         }
         else
         {
-            $next=DB::select(DB::raw("SELECT C.nama_role, D.id_user, D.email FROM claims A, flows B, roles C, users D, user_roles E WHERE A.kode_flow=B.kode_flow AND B.id_role=C.id_role AND C.id_role=E.id_role and E.id_user=D.id_user AND '$level'=B.level_flow AND A.id_claim='$request->id_claim'"));
+            $next=DB::select(DB::raw("SELECT C.nama_role, D.id_user, D.email FROM claims A, flows B, roles C, users D, category_accesses E WHERE A.kode_flow=B.kode_flow AND B.id_role=C.id_role AND C.id_role=E.id_role and E.id_user=D.id_user AND '$level'=B.level_flow AND A.id_claim='$request->id_claim'"));
             
             $approve = Claim::where('id_claim', $request->id_claim)->update(['level_flow'=>$level, 'id_staff'=>$next[0]->id_user, 'status'=>'Waiting from ' . $next[0]->nama_role . ' (' . $next[0]->email . ')']);
 
@@ -534,7 +534,7 @@ class ClaimController extends Controller
         }
         else
         {
-            $next=DB::select(DB::raw("SELECT C.nama_role, D.id_user, D.email FROM claims A, flows B, roles C, users D, user_roles E WHERE A.kode_flow=B.kode_flow AND B.id_role=C.id_role AND C.id_role=E.id_role and E.id_user=D.id_user AND '$level'=B.level_flow AND A.id_claim='$request->id_claim'"));
+            $next=DB::select(DB::raw("SELECT C.nama_role, D.id_user, D.email FROM claims A, flows B, roles C, users D, category_accesses E WHERE A.kode_flow=B.kode_flow AND B.id_role=C.id_role AND C.id_role=E.id_role and E.id_user=D.id_user AND '$level'=B.level_flow AND A.id_claim='$request->id_claim'"));
             
             $approve = Claim::where('id_claim', $request->id_claim)->update(['level_flow'=>$level, 'id_staff'=>$next[0]->id_user, 'status'=>'Waiting from ' . $next[0]->nama_role . ' (' . $next[0]->email . ')']);
 
@@ -589,7 +589,7 @@ class ClaimController extends Controller
             $role=Session::get('role');
             $email=Session::get('email');
 
-            $next=DB::select(DB::raw("SELECT C.nama_role, D.id_user, D.email FROM claims A, flows B, roles C, users D, user_roles E WHERE A.kode_flow=B.kode_flow AND B.id_role=C.id_role AND C.id_role=E.id_role and E.id_user=D.id_user AND 1=B.level_flow AND A.id_claim='$request->id_claim'"));
+            $next=DB::select(DB::raw("SELECT C.nama_role, D.id_user, D.email FROM claims A, flows B, roles C, users D, category_accesses E WHERE A.kode_flow=B.kode_flow AND B.id_role=C.id_role AND C.id_role=E.id_role and E.id_user=D.id_user AND 1=B.level_flow AND A.id_claim='$request->id_claim'"));
             
             $reject = Claim::where('id_claim', $request->id_claim)->update(['level_flow'=>'1', 'status'=>'Rejected by ' . $role[0] . ' (' . $email . ')']);
 
