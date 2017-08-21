@@ -69,8 +69,7 @@
                         <input type="text" class="form-control" id="flowname" name="flowname" placeholder="" required="required" <?php if($flag) echo 'value='."'$namaflow'"; ?> />
                     </div>
                 </div>
-                <div class="form-group">
-                    
+                <div class="form-group">                    
                     @if($flag)            
                     @for($i=0;$i<$length;$i++)      
                     <label class="col-md-2 control-label">Flow Level <?php echo $i+1; ?></label> 
@@ -83,7 +82,6 @@
                     </div>
                     <br>
                     <br>
-
                     @endfor
                     @else
                     <label class="col-md-2 control-label">Flow Level 1</label> 

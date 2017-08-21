@@ -4,24 +4,26 @@
 
     <?php
         if(isset($_GET['id_user'])){            
-            foreach($count as $counts){
-                if($counts['id_user']==$_GET['id_user']){
-                    $nama_user = $counts['nama_user'];
-                    $email = $counts['email'];
-                    $password = $counts['password'];
+            for($k=0;$k<sizeof($user);$k++){
+                if($user[$k]->id_user==$_GET['id_user']){
+                    $id_user = $user[$k]->id_user;
+                    $nama_user = $user[$k]->nama_user;
+                    $email = $user[$k]->email;
+                    $password = $user[$k]->password;
 
                     for($i=2;$i<=9;$i++)
                     {
                         $var = 'email'.$i;
-                        if($counts['$var']!=NULL)
+                        if($user[$k]->$var!=NULL)
                         {
-                            $email.$i = $counts['$var'];
+                            $var = $user[$k]->$var;
                         }
                     }
                 }
                 break;
             }
             $flag=true;
+            $id_user = $_GET['id_user'];
         }
         else 
             $flag=false;
@@ -68,21 +70,31 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label">Primary Email</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="email" name="email" placeholder="" required />
+                            <input type="text" class="form-control" id="email" name="email" placeholder="" required <?php if($flag) echo 'value='."'$email'"; ?>/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-4 control-label">Name</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="name" name="name" placeholder="" required />
+                            <input type="text" class="form-control" id="name" name="name" placeholder="" required <?php if($flag) echo 'value='."'$nama_user'"; ?>/>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-4 control-label">Password</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="password" name="password" placeholder="" required />
+                            <input type="text" class="form-control" id="password" name="password" placeholder="" required <?php if($flag) echo 'value='."'$password'"; ?>/>
                         </div>
                     </div>
+                    @if($flag)            
+                    @for($i=2;$i<=9;$i++)      
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Email {{ $i }}</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" id="email{{$i}}" name="email{{$i}}" placeholder="" />
+                        </div>
+                    </div>
+                    @endfor
+                    @endif     
                     <div class="col-md-12" align="center">
                         <a id="addemail" class="btn btn-primary addrow">Add Email CC</a>
                     </div> 
