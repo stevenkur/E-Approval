@@ -51,15 +51,17 @@ class ReportController extends Controller
 
             for($z=0;$z<$category_length;$z++)
             {
-                $claim[$z]= array();
+               
                 $nama_category=$category[$z];
                 $id_category = DB::select(DB::raw("SELECT id_category from categories where nama_category='$nama_category'"));
                 $now= $id_category[0]->id_category;
                 $role[$z] = DB::select(DB::raw("SELECT A.id_role,A.id_user,A.id_category,B.nama_role FROM category_accesses A, roles B, categories C WHERE A.id_category=C.id_category and B.nama_role!='Administrator' and A.id_role=B.id_role and A.id_category=$now"));               
                 $role_length[$z] = sizeof($role[$z]);                
                 $claim[$z] = DB::select(DB::raw("SELECT Distinct A.id_claim, A.nama_category, B.nama_program,C.id_user, C.created_at,E.nama_role FROM claims A, programs B, log_claims C, categories D, roles E, user_roles F where E.id_role=F.id_role and C.id_user=F.id_user and C.id_activity=2 and A.id_claim=C.id_claim and A.nama_program=B.nama_program  and A.nama_category='$nama_category'"));
+                $register[$z] = DB::select(DB::raw("SELECT Distinct A.id_claim, A.nama_category, B.nama_program,C.id_user, C.created_at,E.nama_role FROM claims A, programs B, log_claims C, categories D, roles E, user_roles F where E.id_role=F.id_role and C.id_user=F.id_user and C.id_activity=6 and A.id_claim=C.id_claim and A.nama_program=B.nama_program  and A.nama_category='$nama_category'"));
                 $length = sizeof($claim[$z]);
                 // dd($claim[$z]);
+                $j=0;
                 if($length!=0)
                 {
                     $pisah = array();
@@ -71,8 +73,11 @@ class ReportController extends Controller
                             $pisah[$id] = array();
                             $i=0;
 
+                            $pisah[$id][0]= $register[$z][$j];
+                            $j++;
                         }
                         $i++;
+
                         $pisah[$id][$i] = $value;
                     }
                     
@@ -80,14 +85,16 @@ class ReportController extends Controller
                     $array=array();
                     $arr_keys = array_keys($pisah);
                     $arr_keys_length = sizeof($arr_keys);
-               
+                    // dd($pisah);
                     for($m=0;$m<$arr_keys_length;$m++)
                     {
                         $id=$arr_keys[$m];
                         $jumlah = sizeof($pisah[$id]);
-                        for($i=1;$i<$jumlah;$i++)
+                        // dd($jumlah);
+                        for($i=0;$i<$jumlah-1;$i++)
                         {                            
                             $tes=(strtotime($pisah[$id][$i+1]->created_at)-strtotime($pisah[$id][$i]->created_at));                
+                            // dd($tes);
                             $datediff= floor($tes / (60 * 60 * 24));
                             $from= $pisah[$id][$i]->created_at;
                             $start = DateTime::createFromFormat("Y-m-d H:i:s","$from");
@@ -114,7 +121,7 @@ class ReportController extends Controller
                 }
             }
             // dd($date);
-            return view('user/resolutionreport')->with('role',$role)->with('claim',$claim)->with('date',$date);
+            return view('user/resolutionreport')->with('role',$role)->with('claim',$claim)->with('date',$date)->with('register',$register);
         }
     }
 

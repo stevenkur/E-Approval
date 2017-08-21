@@ -5,7 +5,7 @@
 <?php
     $category = Session::get('nama_category');
     $category_length = sizeof(Session::get('nama_category'));
-
+    $tes=0; 
     // dd($category);
 ?>  
     <section class="content">
@@ -25,28 +25,51 @@
                     <tr>
                         <th>ID Claim</th>
                         <th>Program</th>
+                        <th>Register</th>
                         @for($j=0;$j<$role_length;$j++)
                             <th> {{ $role[$i][$j]->nama_role }} </th>
                         @endfor
                     </tr>
                     </thead>
                     <tbody>
-                    <?php $claim_length = sizeof($claim[$i]);
-                          if($claim_length!=0) $id_length = sizeof($date[$i]);
-                          else $id_length=0;
-                          $count=1;
-
+                    <?php 
+                      $claim_length = sizeof($claim[$i]);
+                      if($claim_length!=0) $id_length = sizeof($date[$i]);
+                      else $id_length=0;
+                      $count=1;
                     ?>
                     <tr>
+                        
                         @for($k=0;$k<$claim_length;$k=$k+$count)
                         <td> {{$claim[$i][$k]->id_claim}} </td>
                         <td> {{$claim[$i][$k]->nama_program}} </td>
-                        <td> {{ date('d-m-Y', strtotime($claim[$i][$k]->created_at)) }}</td>
-                        <?php $id=$claim[$i][$k]->id_claim; ?>
-                        @for($l=0;$l<$role_length-1;$l++)
-                            @if (isset($date[$i][$id][$l+1]))
-                            <td> {{ date('d-m-Y', strtotime($claim[$i][$k+$l+1]->created_at)) }} ( {{$date[$i][$id][$l+1]}} days )</td>
-                            <?php $count++; ?>
+                        <td> {{ date('d-m-Y', strtotime($register[$i][$k]->created_at)) }}</td>
+                        <?php $id=$claim[$i][$k]->id_claim; 
+                          $jumlah=0;
+                          // dd($claim);
+                        ?>
+                        
+                        @for($l=0;$l<$role_length;$l++)
+                              <?php echo $claim[$i][$tes]->nama_role;
+                                    echo $role[$i][$l]->nama_role;
+                                    echo '<br>';
+                                    // dd($claim);
+                                    echo $claim_length;
+                                    echo '<br>';
+                                    echo $tes;
+                                    echo $count;
+                                    echo $jumlah;
+
+                                    echo '<br>';
+                                    if($tes=$claim_length) $tes=0;
+                              ?>
+                            @if($claim[$i][$tes]->nama_role = $role[$i][$l]->nama_role)
+                              @if (isset($date[$i][$id][$jumlah]))
+                              <td> {{ date('d-m-Y', strtotime($claim[$i][$tes]->created_at)) }} ( {{$date[$i][$id][$jumlah]}} days )</td>
+                              <?php $count++; $jumlah++; $tes++;?>
+                              
+                              @else <td>-</td>
+                              @endif
                             @else <td>-</td>
                             @endif
                         @endfor
