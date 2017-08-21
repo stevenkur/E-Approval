@@ -2,6 +2,31 @@
 
 @section('content')
 
+    <?php
+        if(isset($_GET['id_user'])){            
+            foreach($count as $counts){
+                if($counts['id_user']==$_GET['id_user']){
+                    $nama_user = $counts['nama_user'];
+                    $email = $counts['email'];
+                    $password = $counts['password'];
+
+                    for($i=2;$i<=9;$i++)
+                    {
+                        $var = 'email'.$i;
+                        if($counts['$var']!=NULL)
+                        {
+                            $email.$i = $counts['$var'];
+                        }
+                    }
+                }
+                break;
+            }
+            $flag=true;
+        }
+        else 
+            $flag=false;
+    ?>
+
     <script type="text/javascript">        
         i=2;
         $(document).on("click", '.addrow', function (){   
@@ -17,31 +42,25 @@
         });
     </script>
 
-    <?php 
-        if(isset($_GET['iduser'])){
-            
-            foreach($user as $activities){
-                if($activities['id_activity']==$_GET['idactivity']){
-                    $idactivity = $activities['id_activity'];
-                    $namaactivity = $activities['nama_activity'];
-                 
-                }
-            }
-            $flag=true;
-        }
-        else 
-            $flag=false;
-    ?>  
-
     <!-- Main content -->
     <section class="content">
     <div class="row">
     <div class="col-md-12">
         <div class="box box-primary">
+            @if($flag)
+            <form action="{{ route('masteraccount.update', $id_user) }}" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formupdateaccount">
+            <input name="_method" type="hidden" value="PATCH">
+            @else
             <form action="{{ route('masteraccount.store') }}" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewaccount">
+            <input name="_method" type="hidden" value="POST">
+            @endif
             {{csrf_field()}}
             <div class="box-header with-border">
+                @if($flag)
+                <h3 class="box-title">Update Account</h3>
+                @else
                 <h3 class="box-title">Create Account</h3>
+                @endif
             </div>
             <div class="box-body">            
                 <div class="row">
@@ -142,8 +161,7 @@
                         <td>{{ $users->category }}</td>
                         <td>{{ $users->role }}</td>
                         <td>{{ $users->distributor }}</td>
-
-                        <td><a class="btn btn-primary" type ="submit" href="./masteraccount?iduser={{$users->id_user}}">Edit</a></td>
+                        <td><a class="btn btn-primary" type="submit" href="./masteraccount?id_user={{$users->id_user}}">Edit</a></td>
                         <td>
                             {{ Form::open(array('url' => 'masteraccount/' . $users->id_user)) }}
                             {{ Form::hidden('_method', 'DELETE') }}

@@ -55,11 +55,11 @@ class FlowController extends Controller
         for($i=1; $i<=$count; $i++)
         {        
             $flow= new Flow();
-            $flow->id_role = $flows['flow'.$i];   
+            $flow->id_role = $flows['flow'.$i];
             $flow->kode_flow = $flows['flowcode'];
             $flow->nama_flow = $flows['flowname'];
             $flow->level_flow = $i;
-            $flow->save();        
+            $flow->save();
         }
 
         return redirect()->route('masterflow.index')

@@ -52,18 +52,16 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Master <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
                 <li><a href="{{ route('masteraccount.index') }}">Master Account</a></li>
+                <li><a href="{{ route('masteruserdistributor.index') }}">Master User Distributor</a></li>
                 <li><a href="{{ route('masterrole.index') }}">Master Role</a></li>
+                <li><a href="{{ route('masterdistributor.index') }}">Master Distributor</a></li>
                 <li><a href="{{ route('mastercategory.index') }}">Master Category</a></li>
-                <!-- <li><a href="{{ route('mastercategoryaccess.index') }}">Master Category Access</a></li>
-                 -->
                 <li><a href="{{ route('mastercategorydetail.index') }}">Master Category Detail</a></li>
-                <li><a href="{{ route('masteractivity.index') }}">Master Activity</a></li>
+                <li><a href="{{ route('masterprogram.index') }}">Master Program</a></li>
+                <li><a href="{{ route('mastermarketing.index') }}">Master Marketing</a></li>
                 <li><a href="{{ route('masterflow.index') }}">Master Flow</a></li>
                 <li><a href="{{ route('masterholiday.index') }}">Master Holiday</a></li>
-                <li><a href="{{ route('masteruserdistributor.index') }}">Master User Distributor</a></li>
-                <li><a href="{{ route('masterdistributor.index') }}">Master Distributor</a></li>
-                <li><a href="{{ route('mastermarketing.index') }}">Master Marketing</a></li>
-                <li><a href="{{ route('masterprogram.index') }}">Master Program</a></li>
+                <li><a href="{{ route('masteractivity.index') }}">Master Activity</a></li>
                 <li><a href="{{ route('masterperiod.index') }}">Master Period</a></li>
               </ul>
             </li>

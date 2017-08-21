@@ -23,7 +23,7 @@
     <div class="col-md-4">
         <div class="box box-primary">
             @if($flag)
-            <form action="{{ route('masterprogram.update', $idprogram) }}" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewprogram">
+            <form action="{{ route('masterprogram.update', $idprogram) }}" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formupdateprogram">
             <input name="_method" type="hidden" value="PATCH">
             @else 
             <form action="{{ route('masterprogram.store') }}" method="post" role="form" class="form-horizontal" enctype="multipart/form-data" name="formnewprogram">

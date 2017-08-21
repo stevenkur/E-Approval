@@ -2,10 +2,8 @@
 
 @section('content')
 
-    <?php 
-        
-        if(isset($_GET['idmarketing'])){
-            
+    <?php        
+        if(isset($_GET['idmarketing'])){            
             for($i=0;$i<sizeof($marketing);$i++){
                 if( $marketing[$i]->id_marketing==$_GET['idmarketing']){
                     $idmarketing =  $marketing[$i]->id_marketing;
@@ -22,6 +20,7 @@
         else 
             $flag=false;
     ?>
+
     <!-- Main content -->
     <section class="content">
     <div class="row">
@@ -123,7 +122,6 @@
                         <td>{{ $marketings->nama_category }}</td>
                         <td>{{ $marketings->entitlement }}</td>
                         <td>{{ $marketings->maxclaim_date }}</td>
-                        
                         <td><a class="btn btn-primary" type ="submit" href="./mastermarketing?idmarketing={{$marketings->id_marketing}}">Edit</a></td>
                         <td>
                             {{ Form::open(array('url' => 'mastermarketing/' . $marketings->id_marketing)) }}

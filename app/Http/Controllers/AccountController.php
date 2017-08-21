@@ -35,9 +35,10 @@ class AccountController extends Controller
         else
         {
             $user=DB::select(DB::raw("SELECT A.id_user,A.email, A.nama_user,A.password, GROUP_CONCAT(DISTINCT C.nama_category SEPARATOR ', ') as category, GROUP_CONCAT(DISTINCT D.nama_role SEPARATOR ' ') as role, GROUP_CONCAT(DISTINCT E.distributor_id SEPARATOR ', ') as distributor, GROUP_CONCAT(DISTINCT B.id_category SEPARATOR ' ') as id_category, GROUP_CONCAT(DISTINCT B.id_role SEPARATOR ', ') as id_role, GROUP_CONCAT(DISTINCT F.id_dist SEPARATOR ' ') as id_dist FROM users A, category_accesses B, categories C, roles D, distributors E, user_distributors F WHERE (B.id_user=A.id_user and B.id_category=C.id_category and B.id_role=D.id_role and F.id_dist=E.id_dist and A.id_user=F.id_user) group by A.id_user, A.email, A.nama_user, A.password" ));
+            $count=User::all();
             $category=Category::all();
             $role=Role::all();
-            return view('admin/masteraccount')->with('user', $user)->with('role', $role)->with('category',$category);
+            return view('admin/masteraccount')->with('user', $user)->with('count', $count)->with('role', $role)->with('category',$category);
         }
     }
 
@@ -61,12 +62,23 @@ class AccountController extends Controller
     {
         //
         $input=Input::all();
-        dd($input);
-
+        // dd($input);
+        
         $user = new User;
         $user->email = $input['email'];
-        $user->name = $input['name'];
+        $user->nama_user = $input['name'];
         $user->password = hash('md5', $input['password']);
+        for($i=2;$i<=9;$i++)
+        {
+            $var = 'email'.$i;
+            if($request->has($var))
+            {
+                $user->$var = $input[$var];
+            }
+        }
+        $user->save();
+
+        $find = User::where('email', '=' , $input['email'])->first();
 
         $category=count(Category::all());
         for($i=1;$i<=$category;$i++)
@@ -74,9 +86,15 @@ class AccountController extends Controller
             if($input['checklist'.$i]!=0)
             {                
                 $access = new Category_access;
-                
+                $access->id_user = $find->id_user;
+                $access->id_category = $input['checklist'.$i];
+                $access->id_role = $input['role'.$i];
+                $access->auto_approved = $input['autoapproved'.$i];
+                $access->save();
             }
         }
+
+        return redirect()->route('masteraccount.index');
     }
 
     /**
@@ -111,6 +129,15 @@ class AccountController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $user = User::where('id_user',$id); 
+        $user->update([
+            'email' => $request->email,
+            'nama_user' => $request->nama_user,
+            'password' => $request->password
+        ]);
+        
+        return redirect()->route('masteraccount.index')
+            ->with('alert-success', 'Data Berhasil Diupdate.');
     }
 
     /**
@@ -122,7 +149,8 @@ class AccountController extends Controller
     public function destroy($id)
     {
         //
-        $user = User::where('id_user',$id)->delete(); 
+        $user = User::where('id_user', $id)->delete();
+        $access = Category_access::where('id_user', $id)->delete(); 
         
         return redirect()->route('masteraccount.index')->with('alert-success', 'Data Berhasil Dihapus.');
     }
