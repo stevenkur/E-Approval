@@ -568,6 +568,8 @@ class ClaimController extends Controller
         $input=Input::all();
         if($input['comment']!=NULL)
         {
+            $update = Log_claim::where(['id_claim', $request->id_claim, 'id_activity', 2])->update(['id_activity'=>12]);
+
             $comment = new Comment();
             $comment->id_claim = $request->id_claim;
             $comment->comment = $input['comment'];
