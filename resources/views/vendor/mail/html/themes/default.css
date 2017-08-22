@@ -6,7 +6,7 @@ body, body *:not(html):not(style):not(br):not(tr):not(code) {
 }
 
 body {
-    background-color: #3c8dbc;
+    background-color: #ffffff;
     color: #000000;
     height: 100%;
     hyphens: auto;
@@ -82,7 +82,7 @@ img {
 /* Layout */
 
 .wrapper {
-    background-color: #3c8dbc;
+    background-color: #ffffff;
     margin: 0;
     padding: 0;
     width: 100%;
@@ -108,11 +108,11 @@ img {
 }
 
 .header a {
-    color: #ffffff;
+    color: #3c8dbc;
     font-size: 19px;
     font-weight: bold;
     text-decoration: none;
-    text-shadow: 0 1px 0 #3c8dbc;
+    text-shadow: 0 1px 0 #ffffff;
 }
 
 /* Body */
@@ -164,7 +164,7 @@ img {
 }
 
 .footer p {
-    color: #ffffff;
+    color: #3c8dbc;
     font-size: 12px;
     text-align: center;
 }

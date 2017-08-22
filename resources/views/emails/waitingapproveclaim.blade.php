@@ -54,6 +54,9 @@
 	<i>{{ $comments->created_at }}</i> | <b>{{ $comments->nama_user }}</b> | {{ $comments->comment }}<br>
 	@endforeach
 </p>
+@component('mail::button', ['url' => 'localhost/E-Approval/viewclaim/' . $claim->id_claim, 'color' => 'blue'])
+Approve Claim
+@endcomponent
 <p>
 	*Please login to http://www.philips-eApproval.com to approve or reject the claim<br><br>
 

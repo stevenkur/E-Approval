@@ -21,6 +21,8 @@ Route::get('/', ['as'=>'/', 'uses'=>'LoginController@index']);
 
 Route::get('login', ['as'=>'login', 'uses'=>'LoginController@index']);
 Route::post('login', ['as'=>'login', 'uses'=>'LoginController@login']);
+Route::get('login2', ['as'=>'login2', 'uses'=>'LoginController@index2']);
+Route::post('login2', ['as'=>'login2', 'uses'=>'LoginController@login2']);
 Route::get('logout', ['as'=>'logout', 'uses'=>'LoginController@logout']);
 
 Route::resource('home', 'HomeController');
@@ -32,6 +34,7 @@ Route::any('listclaim', ['as'=>'listclaim', 'uses'=>'ClaimController@listclaim']
 Route::any('updateclaim', ['as'=>'updateclaim', 'uses'=>'ClaimController@updateclaim']);
 Route::any('/addcomment/{id_claim}', ['as'=>'addcomment', 'uses'=> 'ClaimController@addcomment']);
 Route::any('/editclaim/{id_claim}', ['as'=>'editclaim', 'uses'=> 'ClaimController@editclaim']);
+Route::any('/viewclaim/{id_claim}', ['as'=>'viewclaim', 'uses'=> 'ClaimController@viewclaim']);
 Route::any('/cancelclaim/{id_claim}', ['as'=>'cancelclaim', 'uses'=> 'ClaimController@cancelclaim']);
 Route::any('/approveclaim/{id_claim}', ['as'=>'approveclaim', 'uses'=> 'ClaimController@approveclaim']);
 Route::any('/marketingapproveclaim/{id_claim}', ['as'=>'marketingapproveclaim', 'uses'=> 'ClaimController@marketingapproveclaim']);
