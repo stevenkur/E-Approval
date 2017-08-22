@@ -6,7 +6,7 @@
     $category = Session::get('nama_category');
     $category_length = sizeof(Session::get('nama_category'));
     $tes=0; 
-    // dd($category);
+//     dd($register);
 ?>  
     <section class="content">
     
@@ -17,7 +17,7 @@
                 <h3 class="box-title">Resolution Report {{$category[$i]}}</h3>
             </div>
             <!-- /.box-header -->
-            <div class="box-body">
+            <div class="box-body" style="overflow:auto">
                 <table id="{{'table'.$category[$i]}}" class="table table-bordered table-striped" >
                     <thead>
                     <?php $role_length = sizeof($role[$i]);
@@ -32,54 +32,25 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <?php 
-                      $claim_length = sizeof($claim[$i]);
-                      if($claim_length!=0) $id_length = sizeof($date[$i]);
-                      else $id_length=0;
-                      $count=1;
-                    ?>
-                    <tr>
-                        
-                        @for($k=0;$k<$claim_length;$k=$k+$count)
-                        <td> {{$claim[$i][$k]->id_claim}} </td>
-                        <td> {{$claim[$i][$k]->nama_program}} </td>
-                        <td> {{ date('d-m-Y', strtotime($register[$i][$k]->created_at)) }}</td>
-                        <?php $id=$claim[$i][$k]->id_claim; 
-                          $jumlah=0;
-                          // dd($claim);
-                        ?>
-                        
-                        @for($l=0;$l<$role_length;$l++)
-                              <?php echo $claim[$i][$tes]->nama_role;
-                                    echo $role[$i][$l]->nama_role;
-                                    echo '<br>';
-                                    // dd($claim);
-                                    echo $claim_length;
-                                    echo '<br>';
-                                    echo $tes;
-                                    echo $count;
-                                    echo $jumlah;
+                        <tr>
+                            @if(isset($list[$i]))
+                                @foreach($list[$i] as $lists)
+                                <td> {{$lists['id_claim']}} </td>
+                                <td> {{$lists['program']}} </td>
+                                <td> {{date('d-m-Y', strtotime($lists['register']))}}</td>
 
-                                    echo '<br>';
-                                    if($tes=$claim_length) $tes=0;
-                              ?>
-                            @if($claim[$i][$tes]->nama_role = $role[$i][$l]->nama_role)
-                              @if (isset($date[$i][$id][$jumlah]))
-                              <td> {{ date('d-m-Y', strtotime($claim[$i][$tes]->created_at)) }} ( {{$date[$i][$id][$jumlah]}} days )</td>
-                              <?php $count++; $jumlah++; $tes++;?>
-                              
-                              @else <td>-</td>
-                              @endif
-                            @else <td>-</td>
+                                    @for($j=0;$j<$role_length;$j++)
+                                        @if($lists[$role[$i][$j]->nama_role]!=null)
+                                        <th> {{date('d-m-Y', strtotime($lists[$role[$i][$j]->nama_role]['date']))}} <br> {{'('.$lists[$role[$i][$j]->nama_role]['interval'].' days)'}}</th>
+                                        @else
+                                        <th> - </th>
+                                        @endif
+                                    @endfor
+                                @endforeach
+                            @else
+                                <tr><td>No Data Available</td></tr>
                             @endif
-                        @endfor
-                        
-                        <tr> </tr>
-                        @endfor
-                    </tr>
-
-                   
-                    
+                        </tr>
                     </tbody>
                 </table>
             </div>

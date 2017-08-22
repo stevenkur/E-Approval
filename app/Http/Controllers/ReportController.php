@@ -14,6 +14,8 @@ use DB;
 
 class ReportController extends Controller
 {
+    private $holiday, $holiday_length;
+    
     public function monitoringreport()
     {
         //
@@ -44,14 +46,16 @@ class ReportController extends Controller
         }
         else
         {            
-            $holiday = DB::select(DB::raw("SELECT tanggal_libur from holidays"));     
-            $holiday_length = sizeof($holiday);      
+            $this->holiday = DB::select(DB::raw("SELECT tanggal_libur from holidays"));     
+            $this->holiday_length = sizeof($this->holiday);      
             $category_length = sizeof(Session::get('nama_category'));
             $category = Session::get('nama_category');
-
+            
+            $list = null;
+            
             for($z=0;$z<$category_length;$z++)
             {
-               
+                $idclaim[$z] = null;
                 $nama_category=$category[$z];
                 $id_category = DB::select(DB::raw("SELECT id_category from categories where nama_category='$nama_category'"));
                 $now= $id_category[0]->id_category;
@@ -59,71 +63,46 @@ class ReportController extends Controller
                 $role_length[$z] = sizeof($role[$z]);                
 
                 $claim[$z] = DB::select(DB::raw("SELECT Distinct A.id_claim, A.nama_category, B.nama_program,C.id_user, C.created_at,E.nama_role FROM claims A, programs B, log_claims C, categories D, roles E, category_accesses F where E.id_role=F.id_role and C.id_user=F.id_user and C.id_activity=2 and A.id_claim=C.id_claim and A.nama_program=B.nama_program  and A.nama_category='$nama_category'"));
-                $register[$z] = DB::select(DB::raw("SELECT Distinct A.id_claim, A.nama_category, B.nama_program,C.id_user, C.created_at,E.nama_role FROM claims A, programs B, log_claims C, categories D, roles E, category_accesses F where E.id_role=F.id_role and C.id_user=F.id_user and C.id_activity=6 and A.id_claim=C.id_claim and A.nama_program=B.nama_program  and A.nama_category='$nama_category'"));
+                $register[$z] = DB::select(DB::raw("SELECT Distinct A.id_claim, A.nama_category, B.nama_program,C.id_user, C.created_at,E.nama_role FROM claims A, programs B, log_claims C, categories D, roles E, category_accesses F where E.id_role=F.id_role and C.id_user=F.id_user and C.id_activity=6 and A.id_claim=C.id_claim and A.nama_program=B.nama_program  and A.nama_category='$nama_category' ORDER BY A.id_claim"));
 
-                $length = sizeof($claim[$z]);
-                // dd($claim[$z]);
-                $j=0;
-                if($length!=0)
+                $x=-1;
+                for($y=0; $y<count($claim[$z]); $y++)
                 {
-                    $pisah = array();
-                    foreach($claim[$z] as $key=>$value)
+                    if($y==0)
+                        $idclaim[$z][++$x]=$claim[$z][$y]->id_claim;
+                    if($claim[$z][$y]->id_claim != $idclaim[$z][$x])
+                        $idclaim[$z][++$x]=$claim[$z][$y]->id_claim;
+                }
+                                
+                for($x=0; $x<count($idclaim[$z]); $x++){
+                    $list[$z][$x]['category'] = $nama_category;
+                    $list[$z][$x]['id_claim'] = $idclaim[$z][$x];
+                    $list[$z][$x]['program'] = $register[$z][$x]->nama_program;
+                    $list[$z][$x]['register'] = $register[$z][$x]->created_at;
+                    
+                    for($y=0; $y<$role_length[$z]; $y++)
                     {
-                        $id = $value->id_claim;
-                        if(!isset($pisah[$id])) 
-                        {
-                            $pisah[$id] = array();
-                            $i=0;
-
-                            $pisah[$id][0]= $register[$z][$j];
-                            $j++;
-                        }
-                        $i++;
-
-                        $pisah[$id][$i] = $value;
+                        $role[$z][$y]->nama_role;
+                        $list[$z][$x][$role[$z][$y]->nama_role] = null;
                     }
                     
-                    $tes=array();
-                    $array=array();
-                    $arr_keys = array_keys($pisah);
-                    $arr_keys_length = sizeof($arr_keys);
-                    // dd($pisah);
-                    for($m=0;$m<$arr_keys_length;$m++)
+                    for($y=0; $y<count($claim[$z]); $y++)
                     {
-                        $id=$arr_keys[$m];
-                        $jumlah = sizeof($pisah[$id]);
-                        // dd($jumlah);
-                        for($i=0;$i<$jumlah-1;$i++)
-                        {                            
-                            $tes=(strtotime($pisah[$id][$i+1]->created_at)-strtotime($pisah[$id][$i]->created_at));                
-                            // dd($tes);
-                            $datediff= floor($tes / (60 * 60 * 24));
-                            $from= $pisah[$id][$i]->created_at;
-                            $start = DateTime::createFromFormat("Y-m-d H:i:s","$from");
-                            $interval = new DateInterval("P1D");
-                            $period = new DatePeriod($start,$interval,$datediff);
-                            $difference[$id][$i]=iterator_count($period);
-                            
-                            $count=0;
-                            foreach($period as $dt)
-                            {
-                                for($n=0;$n<$holiday_length;$n++)
-                                {
-                                    if($dt->format("Y-m-d")==$holiday[$n]->tanggal_libur)
-                                    {                                       
-                                        $count++;                                        
-                                    }     
-                                }                                
-                            }
-
-                            $date[$z][$id][$i]= $difference[$id][$i]-$count;
-                            $array=array();
+                        if($y==0){
+                            $list[$z][$x][$claim[$z][$y]->nama_role]['date'] = $claim[$z][$y]->created_at;
+                            $list[$z][$x][$claim[$z][$y]->nama_role]['interval'] = $this->getInterval($list[$z][$x]['register'], $claim[$z][$y]->created_at);
+                        }
+                        else{
+                            $list[$z][$x][$claim[$z][$y]->nama_role]['date'] = $claim[$z][$y]->created_at;
+                            $list[$z][$x][$claim[$z][$y]->nama_role]['interval'] = $this->getInterval($list[$z][$x][$claim[$z][$y-1]->nama_role]['date'], $claim[$z][$y]->created_at);
                         }
                     }
                 }
             }
-            // dd($date);
-            return view('user/resolutionreport')->with('role',$role)->with('claim',$claim)->with('date',$date)->with('register',$register);
+            
+//            dd($list);
+//            dd($role);
+            return view('user/resolutionreport')->with('role',$role)->with('list',$list);
         }
     }
 
@@ -210,5 +189,32 @@ class ReportController extends Controller
                         
             return view('user/summaryclaimreport')->with('marketing',$marketing)->with('market',$market)->with('total',$total)->with('program',$program)->with('cat',$cat)->with('subcat',$subcat)->with('prog',$prog)->with('subprog',$subprog);
         }
+    }
+    
+    private function getInterval($date1, $date2)
+    {
+        $tes=(strtotime($date1)-strtotime($date2));                
+//             dd($tes);
+        $datediff= floor($tes / (60 * 60 * 24));
+        $from = $date2;
+        $start = DateTime::createFromFormat("Y-m-d H:i:s","$from");
+        $interval = new DateInterval("P1D");
+        $period = new DatePeriod($start,$interval,$datediff);
+//        dd($period);
+        $difference=iterator_count($period);
+                        
+        $count=0;
+        foreach($period as $dt)
+        {
+            for($n=0;$n<$this->holiday_length;$n++)
+            {
+                if($dt->format("Y-m-d")==$this->holiday[$n]->tanggal_libur)
+                {                                       
+                    $count++;                                     
+                }     
+            }                                
+        }
+
+        return $difference-$count;
     }
 }
