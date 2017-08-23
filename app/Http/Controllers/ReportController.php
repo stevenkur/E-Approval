@@ -66,12 +66,12 @@ class ReportController extends Controller
                 $register[$z] = DB::select(DB::raw("SELECT Distinct A.id_claim, A.nama_category, B.nama_program,C.id_user, C.created_at,E.nama_role FROM claims A, programs B, log_claims C, categories D, roles E, category_accesses F where E.id_role=F.id_role and C.id_user=F.id_user and C.id_activity=6 and A.id_claim=C.id_claim and A.nama_program=B.nama_program  and A.nama_category='$nama_category' ORDER BY A.id_claim"));
 
                 $x=-1;
-                for($y=0; $y<count($claim[$z]); $y++)
+                for($y=0; $y<count($register[$z]); $y++)
                 {
                     if($y==0)
-                        $idclaim[$z][++$x]=$claim[$z][$y]->id_claim;
-                    if($claim[$z][$y]->id_claim != $idclaim[$z][$x])
-                        $idclaim[$z][++$x]=$claim[$z][$y]->id_claim;
+                        $idclaim[$z][++$x]=$register[$z][$y]->id_claim;
+                    if($register[$z][$y]->id_claim != $idclaim[$z][$x])
+                        $idclaim[$z][++$x]=$register[$z][$y]->id_claim;
                 }
                                 
                 for($x=0; $x<count($idclaim[$z]); $x++){
@@ -172,7 +172,9 @@ class ReportController extends Controller
                         
             foreach($program as $programs)
             {                
-                $prog[++$i]['title'] = $programs->Program.' :<br> '.$programs->Total;
+                $color[++$i] = "hsl(".rand(0,359).",100%,50%)";
+
+                $prog[$i]['title'] = $programs->Program.' :<br> '.$programs->Total;
                 $prog[$i]['value'] = 100/$progCount;
                 $prog[$i]['color'] = $color[$i];
                 
