@@ -67,7 +67,7 @@ class LoginController extends Controller
     }
 
     public function index2(Request $request)
-    {   
+    {
         if(!$request->session()->has('email'))
             return view('auth/login2');
         else
@@ -113,7 +113,8 @@ class LoginController extends Controller
                 $request->session()->put('categories', $category[0]);
                 $category_now = Session::get('categories');
                 // dd(Session()->all());
-                return redirect()->route('listclaim');
+                $id_claim=Session::get('id_claim');
+                return redirect()->route('viewclaim', ['id_claim' => $id_claim]);
             }
         }
         else{

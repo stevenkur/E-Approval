@@ -62,6 +62,6 @@ Route::resource('masterperiod', 'PeriodController');
 Route::any('dashboard', ['as'=>'dashboard', 'uses'=>'AdminController@dashboard']);
 Route::any('query', ['as'=>'query', 'uses'=>'AdminController@query']);
 Route::any('queryresult', ['as'=>'queryresult', 'uses'=>'AdminController@queryresult']);
-Route::any('listticket', ['as'=>'listticket', 'uses'=>'AdminController@listticket']);
+Route::any('listticket', ['as'=>'listticket', 'uses'=>'ReportController@monitoringreport']);
 Route::any('listattachment', ['as'=>'listattachment', 'uses'=>'AdminController@listattachment']);
 Route::any('listperiod', ['as'=>'listperiod', 'uses'=>'AdminController@listperiod']);

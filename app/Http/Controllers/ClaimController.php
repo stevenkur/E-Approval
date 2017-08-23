@@ -615,6 +615,7 @@ class ClaimController extends Controller
         //
         if (!(Session::has('email')))
         {
+            $request->session()->put('id_claim', $request->id_claim);
             return redirect()->route('login2');
         }
         else
