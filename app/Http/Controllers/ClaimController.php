@@ -439,8 +439,6 @@ class ClaimController extends Controller
         else
         {
             $next=DB::select(DB::raw("SELECT C.nama_role, D.id_user, D.email FROM claims A, flows B, roles C, users D, category_accesses E WHERE A.kode_flow=B.kode_flow AND B.id_role=C.id_role AND C.id_role=E.id_role and E.id_user=D.id_user AND '$level'=B.level_flow AND A.id_claim='$request->id_claim'"));
-            
-            $approve = Claim::where('id_claim', $request->id_claim)->update(['level_flow'=>$level, 'id_staff'=>$next[0]->id_user, 'status'=>'Waiting from ' . $next[0]->nama_role . ' (' . $next[0]->email . ')']);
 
             $query=DB::select(DB::raw("SELECT * FROM claims WHERE id_claim='$request->id_claim'"));
             $mail=$query[0];
@@ -449,6 +447,8 @@ class ClaimController extends Controller
             $query=DB::select(DB::raw("SELECT * FROM claims WHERE id_claim='$request->id_claim'"));
             $mail=$query[0];
             Mail::send(new WaitingApproveClaim($mail));
+            
+            $approve = Claim::where('id_claim', $request->id_claim)->update(['level_flow'=>$level, 'id_staff'=>$next[0]->id_user, 'status'=>'Waiting from ' . $next[0]->nama_role . ' (' . $next[0]->email . ')']);
         }
 
         $log = new Log_claim();
@@ -485,8 +485,6 @@ class ClaimController extends Controller
         {
             $next=DB::select(DB::raw("SELECT C.nama_role, D.id_user, D.email FROM claims A, flows B, roles C, users D, category_accesses E WHERE A.kode_flow=B.kode_flow AND B.id_role=C.id_role AND C.id_role=E.id_role and E.id_user=D.id_user AND '$level'=B.level_flow AND A.id_claim='$request->id_claim'"));
             
-            $approve = Claim::where('id_claim', $request->id_claim)->update(['level_flow'=>$level, 'id_staff'=>$next[0]->id_user, 'status'=>'Waiting from ' . $next[0]->nama_role . ' (' . $next[0]->email . ')']);
-
             $query=DB::select(DB::raw("SELECT * FROM claims WHERE id_claim='$request->id_claim'"));
             $mail=$query[0];
             Mail::send(new ApproveClaim($mail));
@@ -494,6 +492,8 @@ class ClaimController extends Controller
             $query=DB::select(DB::raw("SELECT * FROM claims WHERE id_claim='$request->id_claim'"));
             $mail=$query[0];
             Mail::send(new WaitingApproveClaim($mail));
+            
+            $approve = Claim::where('id_claim', $request->id_claim)->update(['level_flow'=>$level, 'id_staff'=>$next[0]->id_user, 'status'=>'Waiting from ' . $next[0]->nama_role . ' (' . $next[0]->email . ')']);
         }
 
         $log = new Log_claim();
@@ -535,8 +535,6 @@ class ClaimController extends Controller
         else
         {
             $next=DB::select(DB::raw("SELECT C.nama_role, D.id_user, D.email FROM claims A, flows B, roles C, users D, category_accesses E WHERE A.kode_flow=B.kode_flow AND B.id_role=C.id_role AND C.id_role=E.id_role and E.id_user=D.id_user AND '$level'=B.level_flow AND A.id_claim='$request->id_claim'"));
-            
-            $approve = Claim::where('id_claim', $request->id_claim)->update(['level_flow'=>$level, 'id_staff'=>$next[0]->id_user, 'status'=>'Waiting from ' . $next[0]->nama_role . ' (' . $next[0]->email . ')']);
 
             $query=DB::select(DB::raw("SELECT * FROM claims WHERE id_claim='$request->id_claim'"));
             $mail=$query[0];
@@ -545,6 +543,8 @@ class ClaimController extends Controller
             $query=DB::select(DB::raw("SELECT * FROM claims WHERE id_claim='$request->id_claim'"));
             $mail=$query[0];
             Mail::send(new WaitingApproveClaim($mail));
+            
+            $approve = Claim::where('id_claim', $request->id_claim)->update(['level_flow'=>$level, 'id_staff'=>$next[0]->id_user, 'status'=>'Waiting from ' . $next[0]->nama_role . ' (' . $next[0]->email . ')']);
         }
 
         $log = new Log_claim();
