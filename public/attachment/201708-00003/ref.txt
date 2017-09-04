@@ -1,0 +1,11 @@
+[1]  https://id.wikipedia.org/wiki/Philips
+[2]  https://id.wikipedia.org/wiki/XAMPP
+[3]  https://id.wikipedia.org/wiki/Pangkalan_data
+[4]  https://id.wikipedia.org/wiki/JavaScript
+[5]  https://id.wikipedia.org/wiki/Server_web
+[6]  https://id.wikipedia.org/wiki/PHP
+[7]  https://www.codepolitan.com/brackets-open-source-code-editor-untuk-web-designers-dan-front-end-developers
+[8]  https://github.com/guzzle/guzzle
+[9]  https://id.wikipedia.org/wiki/Active_Server_Pages_.NET
+[10] https://id.wikipedia.org/wiki/Microsoft_SQL_Server
+[11] https://www.philips.com
